@@ -95,6 +95,43 @@ export async function removeFromWatchlist(id: string) {
   revalidatePath("/");
 }
 
+export async function updateWatchlist(
+  id: string,
+  updates: { ticker?: string; name?: string; type?: "stock" | "fund" }
+) {
+  const supabase = await createClient();
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Not authenticated");
+
+  const updateData: Record<string, unknown> = {};
+  if (updates.ticker !== undefined) updateData.ticker = updates.ticker.toUpperCase();
+  if (updates.name !== undefined) updateData.name = updates.name || null;
+  if (updates.type !== undefined) updateData.type = updates.type;
+
+  const { data, error } = await supabase
+    .from("watchlist")
+    .update(updateData)
+    .eq("id", id)
+    .eq("user_id", user.id)
+    .select()
+    .single();
+
+  if (error) throw error;
+
+  revalidatePath("/watchlist");
+  revalidatePath("/");
+
+  return {
+    id: data.id,
+    userId: data.user_id,
+    ticker: data.ticker,
+    name: data.name,
+    type: data.type,
+    createdAt: data.created_at,
+  };
+}
+
 export async function addDefaultWatchlist() {
   const supabase = await createClient();
 

@@ -98,7 +98,10 @@ export function Sidebar() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
           </div>
-          <span className="font-bold text-white text-base tracking-tight">InvestTrack</span>
+          <div>
+            <span className="font-bold text-white text-base tracking-tight block">INVEST TRACK</span>
+            <span className="text-white/40 text-xs">by Rangga</span>
+          </div>
         </div>
       </div>
 

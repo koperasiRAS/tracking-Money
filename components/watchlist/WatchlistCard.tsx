@@ -10,6 +10,7 @@ interface WatchlistCardProps {
   price?: number;
   change?: number;
   changePercent?: number;
+  onEdit: (item: WatchlistItem) => void;
   onRemove: (item: WatchlistItem) => void;
   onAddAlert?: (item: WatchlistItem) => void;
 }
@@ -19,6 +20,7 @@ export function WatchlistCard({
   price,
   change,
   changePercent,
+  onEdit,
   onRemove,
   onAddAlert,
 }: WatchlistCardProps) {
@@ -34,7 +36,7 @@ export function WatchlistCard({
   const isPositive = change !== undefined ? change >= 0 : true;
 
   return (
-    <GlassCard className="p-4 hover:bg-gray-100 transition-all duration-300">
+    <GlassCard className="p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           {/* Ticker Badge */}
@@ -47,13 +49,13 @@ export function WatchlistCard({
           {/* Stock Info */}
           <div>
             <div className="flex items-center gap-2">
-              <p className="text-gray-900 font-semibold">{item.ticker}</p>
+              <p className="text-gray-900 dark:text-gray-100 font-semibold">{item.ticker}</p>
               <span className="px-2 py-0.5 text-xs rounded-full bg-green-500/20 text-green-600">
                 {item.type === "stock" ? "Stock" : "Fund"}
               </span>
             </div>
             {item.name && (
-              <p className="text-gray-500 text-sm">{item.name}</p>
+              <p className="text-gray-500 dark:text-gray-400 text-sm">{item.name}</p>
             )}
           </div>
         </div>
@@ -62,7 +64,7 @@ export function WatchlistCard({
         <div className="text-right">
           {price !== undefined ? (
             <>
-              <p className="text-gray-900 font-semibold">{formatCurrency(price)}</p>
+              <p className="text-gray-900 dark:text-gray-100 font-semibold">{formatCurrency(price)}</p>
               <div className={cn(
                 "flex items-center justify-end gap-1 text-sm",
                 isPositive ? "text-green-600" : "text-red-500"
@@ -82,7 +84,7 @@ export function WatchlistCard({
               </div>
             </>
           ) : (
-            <p className="text-gray-300 text-sm">Loading...</p>
+            <p className="text-gray-300 dark:text-gray-600 text-sm">Loading...</p>
           )}
         </div>
 
@@ -100,6 +102,16 @@ export function WatchlistCard({
               </svg>
             </GlassButton>
           )}
+          <GlassButton
+            variant="ghost"
+            size="sm"
+            onClick={() => onEdit(item)}
+            title="Edit"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+          </GlassButton>
           <GlassButton
             variant="ghost"
             size="sm"

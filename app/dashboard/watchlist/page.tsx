@@ -12,17 +12,22 @@ import {
   getWatchlist,
   addToWatchlist,
   removeFromWatchlist,
+  updateWatchlist,
   addDefaultWatchlist,
-  DEFAULT_WATCHLIST,
 } from "@/lib/actions/watchlist";
 
 export default function WatchlistPage() {
   const [items, setItems] = useState<WatchlistItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState<WatchlistItem | null>(null);
   const [newTicker, setNewTicker] = useState("");
   const [newName, setNewName] = useState("");
   const [newType, setNewType] = useState<"stock" | "fund">("stock");
+  const [editTicker, setEditTicker] = useState("");
+  const [editName, setEditName] = useState("");
+  const [editType, setEditType] = useState<"stock" | "fund">("stock");
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
@@ -77,6 +82,37 @@ export default function WatchlistPage() {
     }
   };
 
+  const handleEditItem = (item: WatchlistItem) => {
+    setEditingItem(item);
+    setEditTicker(item.ticker);
+    setEditName(item.name || "");
+    setEditType(item.type || "stock");
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingItem || !editTicker.trim()) return;
+
+    setIsAdding(true);
+    try {
+      const updated = await updateWatchlist(editingItem.id, {
+        ticker: editTicker,
+        name: editName,
+        type: editType,
+      });
+      setItems((prev) =>
+        prev.map((i) => (i.id === editingItem.id ? { ...i, ...updated } : i))
+      );
+      setIsEditModalOpen(false);
+      setEditingItem(null);
+    } catch (error) {
+      console.error("Failed to update watchlist:", error);
+    } finally {
+      setIsAdding(false);
+    }
+  };
+
   const handleRemoveItem = async (item: WatchlistItem) => {
     try {
       await removeFromWatchlist(item.id);
@@ -105,7 +141,7 @@ export default function WatchlistPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Watchlist</h1>
-          <p className="text-gray-500 mt-1">Track your favorite Indonesian stocks</p>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Track your favorite Indonesian stocks</p>
         </div>
         <GlassButton onClick={() => setIsModalOpen(true)}>
           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,7 +154,7 @@ export default function WatchlistPage() {
       {/* Quick Add Popular Stocks */}
       {!isLoading && items.length < 5 && (
         <GlassCard className="p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Popular Indonesian Stocks</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Popular Indonesian Stocks</h2>
           <div className="flex flex-wrap gap-2">
             {popularStocks
               .filter((s) => !items.find((i) => i.ticker === s.ticker))
@@ -130,7 +166,7 @@ export default function WatchlistPage() {
                     await addToWatchlist({ ticker: stock.ticker, name: stock.name });
                     loadWatchlist();
                   }}
-                  className="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 hover:text-gray-900 text-sm transition-all"
+                  className="px-3 py-1.5 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 text-sm transition-all"
                 >
                   {stock.ticker}
                 </button>
@@ -157,13 +193,13 @@ export default function WatchlistPage() {
         </div>
       ) : items.length === 0 ? (
         <GlassCard className="p-12 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 rounded-2xl bg-gray-50 dark:bg-gray-700 flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No stocks in watchlist</h3>
-          <p className="text-gray-500 text-sm mb-4">Add stocks to track their prices</p>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">No stocks in watchlist</h3>
+          <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">Add stocks to track their prices</p>
           <GlassButton onClick={() => setIsModalOpen(true)}>Add Your First Stock</GlassButton>
         </GlassCard>
       ) : (
@@ -172,6 +208,7 @@ export default function WatchlistPage() {
             <WatchlistCard
               key={item.id}
               item={item}
+              onEdit={handleEditItem}
               onRemove={handleRemoveItem}
             />
           ))}
@@ -181,14 +218,14 @@ export default function WatchlistPage() {
       {/* Add Stock Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsModalOpen(false)} />
+          <button className="absolute inset-0 bg-black/50 backdrop-blur-sm cursor-default" onClick={() => setIsModalOpen(false)} type="button" aria-label="Close modal" />
           <GlassCard className="relative w-full max-w-md p-6 space-y-6 animate-slide-up">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Add to Watchlist</h2>
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="p-2 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition-colors"
+                className="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -231,6 +268,66 @@ export default function WatchlistPage() {
                 </GlassButton>
                 <GlassButton type="submit" className="flex-1" isLoading={isAdding}>
                   Add
+                </GlassButton>
+              </div>
+            </form>
+          </GlassCard>
+        </div>
+      )}
+
+      {/* Edit Stock Modal */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <button className="absolute inset-0 bg-black/50 backdrop-blur-sm cursor-default" onClick={() => setIsEditModalOpen(false)} type="button" aria-label="Close modal" />
+          <GlassCard className="relative w-full max-w-md p-6 space-y-6 animate-slide-up">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Edit Watchlist Item</h2>
+              <button
+                type="button"
+                onClick={() => setIsEditModalOpen(false)}
+                className="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveEdit} className="space-y-4">
+              <GlassInput
+                label="Ticker Symbol"
+                placeholder="BBCA"
+                value={editTicker}
+                onChange={(e) => setEditTicker(e.target.value.toUpperCase())}
+                required
+              />
+              <GlassInput
+                label="Company Name (Optional)"
+                placeholder="Bank Central Asia"
+                value={editName}
+                onChange={(e) => setEditName(e.target.value)}
+              />
+              <GlassSelect
+                label="Type"
+                value={editType}
+                onChange={(e) => setEditType(e.target.value as "stock" | "fund")}
+                options={[
+                  { value: "stock", label: "Stock" },
+                  { value: "fund", label: "Fund" },
+                ]}
+              />
+
+              <div className="flex gap-3 pt-2">
+                <GlassButton
+                  type="button"
+                  variant="secondary"
+                  className="flex-1"
+                  onClick={() => setIsEditModalOpen(false)}
+                >
+                  Cancel
+                </GlassButton>
+                <GlassButton type="submit" className="flex-1" isLoading={isAdding}>
+                  Save Changes
                 </GlassButton>
               </div>
             </form>
