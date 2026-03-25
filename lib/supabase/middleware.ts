@@ -73,10 +73,13 @@ export async function updateSession(request: NextRequest) {
     request.nextUrl.pathname.startsWith('/score') ||
     request.nextUrl.pathname.startsWith('/dashboard');
 
-  // Auth routes (login/register)
+  // Auth routes (login/register + OAuth + 2FA)
   const isAuthRoute =
     request.nextUrl.pathname.startsWith('/auth/login') ||
-    request.nextUrl.pathname.startsWith('/auth/register');
+    request.nextUrl.pathname.startsWith('/auth/register') ||
+    request.nextUrl.pathname.startsWith('/auth/callback') ||
+    request.nextUrl.pathname.startsWith('/auth/2fa-enroll') ||
+    request.nextUrl.pathname.startsWith('/auth/2fa-verify');
 
   // Redirect authenticated users away from auth pages
   if (isAuthRoute && user) {

@@ -155,7 +155,7 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
           <Link href="/auth/login">
             <GlassButton size="lg" className="w-full sm:w-auto">
-              Sign In
+              Sign In with Google
             </GlassButton>
           </Link>
           <Link href="/auth/register">
