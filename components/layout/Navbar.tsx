@@ -16,6 +16,7 @@ const navigation = [
   { name: "Income Planner", href: "/income" },
   { name: "Allocation", href: "/allocation" },
   { name: "Cash to Lot", href: "/cash-to-lot" },
+  { name: "Risk Meter", href: "/risk-meter" },
   { name: "Mutual Funds", href: "/mutual-funds" },
 ];
 
