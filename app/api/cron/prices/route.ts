@@ -3,7 +3,11 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { fetchMultiplePrices } from "@/lib/utils/finance";
 import { sendAlertNotification } from "@/lib/actions/notifications";
 
-// This API route is called by Vercel Cron every 5 minutes
+// Force dynamic rendering for cron job
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+// This API route is called by Vercel Cron every day at 9 AM
 export async function GET(request: Request) {
   try {
     // Verify cron secret for security
@@ -14,6 +18,8 @@ export async function GET(request: Request) {
         { status: 401 }
       );
     }
+
+    console.log("[Cron] Starting price check...");
 
     // Check if Supabase is configured
     let supabase;
@@ -28,8 +34,6 @@ export async function GET(request: Request) {
         triggered: 0,
       });
     }
-
-    console.log("[Cron] Starting price check...");
 
     // Get all active alerts
     const { data: alerts, error: alertsError } = await supabase
@@ -56,7 +60,7 @@ export async function GET(request: Request) {
     }
 
     // Get unique tickers
-    const tickers = Array.from(new Set(alerts.map((a) => a.ticker)));
+    const tickers = Array.from(new Set(alerts.map((a: { ticker: string }) => a.ticker)));
     console.log(`[Cron] Checking ${tickers.length} tickers...`);
 
     // Fetch current prices
