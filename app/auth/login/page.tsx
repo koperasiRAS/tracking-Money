@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function LoginPage() {
+function LoginPageContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -13,6 +13,8 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [supabase, setSupabase] = useState<ReturnType<typeof import("@/lib/supabase/client").createClient> | null>(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const resetSuccess = searchParams.get("reset") === "success";
 
   useEffect(() => {
     import("@/lib/supabase/client").then(({ createClient }) => {
@@ -75,7 +77,7 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen flex bg-base">
+    <main className="min-h-screen flex bg-base dark:bg-gray-900">
       {/* ===== LEFT PANEL - Branding ===== */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-[#0f0f23] via-[#0d1f2d] to-[#0a2a1a]">
 
@@ -103,7 +105,10 @@ export default function LoginPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
-              <span className="text-2xl font-bold text-white tracking-tight">INVESTTRACK PRO</span>
+              <div>
+                <span className="text-2xl font-bold text-white tracking-tight block">Invest Track</span>
+                <span className="text-white/40 text-xs">by Rangga</span>
+              </div>
             </div>
           </div>
 
@@ -152,11 +157,11 @@ export default function LoginPage() {
       </div>
 
       {/* ===== RIGHT PANEL - Login Form ===== */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 bg-white relative overflow-hidden">
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 bg-white dark:bg-gray-900 relative overflow-hidden">
 
         {/* Decorative circles */}
-        <div className="absolute -top-32 -right-32 w-64 h-64 bg-green-50 rounded-full" />
-        <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-green-50 rounded-full" />
+        <div className="absolute -top-32 -right-32 w-64 h-64 bg-green-50 dark:bg-green-950/30 rounded-full" />
+        <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-green-50 dark:bg-green-950/30 rounded-full" />
 
         <div className="relative z-10 w-full max-w-md">
 
@@ -167,22 +172,35 @@ export default function LoginPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
             </div>
-            <span className="text-xl font-bold text-gray-900 tracking-tight">INVESTTRACK PRO</span>
+            <div>
+              <span className="text-xl font-bold text-gray-900 dark:text-white tracking-tight block">Invest Track</span>
+              <span className="text-gray-500 dark:text-gray-400 text-xs">by Rangga</span>
+            </div>
           </div>
 
           {/* Header */}
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">Masuk ke Akun Anda</h2>
-            <p className="text-gray-5000 text-sm">Pilih metode login yang Anda inginkan</p>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">Masuk ke Akun Anda</h2>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">Pilih metode login yang Anda inginkan</p>
           </div>
 
           {/* Error alert */}
           {error && (
-            <div className="mb-5 p-3.5 rounded-xl bg-red-50 border border-red-100 text-red-600 text-sm flex items-center gap-2">
+            <div className="mb-5 p-3.5 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800 text-red-600 dark:text-red-400 text-sm flex items-center gap-2">
               <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               {error}
+            </div>
+          )}
+
+          {/* Reset success alert */}
+          {resetSuccess && (
+            <div className="mb-5 p-3.5 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800 text-green-700 dark:text-green-400 text-sm flex items-center gap-2">
+              <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Kata sandi berhasil direset. Silakan masuk dengan kata sandi baru.
             </div>
           )}
 
@@ -191,10 +209,10 @@ export default function LoginPage() {
             type="button"
             onClick={handleGoogleLogin}
             disabled={isGoogleLoading || !supabase}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-200 rounded-xl font-medium text-sm text-gray-7000 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl font-medium text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
           >
             {isGoogleLoading ? (
-              <div className="w-5 h-5 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 border-t-transparent rounded-full animate-spin" />
             ) : (
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -209,10 +227,10 @@ export default function LoginPage() {
           {/* Divider */}
           <div className="relative my-5">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200" />
+              <div className="w-full border-t border-gray-200 dark:border-gray-700" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-3 text-gray-4000">atau</span>
+              <span className="bg-white dark:bg-gray-900 px-3 text-gray-400 dark:text-gray-500">atau</span>
             </div>
           </div>
 
@@ -220,11 +238,11 @@ export default function LoginPage() {
           <form onSubmit={handlePasswordLogin} className="space-y-4">
             {/* Email field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-7000 mb-1.5">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                 Email
               </label>
               <div className="relative">
-                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-4000 pointer-events-none">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
@@ -236,18 +254,18 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder:text-gray-4000 focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-400 transition-all duration-200 shadow-sm"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-400 transition-all duration-200 shadow-sm"
                 />
               </div>
             </div>
 
             {/* Password field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-7000 mb-1.5">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                 Password
               </label>
               <div className="relative">
-                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-4000 pointer-events-none">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
@@ -259,12 +277,12 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder:text-gray-4000 focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-400 transition-all duration-200 shadow-sm"
+                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-400 transition-all duration-200 shadow-sm"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-4000 hover:text-gray-600 transition-colors cursor-pointer"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors cursor-pointer"
                   tabIndex={-1}
                 >
                   {showPassword ? (
@@ -285,7 +303,7 @@ export default function LoginPage() {
             <div className="flex justify-end">
               <Link
                 href="/auth/forgot-password"
-                className="text-xs text-gray-4000 hover:text-green-600 transition-colors"
+                className="text-xs text-gray-500 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition-colors"
               >
                 Lupa kata sandi?
               </Link>
@@ -316,13 +334,13 @@ export default function LoginPage() {
           {/* Divider with icons */}
           <div className="relative my-5">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-100" />
+              <div className="w-full border-t border-gray-100 dark:border-gray-800" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-white px-3 text-gray-3000 text-xs flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-gray-200 inline-block" />
-                <span className="w-1.5 h-1.5 rounded-full bg-gray-200 inline-block" />
-                <span className="w-1.5 h-1.5 rounded-full bg-gray-200 inline-block" />
+              <span className="bg-white dark:bg-gray-900 px-3 text-gray-300 dark:text-gray-600 text-xs flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 inline-block" />
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 inline-block" />
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 inline-block" />
               </span>
             </div>
           </div>
@@ -332,7 +350,7 @@ export default function LoginPage() {
             <button
               type="button"
               disabled
-              className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-100 rounded-xl font-medium text-sm text-gray-4000 cursor-not-allowed shadow-sm opacity-50"
+              className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-800 rounded-xl font-medium text-sm text-gray-400 dark:text-gray-600 cursor-not-allowed shadow-sm opacity-50"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
@@ -343,11 +361,11 @@ export default function LoginPage() {
 
           {/* Register link */}
           <div className="mt-6 text-center">
-            <p className="text-gray-5000 text-sm">
+            <p className="text-gray-500 dark:text-gray-400 text-sm">
               Belum punya akun?{" "}
               <Link
                 href="/auth/register"
-                className="text-green-600 hover:text-green-700 font-semibold transition-colors"
+                className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-semibold transition-colors"
               >
                 Daftar
               </Link>
@@ -355,16 +373,24 @@ export default function LoginPage() {
           </div>
 
           {/* Security note */}
-          <div className="mt-8 flex items-start gap-2.5 p-3.5 bg-gray-50 rounded-xl border border-gray-100">
+          <div className="mt-8 flex items-start gap-2.5 p-3.5 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700">
             <svg className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
-            <p className="text-gray-4000 text-xs leading-relaxed">
+            <p className="text-gray-500 dark:text-gray-400 text-xs leading-relaxed">
               Login dilindungi 2FA via Google Authenticator. Data Anda diamankan dengan Supabase Row Level Security.
             </p>
           </div>
         </div>
       </div>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginPageContent />
+    </Suspense>
   );
 }
