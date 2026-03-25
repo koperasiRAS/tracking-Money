@@ -28,7 +28,7 @@ export default function TwoFactorVerifyPage() {
     setError("");
 
     try {
-      // Get current challenge/factor
+      // Get TOTP factor
       const { data: factors } = await supabase.auth.mfa.listFactors();
       const totpFactor = factors?.all?.find(
         (f) => f.factor_type === "totp" && f.status === "verified"
@@ -40,10 +40,22 @@ export default function TwoFactorVerifyPage() {
         return;
       }
 
+      // Create a challenge first (required before verify)
+      const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({
+        factorId: totpFactor.id,
+      });
+
+      if (challengeError || !challenge) {
+        setError("Failed to start verification. Please try again.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Verify with the challenge ID
       const { error: verifyError } = await supabase.auth.mfa.verify({
         factorId: totpFactor.id,
         code,
-        challengeId: totpFactor.id,
+        challengeId: challenge.id,
       });
 
       if (verifyError) {

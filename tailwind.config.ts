@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        base: "#0f0f23",
         glass: {
           white: "rgba(255, 255, 255, 0.05)",
           border: "rgba(255, 255, 255, 0.1)",

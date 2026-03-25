@@ -80,7 +80,7 @@ export default function DashboardPage() {
           <p className="text-white/50 mt-1">Your investment overview</p>
         </div>
         <div className="flex gap-3">
-          <Link href="/portfolio">
+          <Link href="/dashboard/portfolio">
             <GlassButton size="sm">
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -119,7 +119,7 @@ export default function DashboardPage() {
         <h2 className="text-lg font-semibold text-white mb-4">Smart Investment Tools</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Price Alerts */}
-          <Link href="/alerts">
+          <Link href="/dashboard/alerts">
             <GlassCard className="p-5 hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-yellow-500/20 flex items-center justify-center flex-shrink-0">
@@ -139,7 +139,7 @@ export default function DashboardPage() {
           </Link>
 
           {/* DCA Scheduler */}
-          <Link href="/dca">
+          <Link href="/dashboard/dca">
             <GlassCard className="p-5 hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
@@ -159,7 +159,7 @@ export default function DashboardPage() {
           </Link>
 
           {/* Dividends */}
-          <Link href="/dividends">
+          <Link href="/dashboard/dividends">
             <GlassCard className="p-5 hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
@@ -179,7 +179,7 @@ export default function DashboardPage() {
           </Link>
 
           {/* Target Planner */}
-          <Link href="/planner">
+          <Link href="/dashboard/planner">
             <GlassCard className="p-5 hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center flex-shrink-0">
@@ -198,7 +198,7 @@ export default function DashboardPage() {
           </Link>
 
           {/* Income Planner */}
-          <Link href="/income">
+          <Link href="/dashboard/income">
             <GlassCard className="p-5 hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
@@ -217,7 +217,7 @@ export default function DashboardPage() {
           </Link>
 
           {/* Allocation */}
-          <Link href="/allocation">
+          <Link href="/dashboard/allocation">
             <GlassCard className="p-5 hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center flex-shrink-0">
@@ -236,7 +236,7 @@ export default function DashboardPage() {
           </Link>
 
           {/* Risk Meter */}
-          <Link href="/risk-meter">
+          <Link href="/dashboard/risk-meter">
             <GlassCard className="p-5 hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center flex-shrink-0">
@@ -255,7 +255,7 @@ export default function DashboardPage() {
           </Link>
 
           {/* Cash to Lot */}
-          <Link href="/cash-to-lot">
+          <Link href="/dashboard/cash-to-lot">
             <GlassCard className="p-5 hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center flex-shrink-0">
@@ -274,7 +274,7 @@ export default function DashboardPage() {
           </Link>
 
           {/* Monthly Score */}
-          <Link href="/score">
+          <Link href="/dashboard/score">
             <GlassCard className="p-5 hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-pink-500/20 flex items-center justify-center flex-shrink-0">
@@ -299,7 +299,7 @@ export default function DashboardPage() {
         <GlassCard className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-white">Portfolio Holdings</h2>
-            <Link href="/portfolio">
+            <Link href="/dashboard/portfolio">
               <GlassButton variant="ghost" size="sm">View All</GlassButton>
             </Link>
           </div>
@@ -359,10 +359,10 @@ export default function DashboardPage() {
             Add stocks to your portfolio to start tracking your investments and unlock all smart tools
           </p>
           <div className="flex gap-3 justify-center">
-            <Link href="/portfolio">
+            <Link href="/dashboard/portfolio">
               <GlassButton>Add Your First Stock</GlassButton>
             </Link>
-            <Link href="/alerts">
+            <Link href="/dashboard/alerts">
               <GlassButton variant="secondary">Create an Alert</GlassButton>
             </Link>
           </div>

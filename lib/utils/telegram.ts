@@ -75,7 +75,7 @@ ${direction} Price has ${status} your target!
 
 📍 Target: ${formatCurrency(targetPrice)}
 💰 Current: ${formatCurrency(currentPrice)}
-📊 Change: ${((currentPrice / targetPrice - 1) * 100).toFixed(2)}%
+📊 Change: ${(((currentPrice - targetPrice) / targetPrice) * 100).toFixed(2)}%
 
 ---
 _Invest Tracker Pro_`;

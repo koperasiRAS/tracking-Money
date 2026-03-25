@@ -10,43 +10,48 @@ export async function GET(request: NextRequest) {
     const supabase = await createClient();
     const { data: { user }, error } = await supabase.auth.exchangeCodeForSession(code);
 
-    if (!error && user) {
-      // Check if user has 2FA enrolled
-      const { data: factors } = await supabase.auth.mfa.listFactors();
-
-      const hasTotp = factors?.all?.some(
-        (f) => f.factor_type === "totp" && f.status === "verified"
+    if (error || !user) {
+      // Code exchange failed — redirect to login with specific error
+      const errorParam = error?.message ? `code_exchange_failed:${encodeURIComponent(error.message)}` : "no_user";
+      return NextResponse.redirect(
+        new URL(`/auth/login?error=${errorParam}`, origin)
       );
-
-      if (hasTotp) {
-        // User has 2FA enrolled — redirect to verify page
-        // Store session in cookie/URL to persist across verify step
-        const session = await supabase.auth.getSession();
-        if (session.data.session) {
-          // Set a cookie to indicate 2FA pending verification
-          const response = NextResponse.redirect(
-            new URL("/auth/2fa-verify", origin)
-          );
-          response.cookies.set(
-            "mfa_pending",
-            "true",
-            {
-              httpOnly: true,
-              secure: process.env.NODE_ENV === "production",
-              sameSite: "lax",
-              maxAge: 60 * 10, // 10 minutes
-              path: "/",
-            }
-          );
-          return response;
-        }
-      }
-
-      // No 2FA enrolled — redirect to enroll page
-      return NextResponse.redirect(new URL("/auth/2fa-enroll", origin));
     }
+
+    // User authenticated successfully — check 2FA enrollment
+    const { data: factors } = await supabase.auth.mfa.listFactors();
+
+    const hasTotp = factors?.all?.some(
+      (f) => f.factor_type === "totp" && f.status === "verified"
+    );
+
+    if (hasTotp) {
+      // User has 2FA enrolled — redirect to verify page
+      const session = await supabase.auth.getSession();
+      if (session.data.session) {
+        // Set a cookie to indicate 2FA pending verification
+        const response = NextResponse.redirect(
+          new URL("/auth/2fa-verify", origin)
+        );
+        response.cookies.set(
+          "mfa_pending",
+          "true",
+          {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 60 * 10, // 10 minutes
+            path: "/",
+          }
+        );
+        return response;
+      }
+    }
+
+    // No 2FA enrolled — redirect to enroll page
+    return NextResponse.redirect(new URL("/auth/2fa-enroll", origin));
   }
 
-  // OAuth error or no code
-  return NextResponse.redirect(new URL("/auth/login?error=oauth_failed", origin));
+  // No code provided
+  return NextResponse.redirect(new URL("/auth/login?error=missing_code", origin));
 }

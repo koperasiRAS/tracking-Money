@@ -67,12 +67,12 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
-            <Link href="/portfolio">
+            <Link href="/dashboard/portfolio">
               <GlassButton size="lg" className="w-full sm:w-auto">
                 Go to Dashboard
               </GlassButton>
             </Link>
-            <Link href="/settings">
+            <Link href="/dashboard/settings">
               <GlassButton variant="secondary" size="lg" className="w-full sm:w-auto">
                 Settings
               </GlassButton>

@@ -15,15 +15,17 @@ export async function createClient() {
         set(name: string, value: string, options: CookieOptions) {
           try {
             cookieStore.set({ name, value, ...options });
-          } catch {
-            // Handle cookies in Server Components
+          } catch (err) {
+            // Handle cookies in Server Components where headers may already be sent
+            console.warn(`[Supabase] Failed to set cookie "${name}":`, err);
           }
         },
         remove(name: string, options: CookieOptions) {
           try {
             cookieStore.set({ name, value: '', ...options });
-          } catch {
-            // Handle cookies in Server Components
+          } catch (err) {
+            // Handle cookies in Server Components where headers may already been sent
+            console.warn(`[Supabase] Failed to remove cookie "${name}":`, err);
           }
         },
       },

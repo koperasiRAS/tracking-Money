@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -11,6 +11,7 @@ import { GlassInput } from "@/components/ui/GlassInput";
 export default function TwoFactorEnrollPage() {
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [factorId, setFactorId] = useState<string | null>(null);
+  const [challengeId, setChallengeId] = useState<string | null>(null);
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -24,41 +25,54 @@ export default function TwoFactorEnrollPage() {
     });
   }, []);
 
-  const enroll2FA = useCallback(async () => {
-    if (!supabase) return;
-    setEnrolling(true);
-
-    try {
-      const { data, error } = await supabase.auth.mfa.enroll({
-        factorType: "totp",
-        friendlyName: "Google Authenticator",
-      });
-
-      if (error) {
-        setError(error.message);
-        setEnrolling(false);
-        return;
-      }
-
-      if (data) {
-        setQrCode(data.totp.qr_code);
-        setFactorId(data.id);
-        setEnrolling(false);
-      }
-    } catch (err) {
-      setError("Failed to initialize 2FA. Please try again.");
-      setEnrolling(false);
-    }
-  }, [supabase]);
-
   useEffect(() => {
     if (!supabase) return;
+
+    const enroll2FA = async () => {
+      setEnrolling(true);
+
+      try {
+        const { data, error } = await supabase.auth.mfa.enroll({
+          factorType: "totp",
+          friendlyName: "Google Authenticator",
+        });
+
+        if (error) {
+          setError(error.message);
+          setEnrolling(false);
+          return;
+        }
+
+        if (data) {
+          setQrCode(data.totp.qr_code);
+          setFactorId(data.id);
+
+          // Create a challenge to get a valid challengeId for verification
+          const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({
+            factorId: data.id,
+          });
+
+          if (challengeError || !challenge) {
+            setError("Failed to initialize verification. Please try again.");
+            setEnrolling(false);
+            return;
+          }
+
+          setChallengeId(challenge.id);
+          setEnrolling(false);
+        }
+      } catch {
+        setError("Failed to initialize 2FA. Please try again.");
+        setEnrolling(false);
+      }
+    };
+
     enroll2FA();
-  }, [supabase, enroll2FA]);
+  }, [supabase]);
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!supabase || !factorId || code.length !== 6) return;
+    if (!supabase || !factorId || !challengeId || code.length !== 6) return;
 
     setIsLoading(true);
     setError("");
@@ -67,7 +81,7 @@ export default function TwoFactorEnrollPage() {
       const { error } = await supabase.auth.mfa.verify({
         factorId,
         code,
-        challengeId: factorId, // Use factorId as challengeId for TOTP
+        challengeId,
       });
 
       if (error) {
@@ -155,7 +169,7 @@ export default function TwoFactorEnrollPage() {
                 type="submit"
                 className="w-full"
                 isLoading={isLoading}
-                disabled={code.length !== 6}
+                disabled={code.length !== 6 || !challengeId}
               >
                 Verify & Activate 2FA
               </GlassButton>

@@ -6,19 +6,19 @@ import { GlassButton } from "@/components/ui/GlassButton";
 import { signOut } from "@/lib/actions/auth";
 
 const navigation = [
-  { name: "Dashboard", href: "/" },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "Watchlist", href: "/watchlist" },
-  { name: "Alerts", href: "/alerts" },
-  { name: "DCA Scheduler", href: "/dca" },
-  { name: "Dividends", href: "/dividends" },
-  { name: "Target Planner", href: "/planner" },
-  { name: "Income Planner", href: "/income" },
-  { name: "Allocation", href: "/allocation" },
-  { name: "Cash to Lot", href: "/cash-to-lot" },
-  { name: "Risk Meter", href: "/risk-meter" },
-  { name: "Monthly Score", href: "/score" },
-  { name: "Mutual Funds", href: "/mutual-funds" },
+  { name: "Dashboard", href: "/dashboard" },
+  { name: "Portfolio", href: "/dashboard/portfolio" },
+  { name: "Watchlist", href: "/dashboard/watchlist" },
+  { name: "Alerts", href: "/dashboard/alerts" },
+  { name: "DCA Scheduler", href: "/dashboard/dca" },
+  { name: "Dividends", href: "/dashboard/dividends" },
+  { name: "Target Planner", href: "/dashboard/planner" },
+  { name: "Income Planner", href: "/dashboard/income" },
+  { name: "Allocation", href: "/dashboard/allocation" },
+  { name: "Cash to Lot", href: "/dashboard/cash-to-lot" },
+  { name: "Risk Meter", href: "/dashboard/risk-meter" },
+  { name: "Monthly Score", href: "/dashboard/score" },
+  { name: "Mutual Funds", href: "/dashboard/mutual-funds" },
 ];
 
 export function Navbar() {
@@ -27,7 +27,7 @@ export function Navbar() {
   return (
     <>
       {/* Mobile Header */}
-      <header className="lg:hidden sticky top-0 z-50 bg-[#0f0f23]/80 backdrop-blur-xl border-b border-white/10">
+      <header className="lg:hidden sticky top-0 z-50 bg-base/80 backdrop-blur-xl border-b border-white/10">
         <nav className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center">
@@ -68,7 +68,7 @@ export function Navbar() {
               </Link>
             ))}
             <Link
-              href="/settings"
+              href="/dashboard/settings"
               className="block px-4 py-3 rounded-xl text-white/60 hover:text-white hover:bg-white/5 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
