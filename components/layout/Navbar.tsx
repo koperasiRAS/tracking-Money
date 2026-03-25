@@ -11,6 +11,7 @@ const navigation = [
   { name: "Watchlist", href: "/watchlist" },
   { name: "Alerts", href: "/alerts" },
   { name: "DCA Scheduler", href: "/dca" },
+  { name: "Dividends", href: "/dividends" },
   { name: "Mutual Funds", href: "/mutual-funds" },
 ];
 
