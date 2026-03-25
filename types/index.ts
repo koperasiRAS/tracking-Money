@@ -99,14 +99,50 @@ export interface DividendForecast {
   shares: number;
   avgPrice: number;
   currentPrice: number;
-  annualDividend: number; // projected annual dividend
+  annualDividend: number;
   dividendPerShare: number;
   yieldPercent: number;
   frequency: DividendFrequency;
   nextExDate: string | null;
   nextPayDate: string | null;
-  projectedIncome: number; // shares * dividendPerShare adjusted for frequency
-  annualizedIncome: number; // normalized to annual
+  projectedIncome: number;
+  annualizedIncome: number;
+}
+
+export type BonusSourceType = "salary_bonus" | "thr" | "rental" | "freelance" | "dividend" | "interest" | "royalty" | "side_hustle" | "other";
+
+export type BonusFrequency = "monthly" | "quarterly" | "semiannual" | "annual" | "once";
+
+export interface BonusIncomeSource {
+  id: string;
+  userId: string;
+  name: string;
+  sourceType: BonusSourceType;
+  expectedAmount: number;
+  frequency: BonusFrequency;
+  isActive: boolean;
+  notes?: string | null;
+  createdAt: string;
+}
+
+export interface BonusIncomeRecord {
+  id: string;
+  userId: string;
+  sourceId: string | null;
+  name: string;
+  amount: number;
+  receivedDate: string;
+  notes?: string | null;
+  createdAt: string;
+}
+
+export interface BonusIncomeSummary {
+  monthlyAverage: number;
+  annualTotal: number;
+  sources: BonusIncomeSource[];
+  thisMonth: number;
+  thisYear: number;
+  projectedYear: number;
 }
 
 export interface DCASchedule {
