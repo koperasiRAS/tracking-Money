@@ -70,12 +70,17 @@ export async function updateSession(request: NextRequest) {
 
   // Redirect authenticated users away from auth pages
   if (isAuthRoute && user) {
-    return NextResponse.redirect(new URL('/', request.url));
+    return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
-  // Redirect unauthenticated users to login
+  // Redirect unauthenticated users to sign up (not login)
   if (isProtectedRoute && !user) {
-    return NextResponse.redirect(new URL('/auth/login', request.url));
+    return NextResponse.redirect(new URL('/auth/register', request.url));
+  }
+
+  // Redirect unauthenticated users from landing page to register
+  if (request.nextUrl.pathname === '/' && !user) {
+    return NextResponse.redirect(new URL('/auth/register', request.url));
   }
 
   return response;

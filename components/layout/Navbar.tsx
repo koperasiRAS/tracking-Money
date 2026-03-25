@@ -11,12 +11,7 @@ const navigation = [
   { name: "Peringatan", href: "/dashboard/alerts" },
   { name: "Jadwal DCA", href: "/dashboard/dca" },
   { name: "Dividen", href: "/dashboard/dividends" },
-  { name: "Perencana Target", href: "/dashboard/planner" },
-  { name: "Perencana Pendapatan", href: "/dashboard/income" },
   { name: "Alokasi", href: "/dashboard/allocation" },
-  { name: "Uang ke Lot", href: "/dashboard/cash-to-lot" },
-  { name: "Meter Risiko", href: "/dashboard/risk-meter" },
-  { name: "Skor Bulanan", href: "/dashboard/score" },
   { name: "Reksa Dana", href: "/dashboard/mutual-funds" },
 ];
 

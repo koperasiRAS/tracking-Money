@@ -135,39 +135,9 @@ export default function DashboardPage() {
             </GlassCard>
           </Link>
 
-          <Link href="/dashboard/planner">
-            <GlassCard className="p-4 cursor-pointer">
-              <p className="text-white font-medium text-sm">Perencana Target</p>
-            </GlassCard>
-          </Link>
-
-          <Link href="/dashboard/income">
-            <GlassCard className="p-4 cursor-pointer">
-              <p className="text-white font-medium text-sm">Perencana Pendapatan</p>
-            </GlassCard>
-          </Link>
-
           <Link href="/dashboard/allocation">
             <GlassCard className="p-4 cursor-pointer">
               <p className="text-white font-medium text-sm">Alokasi</p>
-            </GlassCard>
-          </Link>
-
-          <Link href="/dashboard/risk-meter">
-            <GlassCard className="p-4 cursor-pointer">
-              <p className="text-white font-medium text-sm">Meter Risiko</p>
-            </GlassCard>
-          </Link>
-
-          <Link href="/dashboard/cash-to-lot">
-            <GlassCard className="p-4 cursor-pointer">
-              <p className="text-white font-medium text-sm">Uang ke Lot</p>
-            </GlassCard>
-          </Link>
-
-          <Link href="/dashboard/score">
-            <GlassCard className="p-4 cursor-pointer">
-              <p className="text-white font-medium text-sm">Skor Bulanan</p>
             </GlassCard>
           </Link>
         </div>
