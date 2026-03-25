@@ -14,6 +14,7 @@ const navigation = [
   { name: "Dividends", href: "/dividends" },
   { name: "Target Planner", href: "/planner" },
   { name: "Income Planner", href: "/income" },
+  { name: "Allocation", href: "/allocation" },
   { name: "Mutual Funds", href: "/mutual-funds" },
 ];
 
