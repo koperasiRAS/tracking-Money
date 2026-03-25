@@ -12,6 +12,7 @@ export default function TwoFactorVerifyPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [attempts, setAttempts] = useState(0);
   const [supabase, setSupabase] = useState<ReturnType<typeof import("@/lib/supabase/client").createClient> | null>(null);
+  const [factorId, setFactorId] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -20,59 +21,68 @@ export default function TwoFactorVerifyPage() {
     });
   }, []);
 
+  // Get factor ID on mount
+  useEffect(() => {
+    if (!supabase) return;
+
+    const getFactor = async () => {
+      const { data: factors } = await supabase.auth.mfa.listFactors();
+      const totpFactor = factors?.all?.find(
+        (f) => f.factor_type === "totp" && f.status === "verified"
+      );
+      if (!totpFactor) {
+        // No 2FA found, redirect to enroll
+        router.push("/auth/2fa-enroll");
+        return;
+      }
+      setFactorId(totpFactor.id);
+    };
+
+    getFactor();
+  }, [supabase, router]);
+
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!supabase || code.length !== 6) return;
+    if (!supabase || !factorId || code.length !== 6) return;
 
     setIsLoading(true);
     setError("");
 
     try {
-      // Dapatkan faktor TOTP
-      const { data: factors } = await supabase.auth.mfa.listFactors();
-      const totpFactor = factors?.all?.find(
-        (f) => f.factor_type === "totp" && f.status === "verified"
-      );
-
-      if (!totpFactor) {
-        router.push("/auth/2fa-enroll");
-        return;
-      }
-
-      // Buat challenge dulu (diperlukan sebelum verify)
+      // Buat challenge FRESH SAAT user klik verifikasi
       const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({
-        factorId: totpFactor.id,
+        factorId,
       });
 
       if (challengeError || !challenge) {
-        setError("Gagal memulai verifikasi. Silakan coba lagi.");
+        setError("Gagal memulai verifikasi. Pastikan koneksi internet stabil.");
         setIsLoading(false);
         return;
       }
 
-      // Verifikasi dengan challenge ID
+      // Verifikasi
       const { error: verifyError } = await supabase.auth.mfa.verify({
-        factorId: totpFactor.id,
+        factorId,
         code,
         challengeId: challenge.id,
       });
 
       if (verifyError) {
         setAttempts((a) => a + 1);
-        if (attempts >= 2) {
-          setError("Terlalu banyak percobaan gagal. Silakan tunggu dan coba lagi.");
+        if (attempts >= 4) {
+          setError("Terlalu banyak percobaan gagal. Tunggu 30 detik dan coba lagi.");
         } else {
-          setError("Kode tidak valid. Silakan coba lagi.");
+          setError("Kode tidak valid. Pastikan waktu di HP Anda sinkron.");
         }
         setCode("");
         setIsLoading(false);
         return;
       }
 
-      // Hapus cookie MFA pending
+      // Hapus cookie MFA pending jika ada
       document.cookie = "mfa_pending=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-      // Verifikasi berhasil
+      // Berhasil
       router.push("/dashboard");
       router.refresh();
     } catch {
@@ -123,7 +133,7 @@ export default function TwoFactorVerifyPage() {
             type="submit"
             className="w-full"
             isLoading={isLoading}
-            disabled={code.length !== 6 || attempts >= 5}
+            disabled={code.length !== 6 || !factorId}
           >
             Verifikasi Kode
           </GlassButton>
@@ -137,6 +147,7 @@ export default function TwoFactorVerifyPage() {
 
         <div className="pt-4 border-t border-white/10">
           <button
+            type="button"
             onClick={handleSignOut}
             className="w-full text-center text-white/40 hover:text-white/60 text-sm transition-colors"
           >

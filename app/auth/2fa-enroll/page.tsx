@@ -11,7 +11,6 @@ import { GlassInput } from "@/components/ui/GlassInput";
 export default function TwoFactorEnrollPage() {
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [factorId, setFactorId] = useState<string | null>(null);
-  const [challengeId, setChallengeId] = useState<string | null>(null);
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -45,19 +44,6 @@ export default function TwoFactorEnrollPage() {
       if (data) {
         setQrCode(data.totp.qr_code);
         setFactorId(data.id);
-
-        // Buat challenge untuk dapat challengeId yang valid
-        const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({
-          factorId: data.id,
-        });
-
-        if (challengeError || !challenge) {
-          setError("Gagal menginisialisasi verifikasi. Silakan coba lagi.");
-          setEnrolling(false);
-          return;
-        }
-
-        setChallengeId(challenge.id);
         setEnrolling(false);
       }
     } catch {
@@ -73,20 +59,33 @@ export default function TwoFactorEnrollPage() {
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!supabase || !factorId || !challengeId || code.length !== 6) return;
+    if (!supabase || !factorId || code.length !== 6) return;
 
     setIsLoading(true);
     setError("");
 
     try {
-      const { error } = await supabase.auth.mfa.verify({
+      // Buat challenge FRESH SAAT user klik verifikasi (bukan saat enroll)
+      const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({
         factorId,
-        code,
-        challengeId,
       });
 
-      if (error) {
-        setError("Kode tidak valid. Silakan coba lagi.");
+      if (challengeError || !challenge) {
+        setError("Gagal memulai verifikasi. Silakan coba lagi.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Verifikasi dengan challenge baru (belum expire)
+      const { error: verifyError } = await supabase.auth.mfa.verify({
+        factorId,
+        code,
+        challengeId: challenge.id,
+      });
+
+      if (verifyError) {
+        setError("Kode tidak valid. Pastikan kode yang Anda masukkan benar.");
+        setCode("");
         setIsLoading(false);
         return;
       }
@@ -165,7 +164,7 @@ export default function TwoFactorEnrollPage() {
                 type="submit"
                 className="w-full"
                 isLoading={isLoading}
-                disabled={code.length !== 6 || !challengeId}
+                disabled={code.length !== 6}
               >
                 Verifikasi & Aktifkan 2FA
               </GlassButton>
