@@ -118,21 +118,25 @@ export default function DividendsPage() {
   };
 
   const handleSaveSchedule = async (data: {
-    setIsLoading(true);
-    try {
-      const [schedulesData, recordsData, portfolioData] = await Promise.all([
-        getDividendSchedules(),
-        getDividendRecords(),
-        getPortfolioForDividends(),
-      ]);
-      setSchedules(schedulesData);
-      setRecords(recordsData);
-      setPortfolio(portfolioData);
-    } catch (error) {
-      console.error("Failed to load dividend data:", error);
-    } finally {
-      setIsLoading(false);
-    }
+    ticker: string;
+    name: string;
+    annualYieldPercent: number;
+    dividendPerShare: number;
+    frequency: "monthly" | "quarterly" | "semiannual" | "annual";
+    nextExDate: string;
+    nextPayDate: string;
+    notes: string;
+  }) => {
+    await upsertDividendSchedule(data);
+    const updated = await getDividendSchedules();
+    setSchedules(updated);
+    setIsModalOpen(false);
+    setEditingSchedule(null);
+  };
+
+  const handleDeleteSchedule = async (id: string) => {
+    await deleteDividendSchedule(id);
+    setSchedules((prev) => prev.filter((s) => s.id !== id));
   };
 
   const handleAddRecord = async (data: {
