@@ -20,6 +20,11 @@ const config: Config = {
           success: "#10B981",
           danger: "#EF4444",
           warning: "#F59E0B",
+          green: {
+            primary: "#22c55e",
+            dark: "#16a34a",
+            light: "#4ade80",
+          },
         },
       },
       backgroundImage: {
@@ -39,6 +44,8 @@ const config: Config = {
         "fade-in": "fadeIn 0.5s ease-in-out",
         "slide-up": "slideUp 0.5s ease-out",
         "pulse-glow": "pulseGlow 2s ease-in-out infinite",
+        "float": "float 6s ease-in-out infinite",
+        "float-delayed": "float 6s ease-in-out 3s infinite",
       },
       keyframes: {
         fadeIn: {
@@ -52,6 +59,10 @@ const config: Config = {
         pulseGlow: {
           "0%, 100%": { boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)" },
           "50%": { boxShadow: "0 0 40px rgba(59, 130, 246, 0.6)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" },
         },
       },
     },
