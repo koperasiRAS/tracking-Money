@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { fetchMultiplePrices } from "@/lib/utils/finance";
-import { sendAlertNotification } from "@/lib/actions/notifications";
+import { sendAlertNotification, sendDCAReminder } from "@/lib/actions/notifications";
 
 // Force dynamic rendering for cron job
 export const dynamic = 'force-dynamic';
@@ -139,6 +139,65 @@ export async function GET(request: Request) {
 
         triggeredCount++;
         triggeredAlerts.push(alert.ticker);
+      }
+    }
+
+    // Check DCA schedules
+    console.log("[Cron] Checking DCA schedules...");
+
+    const { data: dcaSchedules, error: dcaError } = await supabase
+      .from("dca_schedules")
+      .select("*")
+      .eq("is_active", true)
+      .lte("next_due", new Date().toISOString());
+
+    if (dcaError) {
+      console.error("[Cron] Error fetching DCA schedules:", dcaError);
+    } else if (dcaSchedules && dcaSchedules.length > 0) {
+      console.log(`[Cron] Found ${dcaSchedules.length} due DCA schedules`);
+
+      // Get all user settings
+      const dcaUserIds = Array.from(new Set(dcaSchedules.map((s: { user_id: string }) => s.user_id)));
+      const { data: dcaUserSettings } = await supabase
+        .from("user_settings")
+        .select("user_id, telegram_token, telegram_chat_id")
+        .in("user_id", dcaUserIds);
+
+      const dcaSettingsMap = new Map(
+        (dcaUserSettings || []).map((s: { user_id: string; telegram_token: string | null; telegram_chat_id: string | null }) =>
+          [s.user_id, { token: s.telegram_token, chatId: s.telegram_chat_id }]
+        )
+      );
+
+      for (const schedule of dcaSchedules) {
+        const userSetting = dcaSettingsMap.get(schedule.user_id);
+        const token = userSetting?.token || process.env.TELEGRAM_BOT_TOKEN;
+        const chatId = userSetting?.chatId || process.env.TELEGRAM_CHAT_ID;
+
+        if (token && chatId) {
+          const sent = await sendDCAReminder(
+            { type: "alert", token, chatId },
+            {
+              id: schedule.id,
+              userId: schedule.user_id,
+              ticker: schedule.ticker,
+              name: schedule.name,
+              amount: Number(schedule.amount),
+              frequency: schedule.frequency,
+              dayOfWeek: schedule.day_of_week,
+              dayOfMonth: schedule.day_of_month,
+              isActive: schedule.is_active,
+              lastTriggered: schedule.last_triggered,
+              nextDue: schedule.next_due,
+              notes: schedule.notes,
+              createdAt: schedule.created_at,
+            }
+          );
+
+          if (sent) {
+            console.log(`[Cron] DCA reminder sent for ${schedule.ticker} (user: ${schedule.user_id})`);
+          }
+        }
       }
     }
 

@@ -1,8 +1,8 @@
 "use server";
 
-import { sendTelegramMessage, formatAlertMessage, formatPortfolioSummary } from "@/lib/utils/telegram";
+import { sendTelegramMessage, formatAlertMessage, formatPortfolioSummary, formatDCAReminder, formatDCATriggered } from "@/lib/utils/telegram";
 import type { Alert } from "@/types";
-import type { PriceData } from "@/types";
+import type { DCASchedule } from "@/types";
 
 export interface NotificationPayload {
   type: "alert" | "portfolio";
@@ -52,6 +52,55 @@ export async function sendPortfolioSummary(
   }
 
   const message = formatPortfolioSummary(data);
+
+  return sendTelegramMessage({
+    token: payload.token,
+    chatId: payload.chatId,
+    text: message,
+    parseMode: "Markdown",
+  });
+}
+
+export async function sendDCAReminder(
+  payload: NotificationPayload,
+  schedule: DCASchedule
+): Promise<boolean> {
+  if (!payload.token || !payload.chatId) {
+    console.error("Telegram credentials not configured");
+    return false;
+  }
+
+  const message = formatDCAReminder({
+    ticker: schedule.ticker,
+    name: schedule.name,
+    amount: schedule.amount,
+    frequency: schedule.frequency,
+    nextDue: schedule.nextDue,
+  });
+
+  return sendTelegramMessage({
+    token: payload.token,
+    chatId: payload.chatId,
+    text: message,
+    parseMode: "Markdown",
+  });
+}
+
+export async function sendDCATriggered(
+  payload: NotificationPayload,
+  schedule: DCASchedule
+): Promise<boolean> {
+  if (!payload.token || !payload.chatId) {
+    console.error("Telegram credentials not configured");
+    return false;
+  }
+
+  const message = formatDCATriggered({
+    ticker: schedule.ticker,
+    name: schedule.name,
+    amount: schedule.amount,
+    frequency: schedule.frequency,
+  });
 
   return sendTelegramMessage({
     token: payload.token,

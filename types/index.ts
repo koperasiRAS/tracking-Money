@@ -60,3 +60,21 @@ export interface UserSettings {
   telegramToken?: string;
   telegramChatId?: string;
 }
+
+export type DCAFrequency = "weekly" | "biweekly" | "monthly" | "quarterly";
+
+export interface DCASchedule {
+  id: string;
+  userId: string;
+  ticker: string;
+  name: string | null;
+  amount: number;
+  frequency: DCAFrequency;
+  dayOfWeek?: number | null;
+  dayOfMonth?: number | null;
+  isActive: boolean;
+  lastTriggered: string | null;
+  nextDue: string;
+  notes?: string | null;
+  createdAt: string;
+}

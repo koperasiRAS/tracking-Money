@@ -117,3 +117,90 @@ _Invest Tracker Pro_`;
 
   return message;
 }
+
+// Format DCA reminder message for Telegram
+export function formatDCAReminder(params: {
+  ticker: string;
+  name?: string | null;
+  amount: number;
+  frequency: string;
+  nextDue: string;
+}): string {
+  const { ticker, name, amount, frequency, nextDue } = params;
+
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
+  const frequencyLabel: Record<string, string> = {
+    weekly: "Mingguan",
+    biweekly: "Dua Minggu",
+    monthly: "Bulanan",
+    quarterly: "Triwulanan",
+  };
+
+  const nextDate = new Date(nextDue);
+  const formattedDate = nextDate.toLocaleDateString("id-ID", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  return `📅 *DCA Reminder!*
+
+💰 *${ticker}*${name ? ` (${name})` : ""}
+
+💵 Amount: ${formatCurrency(amount)}
+🔄 Frequency: ${frequencyLabel[frequency] || frequency}
+📆 Next Due: ${formattedDate}
+
+Don't forget to execute your DCA plan!
+
+---
+_Invest Tracker Pro_`;
+}
+
+// Format DCA triggered (executed) message
+export function formatDCATriggered(params: {
+  ticker: string;
+  name?: string | null;
+  amount: number;
+  frequency: string;
+}): string {
+  const { ticker, name, amount, frequency } = params;
+
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
+  const frequencyLabel: Record<string, string> = {
+    weekly: "Mingguan",
+    biweekly: "Dua Minggu",
+    monthly: "Bulanan",
+    quarterly: "Triwulanan",
+  };
+
+  return `✅ *DCA Executed!*
+
+💰 *${ticker}*${name ? ` (${name})` : ""}
+
+💵 Amount: ${formatCurrency(amount)}
+🔄 Frequency: ${frequencyLabel[frequency] || frequency}
+⏰ Time: ${new Date().toLocaleString("id-ID")}
+
+Keep investing consistently!
+
+---
+_Invest Tracker Pro_`;
+}
