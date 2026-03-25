@@ -62,12 +62,21 @@ export async function updateSession(request: NextRequest) {
     request.nextUrl.pathname.startsWith('/watchlist') ||
     request.nextUrl.pathname.startsWith('/alerts') ||
     request.nextUrl.pathname.startsWith('/mutual-funds') ||
-    request.nextUrl.pathname.startsWith('/settings');
+    request.nextUrl.pathname.startsWith('/settings') ||
+    request.nextUrl.pathname.startsWith('/dca') ||
+    request.nextUrl.pathname.startsWith('/dividends') ||
+    request.nextUrl.pathname.startsWith('/planner') ||
+    request.nextUrl.pathname.startsWith('/income') ||
+    request.nextUrl.pathname.startsWith('/allocation') ||
+    request.nextUrl.pathname.startsWith('/cash-to-lot') ||
+    request.nextUrl.pathname.startsWith('/risk-meter') ||
+    request.nextUrl.pathname.startsWith('/score') ||
+    request.nextUrl.pathname.startsWith('/dashboard');
 
   // Auth routes (login/register)
   const isAuthRoute =
-    request.nextUrl.pathname.startsWith('/login') ||
-    request.nextUrl.pathname.startsWith('/register');
+    request.nextUrl.pathname.startsWith('/auth/login') ||
+    request.nextUrl.pathname.startsWith('/auth/register');
 
   // Redirect authenticated users away from auth pages
   if (isAuthRoute && user) {
@@ -76,7 +85,7 @@ export async function updateSession(request: NextRequest) {
 
   // Redirect unauthenticated users to login
   if (isProtectedRoute && !user) {
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
   return response;

@@ -153,12 +153,12 @@ export default function Home() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
-          <Link href="/login">
+          <Link href="/auth/login">
             <GlassButton size="lg" className="w-full sm:w-auto">
               Sign In
             </GlassButton>
           </Link>
-          <Link href="/register">
+          <Link href="/auth/register">
             <GlassButton variant="primary" size="lg" className="w-full sm:w-auto">
               Create Account
             </GlassButton>
