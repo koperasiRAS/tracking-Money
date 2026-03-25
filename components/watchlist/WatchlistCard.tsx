@@ -38,8 +38,8 @@ export function WatchlistCard({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           {/* Ticker Badge */}
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-            <span className="text-blue-400 font-bold text-sm">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
+            <span className="text-green-400 font-bold text-sm">
               {item.ticker.slice(0, 2)}
             </span>
           </div>
@@ -48,12 +48,7 @@ export function WatchlistCard({
           <div>
             <div className="flex items-center gap-2">
               <p className="text-white font-semibold">{item.ticker}</p>
-              <span className={cn(
-                "px-2 py-0.5 text-xs rounded-full",
-                item.type === "stock"
-                  ? "bg-blue-500/20 text-blue-400"
-                  : "bg-green-500/20 text-green-400"
-              )}>
+              <span className="px-2 py-0.5 text-xs rounded-full bg-green-500/20 text-green-400">
                 {item.type === "stock" ? "Stock" : "Fund"}
               </span>
             </div>

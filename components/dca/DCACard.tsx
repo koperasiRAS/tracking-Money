@@ -64,9 +64,9 @@ export function DCACard({ schedule, onEdit, onDelete, onToggle, highlight }: DCA
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           {/* Ticker Badge */}
-          <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex flex-col items-center justify-center">
-            <span className="text-blue-400 font-bold text-sm">{freq.icon}</span>
-            <span className="text-blue-400/60 text-xs">{freq.label.split("-")[0]}</span>
+          <div className="w-12 h-12 rounded-xl bg-green-500/20 flex flex-col items-center justify-center">
+            <span className="text-green-400 font-bold text-sm">{freq.icon}</span>
+            <span className="text-green-400/60 text-xs">{freq.label.split("-")[0]}</span>
           </div>
 
           {/* Schedule Info */}

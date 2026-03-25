@@ -97,7 +97,7 @@ export default function DashboardPage() {
           </p>
         </GlassCard>
         <GlassCard className="p-4">
-          <p className="text-lg font-bold text-blue-400">{portfolio.length}</p>
+          <p className="text-lg font-bold text-green-400">{portfolio.length}</p>
           <p className="text-white/40 text-xs mt-0.5">Saham</p>
         </GlassCard>
         <GlassCard className="p-4">
@@ -124,7 +124,7 @@ export default function DashboardPage() {
           <Link href="/dashboard/dca">
             <GlassCard className="p-4 cursor-pointer">
               <p className="text-white font-medium text-sm">Jadwal DCA</p>
-              <p className="text-blue-400 text-xs mt-1">{activeDCA} aktif</p>
+              <p className="text-green-400 text-xs mt-1">{activeDCA} aktif</p>
             </GlassCard>
           </Link>
 

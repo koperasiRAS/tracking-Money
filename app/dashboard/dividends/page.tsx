@@ -222,7 +222,7 @@ export default function DividendsPage() {
           <p className="text-white/50 text-sm">Est. Annual Income</p>
         </GlassCard>
         <GlassCard className="p-4 text-center">
-          <p className="text-2xl font-bold text-blue-400">{formatCurrency(thisYearReceived)}</p>
+          <p className="text-2xl font-bold text-green-400">{formatCurrency(thisYearReceived)}</p>
           <p className="text-white/50 text-sm">Received This Year</p>
         </GlassCard>
         <GlassCard className="p-4 text-center">
@@ -339,7 +339,7 @@ export default function DividendsPage() {
                           {f.yieldPercent.toFixed(2)}%
                         </span>
                       </td>
-                      <td className="p-4 text-right text-blue-400 font-medium">{formatCurrency(f.projectedIncome)}</td>
+                      <td className="p-4 text-right text-green-400 font-medium">{formatCurrency(f.projectedIncome)}</td>
                       <td className="p-4 text-right text-green-400 font-bold">{formatCurrency(f.annualizedIncome)}</td>
                       <td className="p-4 text-right">
                         <div className="flex justify-end gap-1">
@@ -366,7 +366,7 @@ export default function DividendsPage() {
                 <tfoot>
                   <tr className="border-t border-white/10">
                     <td className="p-4 text-white font-bold" colSpan={5}>Total</td>
-                    <td className="p-4 text-right text-blue-400 font-bold">{formatCurrency(totalProjectedIncome)}</td>
+                    <td className="p-4 text-right text-green-400 font-bold">{formatCurrency(totalProjectedIncome)}</td>
                     <td className="p-4 text-right text-green-400 font-bold">{formatCurrency(totalAnnualIncome)}</td>
                     <td />
                   </tr>

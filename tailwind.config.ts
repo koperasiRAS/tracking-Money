@@ -16,7 +16,7 @@ const config: Config = {
           hover: "rgba(255, 255, 255, 0.1)",
         },
         accent: {
-          primary: "#3B82F6",
+          primary: "#22c55e",
           success: "#10B981",
           danger: "#EF4444",
           warning: "#F59E0B",
@@ -57,8 +57,8 @@ const config: Config = {
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
         pulseGlow: {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)" },
-          "50%": { boxShadow: "0 0 40px rgba(59, 130, 246, 0.6)" },
+          "0%, 100%": { boxShadow: "0 0 20px rgba(34, 197, 94, 0.3)" },
+          "50%": { boxShadow: "0 0 40px rgba(34, 197, 94, 0.6)" },
         },
         float: {
           "0%, 100%": { transform: "translateY(0px)" },

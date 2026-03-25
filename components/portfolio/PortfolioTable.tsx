@@ -63,8 +63,8 @@ export function PortfolioTable({ items, onEdit, onDelete }: PortfolioTableProps)
               >
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                      <span className="text-blue-400 font-bold text-sm">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
+                      <span className="text-green-400 font-bold text-sm">
                         {item.ticker.slice(0, 2)}
                       </span>
                     </div>

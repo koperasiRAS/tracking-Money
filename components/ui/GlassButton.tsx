@@ -12,7 +12,7 @@ interface GlassButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
   ({ className, variant = "primary", size = "md", isLoading, children, disabled, ...props }, ref) => {
     const variants = {
-      primary: "bg-blue-500/20 hover:bg-blue-500/30 border-blue-500/30 hover:border-blue-500/50 text-blue-400",
+      primary: "bg-green-500/20 hover:bg-green-500/30 border-green-500/30 hover:border-green-500/50 text-green-400",
       secondary: "bg-white/5 hover:bg-white/10 border-white/10 hover:border-white/20 text-white",
       danger: "bg-red-500/20 hover:bg-red-500/30 border-red-500/30 hover:border-red-500/50 text-red-400",
       ghost: "bg-transparent hover:bg-white/5 border-transparent text-white/70 hover:text-white",
@@ -30,7 +30,7 @@ const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         className={cn(
           "inline-flex items-center justify-center rounded-xl font-medium transition-all duration-200",
           "border backdrop-blur-xl disabled:opacity-50 disabled:cursor-not-allowed",
-          "focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-transparent",
+          "focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:ring-offset-2 focus:ring-offset-transparent",
           variants[variant],
           sizes[size],
           className

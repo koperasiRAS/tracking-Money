@@ -293,7 +293,7 @@ export default function AllocationPage() {
           <p className="text-white/50 text-sm">Risk Score (1-3)</p>
         </GlassCard>
         <GlassCard className="p-4 text-center">
-          <p className="text-2xl font-bold text-blue-400">{ageBasedStocks}%</p>
+          <p className="text-2xl font-bold text-green-400">{ageBasedStocks}%</p>
           <p className="text-white/50 text-sm">Age-Based Stocks</p>
         </GlassCard>
         <GlassCard className="p-4 text-center">
@@ -424,8 +424,8 @@ export default function AllocationPage() {
       {/* Age-Based Rule Reference */}
       <GlassCard className="p-6">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-            <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
+            <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>

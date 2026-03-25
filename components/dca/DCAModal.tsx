@@ -187,8 +187,8 @@ export function DCAModal({ isOpen, onClose, onSubmit, schedule }: DCAModalProps)
             />
           )}
 
-          <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-            <p className="text-blue-400 text-sm">
+          <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+            <p className="text-green-400 text-sm">
               💡 You&apos;ll receive a Telegram reminder when your DCA is due.
               The schedule will automatically advance to the next period after being triggered.
             </p>

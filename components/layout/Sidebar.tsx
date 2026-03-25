@@ -30,7 +30,7 @@ export function Sidebar() {
       <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
         {navigation.map((item) => {
           const isActive =
-            pathname === item.href || pathname.startsWith(item.href + "/");
+            pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href));
           return (
             <Link
               key={item.name}
@@ -38,7 +38,7 @@ export function Sidebar() {
               className={cn(
                 "block px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-150",
                 isActive
-                  ? "bg-blue-500/20 text-blue-400"
+                  ? "bg-green-500/20 text-green-400"
                   : "text-white/50 hover:text-white hover:bg-white/5"
               )}
             >

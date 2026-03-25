@@ -46,7 +46,7 @@ export function MutualFundCard({ fund, onEdit, onDelete, onUpdateNAV }: MutualFu
           <div>
             <p className="text-white font-semibold">{fund.fundName}</p>
             {fund.ticker && (
-              <p className="text-blue-400 text-sm">{fund.ticker}</p>
+              <p className="text-green-400 text-sm">{fund.ticker}</p>
             )}
             <div className="flex flex-wrap items-center gap-4 mt-2 text-sm">
               <span className="text-white/50">
