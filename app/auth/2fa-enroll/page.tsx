@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -25,50 +25,51 @@ export default function TwoFactorEnrollPage() {
     });
   }, []);
 
-  useEffect(() => {
+  const enroll2FA = useCallback(async () => {
     if (!supabase) return;
+    setEnrolling(true);
+    setError("");
 
-    const enroll2FA = async () => {
-      setEnrolling(true);
+    try {
+      const { data, error } = await supabase.auth.mfa.enroll({
+        factorType: "totp",
+        friendlyName: "Google Authenticator",
+      });
 
-      try {
-        const { data, error } = await supabase.auth.mfa.enroll({
-          factorType: "totp",
-          friendlyName: "Google Authenticator",
+      if (error) {
+        setError(error.message);
+        setEnrolling(false);
+        return;
+      }
+
+      if (data) {
+        setQrCode(data.totp.qr_code);
+        setFactorId(data.id);
+
+        // Create a challenge to get a valid challengeId for verification
+        const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({
+          factorId: data.id,
         });
 
-        if (error) {
-          setError(error.message);
+        if (challengeError || !challenge) {
+          setError("Failed to initialize verification. Please try again.");
           setEnrolling(false);
           return;
         }
 
-        if (data) {
-          setQrCode(data.totp.qr_code);
-          setFactorId(data.id);
-
-          // Create a challenge to get a valid challengeId for verification
-          const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({
-            factorId: data.id,
-          });
-
-          if (challengeError || !challenge) {
-            setError("Failed to initialize verification. Please try again.");
-            setEnrolling(false);
-            return;
-          }
-
-          setChallengeId(challenge.id);
-          setEnrolling(false);
-        }
-      } catch {
-        setError("Failed to initialize 2FA. Please try again.");
+        setChallengeId(challenge.id);
         setEnrolling(false);
       }
-    };
-
-    enroll2FA();
+    } catch {
+      setError("Failed to initialize 2FA. Please try again.");
+      setEnrolling(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supabase]);
+
+  useEffect(() => {
+    enroll2FA();
+  }, [enroll2FA]);
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
