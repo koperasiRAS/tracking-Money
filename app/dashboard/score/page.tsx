@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { GlassButton } from "@/components/ui/GlassButton";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -48,11 +48,7 @@ export default function ScorePage() {
     }
   }, [portfolio]);
 
-  useEffect(() => {
-    calculateScores();
-  }, [portfolio, prices, selectedMonth]);
-
-  const loadPortfolio = async () => {
+  const calculateScores = useCallback(() => {
     setIsLoading(true);
     try {
       const data = await getPortfolio();

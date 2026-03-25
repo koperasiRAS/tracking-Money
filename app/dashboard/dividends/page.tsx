@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { GlassButton } from "@/components/ui/GlassButton";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -48,29 +48,7 @@ export default function DividendsPage() {
     }
   }, [portfolio]);
 
-  useEffect(() => {
-    calculateForecasts();
-  }, [schedules, portfolio, prices]);
-
-  const loadData = async () => {
-    setIsLoading(true);
-    try {
-      const [schedulesData, recordsData, portfolioData] = await Promise.all([
-        getDividendSchedules(),
-        getDividendRecords(),
-        getPortfolioForDividends(),
-      ]);
-      setSchedules(schedulesData);
-      setRecords(recordsData);
-      setPortfolio(portfolioData);
-    } catch (error) {
-      console.error("Failed to load dividend data:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const calculateForecasts = () => {
+  const calculateForecasts = useCallback(() => {
     if (!portfolio.length || !prices) return;
 
     const forecastMap: Map<string, DividendForecast> = new Map();
@@ -133,6 +111,28 @@ export default function DividendsPage() {
   const handleDeleteSchedule = async (id: string) => {
     await deleteDividendSchedule(id);
     setSchedules((prev) => prev.filter((s) => s.id !== id));
+  }, [schedules, portfolio, prices]);
+
+  useEffect(() => {
+    calculateForecasts();
+  }, [calculateForecasts]);
+
+  const loadData = async () => {
+    setIsLoading(true);
+    try {
+      const [schedulesData, recordsData, portfolioData] = await Promise.all([
+        getDividendSchedules(),
+        getDividendRecords(),
+        getPortfolioForDividends(),
+      ]);
+      setSchedules(schedulesData);
+      setRecords(recordsData);
+      setPortfolio(portfolioData);
+    } catch (error) {
+      console.error("Failed to load dividend data:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleAddRecord = async (data: {

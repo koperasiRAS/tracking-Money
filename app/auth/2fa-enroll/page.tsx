@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -24,12 +24,7 @@ export default function TwoFactorEnrollPage() {
     });
   }, []);
 
-  useEffect(() => {
-    if (!supabase) return;
-    enroll2FA();
-  }, [supabase]);
-
-  const enroll2FA = async () => {
+  const enroll2FA = useCallback(async () => {
     if (!supabase) return;
     setEnrolling(true);
 
@@ -54,7 +49,12 @@ export default function TwoFactorEnrollPage() {
       setError("Failed to initialize 2FA. Please try again.");
       setEnrolling(false);
     }
-  };
+  }, [supabase]);
+
+  useEffect(() => {
+    if (!supabase) return;
+    enroll2FA();
+  }, [supabase, enroll2FA]);
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
