@@ -41,14 +41,18 @@ export function AlertCard({ alert, currentPrice, onEdit, onDelete, onToggle }: A
           {/* Ticker Badge */}
           <div className={cn(
             "w-12 h-12 rounded-xl flex items-center justify-center",
-            alert.condition === "above"
-              ? "bg-green-500/20"
-              : "bg-red-500/20"
+            alert.alertType === "buy" ? "bg-green-500/20" :
+            alert.alertType === "avg_down" ? "bg-yellow-500/20" :
+            alert.alertType === "warning" ? "bg-red-500/20" :
+            (alert.condition === "above" ? "bg-green-500/20" : "bg-red-500/20")
           )}>
             <svg
               className={cn(
                 "w-6 h-6",
-                alert.condition === "above" ? "text-green-400" : "text-red-400"
+                alert.alertType === "buy" ? "text-green-400" :
+                alert.alertType === "avg_down" ? "text-yellow-400" :
+                alert.alertType === "warning" ? "text-red-400" :
+                (alert.condition === "above" ? "text-green-400" : "text-red-400")
               )}
               fill="none"
               stroke="currentColor"
@@ -68,6 +72,23 @@ export function AlertCard({ alert, currentPrice, onEdit, onDelete, onToggle }: A
               <p className="text-white font-semibold">{alert.ticker}</p>
               {alert.name && (
                 <span className="text-white/50 text-sm">{alert.name}</span>
+              )}
+              {/* Alert Type Badge */}
+              {alert.alertType && alert.alertType !== "default" && (
+                <span className={cn(
+                  "px-2 py-0.5 text-xs rounded-full font-medium",
+                  alert.alertType === "buy" && "bg-green-500/20 text-green-400 border border-green-500/30",
+                  alert.alertType === "avg_down" && "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30",
+                  alert.alertType === "warning" && "bg-red-500/20 text-red-400 border border-red-500/30",
+                )}>
+                  {alert.alertType === "buy" && "🟢 BUY"}
+                  {alert.alertType === "avg_down" && "🟡 AVG DOWN"}
+                  {alert.alertType === "warning" && "🔴 WARNING"}
+                </span>
+              )}
+              {/* Priority indicator */}
+              {alert.priority === 1 && (
+                <span className="text-red-400 text-xs" title="High Priority">⚡</span>
               )}
             </div>
             <div className="flex items-center gap-3 mt-1">

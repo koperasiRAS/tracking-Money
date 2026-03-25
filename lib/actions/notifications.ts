@@ -26,6 +26,7 @@ export async function sendAlertNotification(
     condition: alert.condition,
     targetPrice: alert.targetPrice,
     currentPrice,
+    alertType: alert.alertType,
   });
 
   return sendTelegramMessage({

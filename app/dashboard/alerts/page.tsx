@@ -56,7 +56,7 @@ export default function AlertsPage() {
     }
   };
 
-  const handleCreateAlert = async (data: { ticker: string; name: string; condition: "above" | "below"; targetPrice: number }) => {
+  const handleCreateAlert = async (data: { ticker: string; name: string; condition: "above" | "below"; targetPrice: number; alertType?: "buy" | "avg_down" | "warning" | "default"; priority?: number }) => {
     const newAlert = await createAlert(data);
     setAlerts((prev) => [newAlert, ...prev]);
     // Also fetch price for the new ticker
@@ -64,7 +64,7 @@ export default function AlertsPage() {
     setPrices((prev) => ({ ...prev, ...priceData }));
   };
 
-  const handleEditAlert = async (data: { ticker: string; name: string; condition: "above" | "below"; targetPrice: number }) => {
+  const handleEditAlert = async (data: { ticker: string; name: string; condition: "above" | "below"; targetPrice: number; alertType?: "buy" | "avg_down" | "warning" | "default"; priority?: number }) => {
     if (!editingAlert) return;
     const updatedAlert = await updateAlert(editingAlert.id, data);
     setAlerts((prev) => prev.map((a) => (a.id === updatedAlert.id ? updatedAlert : a)));
@@ -85,6 +85,9 @@ export default function AlertsPage() {
 
   const activeAlerts = alerts.filter((a) => a.isActive);
   const triggeredAlerts = alerts.filter((a) => !a.isActive && a.lastTriggered);
+  const buyAlerts = alerts.filter((a) => a.alertType === "buy" && a.isActive);
+  const avgDownAlerts = alerts.filter((a) => a.alertType === "avg_down" && a.isActive);
+  const warningAlerts = alerts.filter((a) => a.alertType === "warning" && a.isActive);
 
   return (
     <main className="space-y-8 animate-in">
@@ -103,18 +106,26 @@ export default function AlertsPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <GlassCard className="p-4 text-center">
-          <p className="text-2xl font-bold text-white">{activeAlerts.length}</p>
-          <p className="text-white/50 text-sm">Active Alerts</p>
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        <GlassCard className="p-3 text-center">
+          <p className="text-xl font-bold text-white">{activeAlerts.length}</p>
+          <p className="text-white/50 text-xs">Active</p>
         </GlassCard>
-        <GlassCard className="p-4 text-center">
-          <p className="text-2xl font-bold text-green-400">{triggeredAlerts.length}</p>
-          <p className="text-white/50 text-sm">Triggered</p>
+        <GlassCard className="p-3 text-center">
+          <p className="text-xl font-bold text-green-400">{buyAlerts.length}</p>
+          <p className="text-white/50 text-xs">Buy Zone</p>
         </GlassCard>
-        <GlassCard className="p-4 text-center">
-          <p className="text-2xl font-bold text-white">{alerts.length}</p>
-          <p className="text-white/50 text-sm">Total Alerts</p>
+        <GlassCard className="p-3 text-center">
+          <p className="text-xl font-bold text-yellow-400">{avgDownAlerts.length}</p>
+          <p className="text-white/50 text-xs">Avg Down</p>
+        </GlassCard>
+        <GlassCard className="p-3 text-center">
+          <p className="text-xl font-bold text-red-400">{warningAlerts.length}</p>
+          <p className="text-white/50 text-xs">Warning</p>
+        </GlassCard>
+        <GlassCard className="p-3 text-center">
+          <p className="text-xl font-bold text-purple-400">{triggeredAlerts.length}</p>
+          <p className="text-white/50 text-xs">Triggered</p>
         </GlassCard>
       </div>
 

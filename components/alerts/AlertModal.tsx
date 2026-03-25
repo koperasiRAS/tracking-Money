@@ -5,12 +5,12 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { GlassButton } from "@/components/ui/GlassButton";
 import { GlassInput } from "@/components/ui/GlassInput";
 import { GlassSelect } from "@/components/ui/GlassSelect";
-import type { Alert } from "@/types";
+import type { Alert, AlertType } from "@/types";
 
 interface AlertModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: { ticker: string; name: string; condition: "above" | "below"; targetPrice: number }) => Promise<void>;
+  onSubmit: (data: { ticker: string; name: string; condition: "above" | "below"; targetPrice: number; alertType?: "buy" | "avg_down" | "warning" | "default"; priority?: number }) => Promise<void>;
   alert?: Alert | null;
   defaultTicker?: string;
   defaultName?: string;
@@ -21,6 +21,8 @@ export function AlertModal({ isOpen, onClose, onSubmit, alert, defaultTicker, de
   const [name, setName] = useState("");
   const [condition, setCondition] = useState<"above" | "below">("above");
   const [targetPrice, setTargetPrice] = useState("");
+  const [alertType, setAlertType] = useState<"buy" | "avg_down" | "warning" | "default">("default");
+  const [priority, setPriority] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -30,11 +32,15 @@ export function AlertModal({ isOpen, onClose, onSubmit, alert, defaultTicker, de
       setName(alert.name || "");
       setCondition(alert.condition);
       setTargetPrice(alert.targetPrice.toString());
+      setAlertType((alert.alertType as "buy" | "avg_down" | "warning" | "default") || "default");
+      setPriority(alert.priority || 2);
     } else {
       setTicker(defaultTicker || "");
       setName(defaultName || "");
       setCondition("above");
       setTargetPrice("");
+      setAlertType("default");
+      setPriority(2);
     }
     setError("");
   }, [alert, defaultTicker, defaultName, isOpen]);
@@ -61,6 +67,8 @@ export function AlertModal({ isOpen, onClose, onSubmit, alert, defaultTicker, de
         name: name.trim(),
         condition,
         targetPrice: price,
+        alertType,
+        priority,
       });
       onClose();
     } catch (err) {
@@ -132,6 +140,27 @@ export function AlertModal({ isOpen, onClose, onSubmit, alert, defaultTicker, de
             value={targetPrice}
             onChange={(e) => setTargetPrice(e.target.value)}
             required
+          />
+          <GlassSelect
+            label="Alert Type"
+            value={alertType}
+            onChange={(e) => setAlertType(e.target.value as "buy" | "avg_down" | "warning" | "default")}
+            options={[
+              { value: "default", label: "📢 Regular Alert" },
+              { value: "buy", label: "🟢 Buy Zone — Good price to buy" },
+              { value: "avg_down", label: "🟡 Avg Down — Price dropped, consider adding" },
+              { value: "warning", label: "🔴 Warning — Overvalued, consider taking profit" },
+            ]}
+          />
+          <GlassSelect
+            label="Priority"
+            value={priority.toString()}
+            onChange={(e) => setPriority(parseInt(e.target.value))}
+            options={[
+              { value: "1", label: "🔴 High — Notify immediately" },
+              { value: "2", label: "🟡 Medium — Normal priority" },
+              { value: "3", label: "⚪ Low — Can wait" },
+            ]}
           />
 
           <div className="flex gap-3 pt-2">

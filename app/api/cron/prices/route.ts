@@ -66,6 +66,19 @@ export async function GET(request: Request) {
     // Fetch current prices
     const prices = await fetchMultiplePrices(tickers);
 
+    // Get all user settings in one query for efficiency
+    const userIds = Array.from(new Set(alerts.map((a: { user_id: string }) => a.user_id)));
+    const { data: userSettings } = await supabase
+      .from("user_settings")
+      .select("user_id, telegram_token, telegram_chat_id")
+      .in("user_id", userIds);
+
+    const settingsMap = new Map(
+      (userSettings || []).map((s: { user_id: string; telegram_token: string | null; telegram_chat_id: string | null }) =>
+        [s.user_id, { token: s.telegram_token, chatId: s.telegram_chat_id }]
+      )
+    );
+
     let triggeredCount = 0;
     const triggeredAlerts: string[] = [];
 
@@ -83,11 +96,12 @@ export async function GET(request: Request) {
         (alert.condition === "below" && price.price <= Number(alert.target_price));
 
       if (shouldTrigger) {
-        console.log(`[Cron] Alert triggered for ${alert.ticker}: ${alert.condition} ${alert.target_price}, current: ${price.price}`);
+        console.log(`[Cron] Alert triggered for ${alert.ticker}: ${alert.alert_type || "default"} ${alert.condition} ${alert.target_price}, current: ${price.price}`);
 
-        // Get user's Telegram settings
-        const token = process.env.TELEGRAM_BOT_TOKEN;
-        const chatId = process.env.TELEGRAM_CHAT_ID;
+        // Get user's Telegram settings from per-user settings
+        const userSetting = settingsMap.get(alert.user_id);
+        const token = userSetting?.token || process.env.TELEGRAM_BOT_TOKEN;
+        const chatId = userSetting?.chatId || process.env.TELEGRAM_CHAT_ID;
 
         if (token && chatId) {
           // Send Telegram notification
@@ -103,12 +117,14 @@ export async function GET(request: Request) {
               isActive: alert.is_active,
               lastTriggered: alert.last_triggered,
               createdAt: alert.created_at,
+              alertType: alert.alert_type,
+              priority: alert.priority,
             },
             price.price
           );
 
           if (sent) {
-            console.log(`[Cron] Telegram notification sent for ${alert.ticker}`);
+            console.log(`[Cron] Telegram notification sent for ${alert.ticker} (user: ${alert.user_id})`);
           }
         }
 

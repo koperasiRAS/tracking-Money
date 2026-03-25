@@ -18,6 +18,8 @@ export interface WatchlistItem {
   createdAt: string;
 }
 
+export type AlertType = "buy" | "avg_down" | "warning" | "default";
+
 export interface Alert {
   id: string;
   userId: string;
@@ -28,6 +30,8 @@ export interface Alert {
   isActive: boolean;
   lastTriggered: string | null;
   createdAt: string;
+  alertType?: AlertType;
+  priority?: number;
 }
 
 export interface MutualFund {

@@ -4,32 +4,62 @@ import { useState, useEffect } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { GlassButton } from "@/components/ui/GlassButton";
 import { GlassInput } from "@/components/ui/GlassInput";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { getUserSettings, updateUserSettings } from "@/lib/actions/user-settings";
 
 export default function SettingsPage() {
   const [telegramToken, setTelegramToken] = useState("");
   const [telegramChatId, setTelegramChatId] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-    // Load saved settings from localStorage (for demo - in production use database)
-    const savedToken = localStorage.getItem("telegram_token");
-    const savedChatId = localStorage.getItem("telegram_chat_id");
-    if (savedToken) setTelegramToken(savedToken);
-    if (savedChatId) setTelegramChatId(savedChatId);
+    loadSettings();
   }, []);
+
+  const loadSettings = async () => {
+    setIsLoading(true);
+    try {
+      const settings = await getUserSettings();
+      if (settings.telegramToken) setTelegramToken(settings.telegramToken);
+      if (settings.telegramChatId) setTelegramChatId(settings.telegramChatId);
+
+      // Also check localStorage for legacy data
+      const localToken = localStorage.getItem("telegram_token");
+      const localChatId = localStorage.getItem("telegram_chat_id");
+      if (localToken && !settings.telegramToken) setTelegramToken(localToken);
+      if (localChatId && !settings.telegramChatId) setTelegramChatId(localChatId);
+    } catch (error) {
+      console.error("Failed to load settings:", error);
+      // Fallback to localStorage
+      const savedToken = localStorage.getItem("telegram_token");
+      const savedChatId = localStorage.getItem("telegram_chat_id");
+      if (savedToken) setTelegramToken(savedToken);
+      if (savedChatId) setTelegramChatId(savedChatId);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSave = async () => {
     setIsSaving(true);
     setMessage(null);
 
     try {
-      localStorage.setItem("telegram_token", telegramToken);
-      localStorage.setItem("telegram_chat_id", telegramChatId);
+      // Save to database
+      await updateUserSettings({
+        telegramToken: telegramToken || null,
+        telegramChatId: telegramChatId || null,
+      });
+
+      // Also save to localStorage as backup
+      if (telegramToken) localStorage.setItem("telegram_token", telegramToken);
+      if (telegramChatId) localStorage.setItem("telegram_chat_id", telegramChatId);
+
       setMessage({ type: "success", text: "Settings saved successfully!" });
-    } catch {
+    } catch (error) {
+      console.error("Failed to save settings:", error);
       setMessage({ type: "error", text: "Failed to save settings" });
     } finally {
       setIsSaving(false);
@@ -42,6 +72,8 @@ export default function SettingsPage() {
       return;
     }
 
+    setMessage(null);
+
     try {
       const response = await fetch("/api/telegram/test", {
         method: "POST",
@@ -52,15 +84,26 @@ export default function SettingsPage() {
       if (response.ok) {
         setMessage({ type: "success", text: "Test message sent! Check your Telegram." });
       } else {
-        setMessage({ type: "error", text: "Failed to send test message" });
+        const error = await response.json();
+        setMessage({ type: "error", text: error.error || "Failed to send test message" });
       }
     } catch {
       setMessage({ type: "error", text: "Failed to send test message" });
     }
   };
 
-  if (!isClient) {
-    return null; // Prevent hydration mismatch
+  if (isLoading) {
+    return (
+      <main className="max-w-2xl mx-auto space-y-8 animate-in">
+        <div>
+          <Skeleton className="h-9 w-32" />
+          <Skeleton className="h-5 w-48 mt-2" />
+        </div>
+        <GlassCard className="p-6 space-y-6">
+          <Skeleton className="h-32" />
+        </GlassCard>
+      </main>
+    );
   }
 
   return (
@@ -99,7 +142,7 @@ export default function SettingsPage() {
           />
           <GlassInput
             label="Chat ID"
-            placeholder="-1001234567890 or @channel_username"
+            placeholder="7745710806"
             value={telegramChatId}
             onChange={(e) => setTelegramChatId(e.target.value)}
           />

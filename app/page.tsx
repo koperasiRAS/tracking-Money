@@ -1,8 +1,89 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { GlassButton } from "@/components/ui/GlassButton";
+import { createClient } from "@/lib/supabase/client";
+import type { User } from "@supabase/supabase-js";
 
 export default function Home() {
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    checkUser();
+  }, []);
+
+  const checkUser = async () => {
+    try {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    } catch (error) {
+      console.error("Error checking user:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse text-white/50">Loading...</div>
+      </main>
+    );
+  }
+
+  // If user is logged in, show dashboard link
+  if (user) {
+    return (
+      <main className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
+        <div className="max-w-4xl w-full text-center space-y-8 animate-in">
+          <div className="space-y-4">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-white/10 backdrop-blur-xl">
+              <svg
+                className="w-10 h-10 text-green-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <h1 className="text-5xl font-bold text-gradient">
+              Welcome Back!
+            </h1>
+            <p className="text-xl text-white/60 max-w-2xl mx-auto">
+              You&apos;re logged in as {user.email}
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
+            <Link href="/portfolio">
+              <GlassButton size="lg" className="w-full sm:w-auto">
+                Go to Dashboard
+              </GlassButton>
+            </Link>
+            <Link href="/settings">
+              <GlassButton variant="secondary" size="lg" className="w-full sm:w-auto">
+                Settings
+              </GlassButton>
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  // If user is not logged in, show landing page
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
       <div className="max-w-4xl w-full text-center space-y-8 animate-in">

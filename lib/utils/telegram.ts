@@ -44,8 +44,9 @@ export function formatAlertMessage(params: {
   condition: "above" | "below";
   targetPrice: number;
   currentPrice: number;
+  alertType?: string;
 }): string {
-  const { ticker, name, condition, targetPrice, currentPrice } = params;
+  const { ticker, name, condition, targetPrice, currentPrice, alertType } = params;
   const direction = condition === "above" ? "📈" : "📉";
   const status = condition === "above" ? "exceeded" : "dropped below";
 
@@ -58,8 +59,16 @@ export function formatAlertMessage(params: {
     }).format(value);
   };
 
-  return `🎯 *Price Alert Triggered!*
+  // Alert type labels
+  const typeLabel = alertType === "buy" ? "🟢 *BUY ZONE*" :
+    alertType === "avg_down" ? "🟡 *AVG DOWN*" :
+    alertType === "warning" ? "🔴 *WARNING*" :
+    null;
 
+  const typeSection = typeLabel ? `\n🏷️ ${typeLabel}\n` : "\n";
+
+  return `🎯 *Price Alert Triggered!*
+${typeSection}
 ${direction} *${ticker}*${name ? ` (${name})` : ""}
 
 ${direction} Price has ${status} your target!

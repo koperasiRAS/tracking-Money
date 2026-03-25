@@ -8,6 +8,8 @@ export interface AlertInput {
   name?: string;
   condition: "above" | "below";
   targetPrice: number;
+  alertType?: "buy" | "avg_down" | "warning" | "default";
+  priority?: number;
 }
 
 export async function getAlerts() {
@@ -34,6 +36,8 @@ export async function getAlerts() {
     isActive: item.is_active,
     lastTriggered: item.last_triggered,
     createdAt: item.created_at,
+    alertType: item.alert_type,
+    priority: item.priority,
   })) || [];
 }
 
@@ -61,6 +65,8 @@ export async function getActiveAlerts() {
     isActive: item.is_active,
     lastTriggered: item.last_triggered,
     createdAt: item.created_at,
+    alertType: item.alert_type,
+    priority: item.priority,
   })) || [];
 }
 
@@ -79,6 +85,8 @@ export async function createAlert(alert: AlertInput) {
       condition: alert.condition,
       target_price: alert.targetPrice,
       is_active: true,
+      alert_type: alert.alertType || "default",
+      priority: alert.priority || 2,
     })
     .select()
     .single();
@@ -98,6 +106,8 @@ export async function createAlert(alert: AlertInput) {
     isActive: data.is_active,
     lastTriggered: data.last_triggered,
     createdAt: data.created_at,
+    alertType: data.alert_type,
+    priority: data.priority,
   };
 }
 
@@ -116,6 +126,8 @@ export async function updateAlert(
   if (updates.condition !== undefined) updateData.condition = updates.condition;
   if (updates.targetPrice !== undefined) updateData.target_price = updates.targetPrice;
   if (updates.isActive !== undefined) updateData.is_active = updates.isActive;
+  if (updates.alertType !== undefined) updateData.alert_type = updates.alertType;
+  if (updates.priority !== undefined) updateData.priority = updates.priority;
 
   const { data, error } = await supabase
     .from("alerts")
@@ -140,6 +152,8 @@ export async function updateAlert(
     isActive: data.is_active,
     lastTriggered: data.last_triggered,
     createdAt: data.created_at,
+    alertType: data.alert_type,
+    priority: data.priority,
   };
 }
 
@@ -164,13 +178,17 @@ export async function deleteAlert(id: string) {
 export async function markAlertTriggered(id: string) {
   const supabase = await createClient();
 
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Not authenticated");
+
   const { error } = await supabase
     .from("alerts")
     .update({
       last_triggered: new Date().toISOString(),
       is_active: false,
     })
-    .eq("id", id);
+    .eq("id", id)
+    .eq("user_id", user.id);
 
   if (error) throw error;
 
