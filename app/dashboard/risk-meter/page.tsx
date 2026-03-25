@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { GlassButton } from "@/components/ui/GlassButton";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -75,7 +75,11 @@ export default function RiskMeterPage() {
     }
   }, [portfolio]);
 
-  const calculateRisk = useCallback(() => {
+  useEffect(() => {
+    calculateRisk();
+  }, [portfolio, prices]);
+
+  const loadPortfolio = async () => {
     setIsLoading(true);
     try {
       const data = await getPortfolio();
