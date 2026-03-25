@@ -2,23 +2,22 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { GlassButton } from "@/components/ui/GlassButton";
 import { signOut } from "@/lib/actions/auth";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard" },
   { name: "Portfolio", href: "/dashboard/portfolio" },
-  { name: "Watchlist", href: "/dashboard/watchlist" },
-  { name: "Alerts", href: "/dashboard/alerts" },
-  { name: "DCA Scheduler", href: "/dashboard/dca" },
-  { name: "Dividends", href: "/dashboard/dividends" },
-  { name: "Target Planner", href: "/dashboard/planner" },
-  { name: "Income Planner", href: "/dashboard/income" },
-  { name: "Allocation", href: "/dashboard/allocation" },
-  { name: "Cash to Lot", href: "/dashboard/cash-to-lot" },
-  { name: "Risk Meter", href: "/dashboard/risk-meter" },
-  { name: "Monthly Score", href: "/dashboard/score" },
-  { name: "Mutual Funds", href: "/dashboard/mutual-funds" },
+  { name: "Daftar Pantau", href: "/dashboard/watchlist" },
+  { name: "Peringatan", href: "/dashboard/alerts" },
+  { name: "Jadwal DCA", href: "/dashboard/dca" },
+  { name: "Dividen", href: "/dashboard/dividends" },
+  { name: "Perencana Target", href: "/dashboard/planner" },
+  { name: "Perencana Pendapatan", href: "/dashboard/income" },
+  { name: "Alokasi", href: "/dashboard/allocation" },
+  { name: "Uang ke Lot", href: "/dashboard/cash-to-lot" },
+  { name: "Meter Risiko", href: "/dashboard/risk-meter" },
+  { name: "Skor Bulanan", href: "/dashboard/score" },
+  { name: "Reksa Dana", href: "/dashboard/mutual-funds" },
 ];
 
 export function Navbar() {
@@ -29,14 +28,7 @@ export function Navbar() {
       {/* Mobile Header */}
       <header className="lg:hidden sticky top-0 z-50 bg-base/80 backdrop-blur-xl border-b border-white/10">
         <nav className="flex items-center justify-between px-4 py-3">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center">
-              <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>
-            </div>
-            <span className="font-bold text-white">Invest Tracker</span>
-          </div>
+          <span className="font-bold text-white">Invest Tracker</span>
 
           <button
             type="button"
@@ -56,46 +48,36 @@ export function Navbar() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="px-4 pb-4 space-y-1">
+          <div className="px-3 pb-4 space-y-0.5">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="block px-4 py-3 rounded-xl text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+                className="block px-4 py-2.5 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.name}
               </Link>
             ))}
-            <Link
-              href="/dashboard/settings"
-              className="block px-4 py-3 rounded-xl text-white/60 hover:text-white hover:bg-white/5 transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Settings
-            </Link>
-            <form action={signOut} className="pt-2 border-t border-white/10">
-              <button
-                type="submit"
-                className="w-full text-left px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10 transition-colors"
+            <div className="pt-2 border-t border-white/10 space-y-0.5">
+              <Link
+                href="/dashboard/settings"
+                className="block px-4 py-2.5 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
               >
-                Sign Out
-              </button>
-            </form>
+                Pengaturan
+              </Link>
+              <form action={signOut}>
+                <button
+                  type="submit"
+                  className="w-full text-left px-4 py-2.5 rounded-lg text-sm text-red-400 hover:bg-red-500/10 transition-colors"
+                >
+                  Keluar
+                </button>
+              </form>
+            </div>
           </div>
         )}
-      </header>
-
-      {/* Desktop Logout Button */}
-      <header className="hidden lg:flex fixed top-4 right-4 z-50">
-        <form action={signOut}>
-          <GlassButton type="submit" variant="ghost" size="sm">
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            Sign Out
-          </GlassButton>
-        </form>
       </header>
     </>
   );

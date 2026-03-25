@@ -46,13 +46,13 @@ export default function TwoFactorEnrollPage() {
         setQrCode(data.totp.qr_code);
         setFactorId(data.id);
 
-        // Create a challenge to get a valid challengeId for verification
+        // Buat challenge untuk dapat challengeId yang valid
         const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({
           factorId: data.id,
         });
 
         if (challengeError || !challenge) {
-          setError("Failed to initialize verification. Please try again.");
+          setError("Gagal menginisialisasi verifikasi. Silakan coba lagi.");
           setEnrolling(false);
           return;
         }
@@ -61,7 +61,7 @@ export default function TwoFactorEnrollPage() {
         setEnrolling(false);
       }
     } catch {
-      setError("Failed to initialize 2FA. Please try again.");
+      setError("Gagal menginisialisasi 2FA. Silakan coba lagi.");
       setEnrolling(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,16 +86,16 @@ export default function TwoFactorEnrollPage() {
       });
 
       if (error) {
-        setError("Invalid code. Please try again.");
+        setError("Kode tidak valid. Silakan coba lagi.");
         setIsLoading(false);
         return;
       }
 
-      // 2FA activated successfully
-      router.push("/");
+      // 2FA berhasil diaktifkan
+      router.push("/dashboard");
       router.refresh();
     } catch {
-      setError("Verification failed. Please try again.");
+      setError("Verifikasi gagal. Silakan coba lagi.");
       setIsLoading(false);
     }
   };
@@ -104,14 +104,9 @@ export default function TwoFactorEnrollPage() {
     <main className="min-h-screen flex items-center justify-center px-4 py-12">
       <GlassCard className="max-w-md w-full p-8 space-y-6 animate-slide-up">
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-green-500/20 border border-white/10 mb-4">
-            <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-white">Setup Google Authenticator</h1>
+          <h1 className="text-2xl font-bold text-white">Atur Google Authenticator</h1>
           <p className="text-white/50 text-sm">
-            Scan the QR code below with your Google Authenticator app to secure your account
+            Scan kode QR di bawah dengan aplikasi Google Authenticator untuk mengamankan akun Anda
           </p>
         </div>
 
@@ -123,7 +118,7 @@ export default function TwoFactorEnrollPage() {
 
         {enrolling ? (
           <div className="flex flex-col items-center justify-center py-8">
-            <div className="animate-pulse text-white/50 text-sm">Loading QR code...</div>
+            <div className="text-white/50 text-sm">Memuat kode QR...</div>
           </div>
         ) : qrCode ? (
           <div className="space-y-6">
@@ -132,7 +127,7 @@ export default function TwoFactorEnrollPage() {
               <div className="p-4 bg-white rounded-2xl">
                 <Image
                   src={qrCode}
-                  alt="2FA QR Code"
+                  alt="Kode QR 2FA"
                   width={192}
                   height={192}
                   className="w-48 h-48"
@@ -140,15 +135,15 @@ export default function TwoFactorEnrollPage() {
                 />
               </div>
               <p className="text-white/50 text-xs mt-3 text-center">
-                Open Google Authenticator → Tap &quot;+&quot; → Scan this QR code
+                Buka Google Authenticator → Ketuk &quot;+&quot; → Scan kode QR ini
               </p>
             </div>
 
             {/* Manual entry key */}
             <div className="p-3 bg-white/5 rounded-xl">
-              <p className="text-white/40 text-xs mb-1">Manual entry key</p>
+              <p className="text-white/40 text-xs mb-1">Kunci masuk manual</p>
               <p className="text-white/70 text-sm font-mono select-all">
-                {qrCode.split("secret=")[1]?.split("&")[0] || "See QR code above"}
+                {qrCode.split("secret=")[1]?.split("&")[0] || "Lihat kode QR di atas"}
               </p>
             </div>
 
@@ -157,8 +152,8 @@ export default function TwoFactorEnrollPage() {
               <GlassInput
                 id="code"
                 type="text"
-                label="Verification Code"
-                placeholder="Enter 6-digit code"
+                label="Kode Verifikasi"
+                placeholder="Masukkan 6 digit kode"
                 value={code}
                 onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
                 maxLength={6}
@@ -172,25 +167,25 @@ export default function TwoFactorEnrollPage() {
                 isLoading={isLoading}
                 disabled={code.length !== 6 || !challengeId}
               >
-                Verify & Activate 2FA
+                Verifikasi & Aktifkan 2FA
               </GlassButton>
             </form>
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-8">
-            <p className="text-red-400 text-sm">Failed to generate QR code.</p>
+            <p className="text-red-400 text-sm">Gagal membuat kode QR.</p>
             <button type="button" onClick={enroll2FA} className="text-blue-400 text-sm mt-2 hover:underline">
-              Try again
+              Coba lagi
             </button>
           </div>
         )}
 
         <div className="text-center">
           <p className="text-white/50 text-xs">
-            <Link href="/" className="text-blue-400 hover:underline">
-              Skip for now
+            <Link href="/dashboard" className="text-blue-400 hover:underline">
+              Lewati untuk sekarang
             </Link>{" "}
-            — but highly recommended for security
+            — tapi sangat direkomendasikan untuk keamanan
           </p>
         </div>
       </GlassCard>

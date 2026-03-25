@@ -28,30 +28,29 @@ export default function TwoFactorVerifyPage() {
     setError("");
 
     try {
-      // Get TOTP factor
+      // Dapatkan faktor TOTP
       const { data: factors } = await supabase.auth.mfa.listFactors();
       const totpFactor = factors?.all?.find(
         (f) => f.factor_type === "totp" && f.status === "verified"
       );
 
       if (!totpFactor) {
-        // No 2FA found, redirect to enroll
         router.push("/auth/2fa-enroll");
         return;
       }
 
-      // Create a challenge first (required before verify)
+      // Buat challenge dulu (diperlukan sebelum verify)
       const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({
         factorId: totpFactor.id,
       });
 
       if (challengeError || !challenge) {
-        setError("Failed to start verification. Please try again.");
+        setError("Gagal memulai verifikasi. Silakan coba lagi.");
         setIsLoading(false);
         return;
       }
 
-      // Verify with the challenge ID
+      // Verifikasi dengan challenge ID
       const { error: verifyError } = await supabase.auth.mfa.verify({
         factorId: totpFactor.id,
         code,
@@ -61,23 +60,23 @@ export default function TwoFactorVerifyPage() {
       if (verifyError) {
         setAttempts((a) => a + 1);
         if (attempts >= 2) {
-          setError("Too many failed attempts. Please wait and try again.");
+          setError("Terlalu banyak percobaan gagal. Silakan tunggu dan coba lagi.");
         } else {
-          setError("Invalid code. Please try again.");
+          setError("Kode tidak valid. Silakan coba lagi.");
         }
         setCode("");
         setIsLoading(false);
         return;
       }
 
-      // Clear MFA pending cookie
+      // Hapus cookie MFA pending
       document.cookie = "mfa_pending=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-      // Verify successful
-      router.push("/");
+      // Verifikasi berhasil
+      router.push("/dashboard");
       router.refresh();
     } catch {
-      setError("Verification failed. Please try again.");
+      setError("Verifikasi gagal. Silakan coba lagi.");
       setIsLoading(false);
     }
   };
@@ -93,14 +92,9 @@ export default function TwoFactorVerifyPage() {
     <main className="min-h-screen flex items-center justify-center px-4 py-12">
       <GlassCard className="max-w-md w-full p-8 space-y-6 animate-slide-up">
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-500/20 border border-white/10 mb-4">
-            <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-white">Two-Factor Authentication</h1>
+          <h1 className="text-2xl font-bold text-white">Verifikasi Dua Faktor</h1>
           <p className="text-white/50 text-sm">
-            Enter the 6-digit code from your Google Authenticator app
+            Masukkan kode 6 digit dari aplikasi Google Authenticator
           </p>
         </div>
 
@@ -114,7 +108,7 @@ export default function TwoFactorVerifyPage() {
           <GlassInput
             id="code"
             type="text"
-            label="Verification Code"
+            label="Kode Verifikasi"
             placeholder="000000"
             value={code}
             onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
@@ -131,14 +125,13 @@ export default function TwoFactorVerifyPage() {
             isLoading={isLoading}
             disabled={code.length !== 6 || attempts >= 5}
           >
-            Verify Code
+            Verifikasi Kode
           </GlassButton>
         </form>
 
-        {/* Timer hint */}
         <div className="text-center">
           <p className="text-white/30 text-xs">
-            Code changes every 30 seconds. Make sure your phone time is synced.
+            Kode berubah setiap 30 detik. Pastikan waktu di HP Anda sinkron.
           </p>
         </div>
 
@@ -147,7 +140,7 @@ export default function TwoFactorVerifyPage() {
             onClick={handleSignOut}
             className="w-full text-center text-white/40 hover:text-white/60 text-sm transition-colors"
           >
-            Sign out and use a different account
+            Keluar dan gunakan akun lain
           </button>
         </div>
       </GlassCard>

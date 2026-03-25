@@ -2,16 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { GlassButton } from "@/components/ui/GlassButton";
-import { GlassInput } from "@/components/ui/GlassInput";
 
 export default function RegisterPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [supabase, setSupabase] = useState<ReturnType<typeof import("@/lib/supabase/client").createClient> | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     import("@/lib/supabase/client").then(({ createClient }) => {
@@ -39,7 +36,7 @@ export default function RegisterPage() {
         window.location.href = data.url;
       }
     } catch {
-      setError("Failed to start Google sign up. Please try again.");
+      setError("Gagal memulai pendaftaran. Silakan coba lagi.");
       setIsLoading(false);
     }
   };
@@ -48,13 +45,8 @@ export default function RegisterPage() {
     <main className="min-h-screen flex items-center justify-center px-4 py-12">
       <GlassCard className="max-w-md w-full p-8 space-y-6 animate-slide-up">
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-purple-500/20 border border-white/10 mb-4">
-            <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-white">Create Account</h1>
-          <p className="text-white/50 text-sm">Sign up with Google to get started</p>
+          <h1 className="text-2xl font-bold text-white">Buat Akun</h1>
+          <p className="text-white/50 text-sm">Daftar dengan Google untuk memulai</p>
         </div>
 
         {error && (
@@ -63,7 +55,7 @@ export default function RegisterPage() {
           </div>
         )}
 
-        {/* Google Sign Up - Primary */}
+        {/* Google Sign Up */}
         <div className="space-y-3">
           <button
             type="button"
@@ -81,11 +73,11 @@ export default function RegisterPage() {
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
               </svg>
             )}
-            {isLoading ? "Redirecting..." : "Sign up with Google"}
+            {isLoading ? "Mengalihkan..." : "Daftar dengan Google"}
           </button>
 
           <p className="text-white/40 text-xs text-center">
-            After sign up, you&apos;ll be guided to set up 2FA for security
+            Setelah daftar, Anda akan diarahkan untuk mengatur 2FA
           </p>
         </div>
 
@@ -94,15 +86,15 @@ export default function RegisterPage() {
             <div className="w-full border-t border-white/10" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-base px-2 text-white/30">or</span>
+            <span className="bg-base px-2 text-white/30">atau</span>
           </div>
         </div>
 
         <div className="text-center">
           <p className="text-white/50 text-sm">
-            Already have an account?{" "}
+            Sudah punya akun?{" "}
             <Link href="/auth/login" className="text-blue-400 hover:text-blue-300 transition-colors">
-              Sign in
+              Masuk
             </Link>
           </p>
         </div>
@@ -113,7 +105,7 @@ export default function RegisterPage() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
           <p className="text-white/40 text-xs">
-            Your account is protected with 2FA. Data is encrypted and secured with Supabase Row Level Security.
+            Akun Anda dilindungi 2FA. Data dienkripsi dan diamankan dengan Supabase Row Level Security.
           </p>
         </div>
       </GlassCard>

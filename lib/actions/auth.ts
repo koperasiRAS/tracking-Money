@@ -14,7 +14,7 @@ export async function signOut() {
   }
 
   revalidatePath("/", "layout");
-  redirect("/login");
+  redirect("/auth/login");
 }
 
 export async function getSession() {

@@ -43,7 +43,7 @@ export default function LoginPage() {
         window.location.href = data.url;
       }
     } catch {
-      setError("Failed to start Google sign in. Please try again.");
+      setError("Gagal memulai login Google. Silakan coba lagi.");
       setIsGoogleLoading(false);
     }
   };
@@ -67,11 +67,11 @@ export default function LoginPage() {
       }
 
       if (data.user) {
-        router.push("/");
+        router.push("/dashboard");
         router.refresh();
       }
     } catch {
-      setError("An unexpected error occurred");
+      setError("Terjadi kesalahan yang tidak terduga.");
     } finally {
       setIsLoading(false);
     }
@@ -81,13 +81,8 @@ export default function LoginPage() {
     <main className="min-h-screen flex items-center justify-center px-4 py-12">
       <GlassCard className="max-w-md w-full p-8 space-y-6 animate-slide-up">
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-500/20 border border-white/10 mb-4">
-            <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-white">Welcome Back</h1>
-          <p className="text-white/50 text-sm">Sign in to your Invest Tracker account</p>
+          <h1 className="text-2xl font-bold text-white">Selamat Datang</h1>
+          <p className="text-white/50 text-sm">Masuk ke akun Invest Tracker</p>
         </div>
 
         {error && (
@@ -96,7 +91,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* Google Sign In - Primary */}
+        {/* Google Sign In */}
         <div className="space-y-3">
           <button
             type="button"
@@ -114,11 +109,11 @@ export default function LoginPage() {
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
               </svg>
             )}
-            {isGoogleLoading ? "Redirecting..." : "Sign in with Google"}
+            {isGoogleLoading ? "Mengalihkan..." : "Masuk dengan Google"}
           </button>
 
           <p className="text-white/40 text-xs text-center">
-            Recommended — uses Google Authenticator for extra security
+            Direkomendasikan — gunakan Google Authenticator untuk keamanan ekstra
           </p>
         </div>
 
@@ -128,11 +123,11 @@ export default function LoginPage() {
             <div className="w-full border-t border-white/10" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-base px-2 text-white/30">or</span>
+            <span className="bg-base px-2 text-white/30">atau</span>
           </div>
         </div>
 
-        {/* Email/Password Fallback - Collapsible */}
+        {/* Email/Password Fallback */}
         <div className="space-y-3">
           {!showPasswordForm ? (
             <button
@@ -140,7 +135,7 @@ export default function LoginPage() {
               onClick={() => setShowPasswordForm(true)}
               className="w-full text-center text-white/50 hover:text-white/70 text-sm transition-colors py-2"
             >
-              Sign in with email & password (fallback)
+              Masuk dengan email & password
             </button>
           ) : (
             <form onSubmit={handlePasswordLogin} className="space-y-4">
@@ -148,7 +143,7 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 label="Email"
-                placeholder="you@example.com"
+                placeholder="email@contoh.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -157,7 +152,7 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 label="Password"
-                placeholder="Enter your password"
+                placeholder="Masukkan password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -169,7 +164,7 @@ export default function LoginPage() {
                 isLoading={isLoading}
                 disabled={!supabase}
               >
-                Sign In
+                Masuk
               </GlassButton>
 
               <button
@@ -177,7 +172,7 @@ export default function LoginPage() {
                 onClick={() => setShowPasswordForm(false)}
                 className="w-full text-center text-white/40 hover:text-white/60 text-xs transition-colors"
               >
-                Hide password login
+                Sembunyikan login password
               </button>
             </form>
           )}
@@ -185,9 +180,9 @@ export default function LoginPage() {
 
         <div className="text-center">
           <p className="text-white/50 text-sm">
-            Don&apos;t have an account?{" "}
+            Belum punya akun?{" "}
             <Link href="/auth/register" className="text-blue-400 hover:text-blue-300 transition-colors">
-              Sign up with Google
+              Daftar dengan Google
             </Link>
           </p>
         </div>
@@ -198,7 +193,7 @@ export default function LoginPage() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
           <p className="text-white/40 text-xs">
-            Google login is protected with 2FA via Google Authenticator. Your data is secured with Supabase Row Level Security.
+            Login Google dilindungi 2FA via Google Authenticator. Data Anda diamankan dengan Supabase Row Level Security.
           </p>
         </div>
       </GlassCard>
