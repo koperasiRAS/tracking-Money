@@ -17,6 +17,7 @@ const navigation = [
   { name: "Allocation", href: "/allocation" },
   { name: "Cash to Lot", href: "/cash-to-lot" },
   { name: "Risk Meter", href: "/risk-meter" },
+  { name: "Monthly Score", href: "/score" },
   { name: "Mutual Funds", href: "/mutual-funds" },
 ];
 
