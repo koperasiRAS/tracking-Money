@@ -86,7 +86,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 bg-[#0f0f23]/80 backdrop-blur-xl border-r border-white/10">
+    <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 bg-[#0f0f23] border-r border-white/10">
 
       {/* Logo */}
       <div className="px-6 py-6 border-b border-white/10">
@@ -115,7 +115,7 @@ export function Sidebar() {
                 "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150",
                 isActive
                   ? "border-l-[3px] border-green-500 bg-green-500/10 text-white pl-[10px]"
-                  : "text-white/50 hover:text-white hover:bg-white/5 border-l-[3px] border-transparent pl-[10px]"
+                  : "text-white/50 hover:text-gray-700 hover:bg-white/5 border-l-[3px] border-transparent pl-[10px]"
               )}
             >
               <span className={cn(isActive ? "text-green-400" : "text-white/30")}>
@@ -131,7 +131,7 @@ export function Sidebar() {
       <div className="px-4 py-4 border-t border-white/10 space-y-1">
         <Link
           href="/dashboard/settings"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/50 hover:text-white hover:bg-white/5 transition-all duration-150 border-l-[3px] border-transparent pl-[10px]"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/50 hover:text-gray-700 hover:bg-white/5 transition-all duration-150 border-l-[3px] border-transparent pl-[10px]"
         >
           <svg className="w-5 h-5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />

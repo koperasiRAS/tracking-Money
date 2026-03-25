@@ -173,7 +173,7 @@ export default function LoginPage() {
           {/* Header */}
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-1">Masuk ke Akun Anda</h2>
-            <p className="text-gray-500 text-sm">Pilih metode login yang Anda inginkan</p>
+            <p className="text-gray-5000 text-sm">Pilih metode login yang Anda inginkan</p>
           </div>
 
           {/* Error alert */}
@@ -191,7 +191,7 @@ export default function LoginPage() {
             type="button"
             onClick={handleGoogleLogin}
             disabled={isGoogleLoading || !supabase}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-200 rounded-xl font-medium text-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-200 rounded-xl font-medium text-sm text-gray-7000 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
           >
             {isGoogleLoading ? (
               <div className="w-5 h-5 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
@@ -212,7 +212,7 @@ export default function LoginPage() {
               <div className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-3 text-gray-400">atau</span>
+              <span className="bg-white px-3 text-gray-4000">atau</span>
             </div>
           </div>
 
@@ -220,11 +220,11 @@ export default function LoginPage() {
           <form onSubmit={handlePasswordLogin} className="space-y-4">
             {/* Email field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-7000 mb-1.5">
                 Email
               </label>
               <div className="relative">
-                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-4000 pointer-events-none">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
@@ -236,18 +236,18 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-400 transition-all duration-200 shadow-sm"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder:text-gray-4000 focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-400 transition-all duration-200 shadow-sm"
                 />
               </div>
             </div>
 
             {/* Password field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-7000 mb-1.5">
                 Password
               </label>
               <div className="relative">
-                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-4000 pointer-events-none">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
@@ -259,12 +259,12 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-400 transition-all duration-200 shadow-sm"
+                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder:text-gray-4000 focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-400 transition-all duration-200 shadow-sm"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-4000 hover:text-gray-600 transition-colors cursor-pointer"
                   tabIndex={-1}
                 >
                   {showPassword ? (
@@ -285,7 +285,7 @@ export default function LoginPage() {
             <div className="flex justify-end">
               <Link
                 href="/auth/forgot-password"
-                className="text-xs text-gray-400 hover:text-green-600 transition-colors"
+                className="text-xs text-gray-4000 hover:text-green-600 transition-colors"
               >
                 Lupa kata sandi?
               </Link>
@@ -319,7 +319,7 @@ export default function LoginPage() {
               <div className="w-full border-t border-gray-100" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-white px-3 text-gray-300 text-xs flex items-center gap-1">
+              <span className="bg-white px-3 text-gray-3000 text-xs flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-gray-200 inline-block" />
                 <span className="w-1.5 h-1.5 rounded-full bg-gray-200 inline-block" />
                 <span className="w-1.5 h-1.5 rounded-full bg-gray-200 inline-block" />
@@ -332,7 +332,7 @@ export default function LoginPage() {
             <button
               type="button"
               disabled
-              className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-100 rounded-xl font-medium text-sm text-gray-400 cursor-not-allowed shadow-sm opacity-50"
+              className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-100 rounded-xl font-medium text-sm text-gray-4000 cursor-not-allowed shadow-sm opacity-50"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
@@ -343,7 +343,7 @@ export default function LoginPage() {
 
           {/* Register link */}
           <div className="mt-6 text-center">
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-5000 text-sm">
               Belum punya akun?{" "}
               <Link
                 href="/auth/register"
@@ -359,7 +359,7 @@ export default function LoginPage() {
             <svg className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
-            <p className="text-gray-400 text-xs leading-relaxed">
+            <p className="text-gray-4000 text-xs leading-relaxed">
               Login dilindungi 2FA via Google Authenticator. Data Anda diamankan dengan Supabase Row Level Security.
             </p>
           </div>

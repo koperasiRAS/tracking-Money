@@ -84,8 +84,8 @@ export default function PortfolioPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white">Portfolio</h1>
-          <p className="text-white/50 mt-1">Track your stock holdings</p>
+          <h1 className="text-3xl font-bold text-gray-900">Portfolio</h1>
+          <p className="text-gray-500 mt-1">Track your stock holdings</p>
         </div>
         <GlassButton onClick={() => setIsModalOpen(true)}>
           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,14 +99,14 @@ export default function PortfolioPage() {
       <GlassCard className="p-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <p className="text-white/50 text-sm">Total Portfolio Value</p>
-            <p className="text-3xl font-bold text-white mt-1">
+            <p className="text-gray-500 text-sm">Total Portfolio Value</p>
+            <p className="text-3xl font-bold text-gray-900 mt-1">
               {isLoading ? "..." : formatCurrency(totalValue)}
             </p>
           </div>
           <div className="text-right">
-            <p className="text-white/50 text-sm">Holdings</p>
-            <p className="text-xl font-semibold text-white mt-1">
+            <p className="text-gray-500 text-sm">Holdings</p>
+            <p className="text-xl font-semibold text-gray-900 mt-1">
               {items.length} stocks
             </p>
           </div>
@@ -147,8 +147,8 @@ export default function PortfolioPage() {
             onClick={() => setDeletingItem(null)}
           />
           <GlassCard className="relative w-full max-w-sm p-6 space-y-4 animate-slide-up">
-            <h3 className="text-lg font-semibold text-white">Delete Stock</h3>
-            <p className="text-white/50">
+            <h3 className="text-lg font-semibold text-gray-900">Delete Stock</h3>
+            <p className="text-gray-500">
               Are you sure you want to remove {deletingItem.ticker} from your portfolio?
             </p>
             <div className="flex gap-3">

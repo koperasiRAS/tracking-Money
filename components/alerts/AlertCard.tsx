@@ -49,10 +49,10 @@ export function AlertCard({ alert, currentPrice, onEdit, onDelete, onToggle }: A
             <svg
               className={cn(
                 "w-6 h-6",
-                alert.alertType === "buy" ? "text-green-400" :
+                alert.alertType === "buy" ? "text-green-600" :
                 alert.alertType === "avg_down" ? "text-yellow-400" :
-                alert.alertType === "warning" ? "text-red-400" :
-                (alert.condition === "above" ? "text-green-400" : "text-red-400")
+                alert.alertType === "warning" ? "text-red-500" :
+                (alert.condition === "above" ? "text-green-600" : "text-red-500")
               )}
               fill="none"
               stroke="currentColor"
@@ -69,17 +69,17 @@ export function AlertCard({ alert, currentPrice, onEdit, onDelete, onToggle }: A
           {/* Alert Info */}
           <div>
             <div className="flex items-center gap-2">
-              <p className="text-white font-semibold">{alert.ticker}</p>
+              <p className="text-gray-900 font-semibold">{alert.ticker}</p>
               {alert.name && (
-                <span className="text-white/50 text-sm">{alert.name}</span>
+                <span className="text-gray-500 text-sm">{alert.name}</span>
               )}
               {/* Alert Type Badge */}
               {alert.alertType && alert.alertType !== "default" && (
                 <span className={cn(
                   "px-2 py-0.5 text-xs rounded-full font-medium",
-                  alert.alertType === "buy" && "bg-green-500/20 text-green-400 border border-green-500/30",
+                  alert.alertType === "buy" && "bg-green-500/20 text-green-600 border border-green-500/30",
                   alert.alertType === "avg_down" && "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30",
-                  alert.alertType === "warning" && "bg-red-500/20 text-red-400 border border-red-500/30",
+                  alert.alertType === "warning" && "bg-red-500/20 text-red-500 border border-red-500/30",
                 )}>
                   {alert.alertType === "buy" && "🟢 BUY"}
                   {alert.alertType === "avg_down" && "🟡 AVG DOWN"}
@@ -88,20 +88,20 @@ export function AlertCard({ alert, currentPrice, onEdit, onDelete, onToggle }: A
               )}
               {/* Priority indicator */}
               {alert.priority === 1 && (
-                <span className="text-red-400 text-xs" title="High Priority">⚡</span>
+                <span className="text-red-500 text-xs" title="High Priority">⚡</span>
               )}
             </div>
             <div className="flex items-center gap-3 mt-1">
               <span className={cn(
                 "px-2 py-0.5 text-xs rounded-full",
                 alert.condition === "above"
-                  ? "bg-green-500/20 text-green-400"
-                  : "bg-red-500/20 text-red-400"
+                  ? "bg-green-500/20 text-green-600"
+                  : "bg-red-500/20 text-red-500"
               )}>
                 {alert.condition === "above" ? "Above" : "Below"} {formatCurrency(alert.targetPrice)}
               </span>
               {alert.lastTriggered && (
-                <span className="text-white/30 text-xs">
+                <span className="text-gray-300 text-xs">
                   Triggered {new Date(alert.lastTriggered).toLocaleDateString()}
                 </span>
               )}
@@ -113,13 +113,13 @@ export function AlertCard({ alert, currentPrice, onEdit, onDelete, onToggle }: A
         <div className="text-right mr-4">
           {currentPrice !== undefined ? (
             <div>
-              <p className="text-white font-medium">{formatCurrency(currentPrice)}</p>
+              <p className="text-gray-900 font-medium">{formatCurrency(currentPrice)}</p>
               {isTriggered && (
-                <span className="text-green-400 text-xs">Triggered!</span>
+                <span className="text-green-600 text-xs">Triggered!</span>
               )}
             </div>
           ) : (
-            <span className="text-white/30 text-sm">No price data</span>
+            <span className="text-gray-300 text-sm">No price data</span>
           )}
         </div>
 
@@ -136,7 +136,7 @@ export function AlertCard({ alert, currentPrice, onEdit, onDelete, onToggle }: A
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             ) : (
-              <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -158,7 +158,7 @@ export function AlertCard({ alert, currentPrice, onEdit, onDelete, onToggle }: A
             onClick={() => onDelete(alert)}
             title="Delete Alert"
           >
-            <svg className="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
           </GlassButton>

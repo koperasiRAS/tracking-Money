@@ -79,8 +79,8 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-          <p className="text-white/50 text-sm mt-0.5">Ringkasan investasi Anda</p>
+          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-gray-500 text-sm mt-0.5">Ringkasan investasi Anda</p>
         </div>
         <Link href="/dashboard/portfolio">
           <GlassButton size="sm">+ Tambah Saham</GlassButton>
@@ -90,54 +90,54 @@ export default function DashboardPage() {
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <GlassCard className="p-4">
-          <p className="text-lg font-bold text-white">{formatCurrency(totalValue)}</p>
-          <p className="text-white/40 text-xs mt-0.5">Nilai Portfolio</p>
-          <p className={`text-xs mt-1 ${totalGainLoss >= 0 ? "text-green-400" : "text-red-400"}`}>
+          <p className="text-lg font-bold text-gray-900">{formatCurrency(totalValue)}</p>
+          <p className="text-gray-400 text-xs mt-0.5">Nilai Portfolio</p>
+          <p className={`text-xs mt-1 ${totalGainLoss >= 0 ? "text-green-600" : "text-red-500"}`}>
             {totalGainLoss >= 0 ? "+" : ""}{formatCurrency(totalGainLoss)} ({gainLossPercent.toFixed(1)}%)
           </p>
         </GlassCard>
         <GlassCard className="p-4">
-          <p className="text-lg font-bold text-green-400">{portfolio.length}</p>
-          <p className="text-white/40 text-xs mt-0.5">Saham</p>
+          <p className="text-lg font-bold text-green-600">{portfolio.length}</p>
+          <p className="text-gray-400 text-xs mt-0.5">Saham</p>
         </GlassCard>
         <GlassCard className="p-4">
           <p className="text-lg font-bold text-yellow-400">{activeAlerts}</p>
-          <p className="text-white/40 text-xs mt-0.5">Peringatan Aktif</p>
+          <p className="text-gray-400 text-xs mt-0.5">Peringatan Aktif</p>
         </GlassCard>
         <GlassCard className="p-4">
-          <p className="text-lg font-bold text-green-400">{activeDCA}</p>
-          <p className="text-white/40 text-xs mt-0.5">Rencana DCA</p>
+          <p className="text-lg font-bold text-green-600">{activeDCA}</p>
+          <p className="text-gray-400 text-xs mt-0.5">Rencana DCA</p>
         </GlassCard>
       </div>
 
       {/* Feature Overview */}
       <div>
-        <h2 className="text-base font-semibold text-white mb-3">Alat Investasi</h2>
+        <h2 className="text-base font-semibold text-gray-900 mb-3">Alat Investasi</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
           <Link href="/dashboard/alerts">
             <GlassCard className="p-4 cursor-pointer">
-              <p className="text-white font-medium text-sm">Peringatan</p>
+              <p className="text-gray-900 font-medium text-sm">Peringatan</p>
               <p className="text-yellow-400 text-xs mt-1">{activeAlerts} aktif</p>
             </GlassCard>
           </Link>
 
           <Link href="/dashboard/dca">
             <GlassCard className="p-4 cursor-pointer">
-              <p className="text-white font-medium text-sm">Jadwal DCA</p>
-              <p className="text-green-400 text-xs mt-1">{activeDCA} aktif</p>
+              <p className="text-gray-900 font-medium text-sm">Jadwal DCA</p>
+              <p className="text-green-600 text-xs mt-1">{activeDCA} aktif</p>
             </GlassCard>
           </Link>
 
           <Link href="/dashboard/dividends">
             <GlassCard className="p-4 cursor-pointer">
-              <p className="text-white font-medium text-sm">Dividen</p>
-              <p className="text-green-400 text-xs mt-1">{dividendSchedules} dilacak</p>
+              <p className="text-gray-900 font-medium text-sm">Dividen</p>
+              <p className="text-green-600 text-xs mt-1">{dividendSchedules} dilacak</p>
             </GlassCard>
           </Link>
 
           <Link href="/dashboard/allocation">
             <GlassCard className="p-4 cursor-pointer">
-              <p className="text-white font-medium text-sm">Alokasi</p>
+              <p className="text-gray-900 font-medium text-sm">Alokasi</p>
             </GlassCard>
           </Link>
         </div>
@@ -147,7 +147,7 @@ export default function DashboardPage() {
       {portfolio.length > 0 && (
         <GlassCard className="p-4">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-base font-semibold text-white">Holdings Portfolio</h2>
+            <h2 className="text-base font-semibold text-gray-900">Holdings Portfolio</h2>
             <Link href="/dashboard/portfolio">
               <GlassButton variant="ghost" size="sm">Lihat Semua</GlassButton>
             </Link>
@@ -155,7 +155,7 @@ export default function DashboardPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-white/10 text-left text-xs text-white/40">
+                <tr className="border-b border-gray-200 text-left text-xs text-gray-400">
                   <th className="pb-2 font-medium">Saham</th>
                   <th className="pb-2 font-medium text-right">Lot</th>
                   <th className="pb-2 font-medium text-right">Harga Rata-rata</th>
@@ -174,16 +174,16 @@ export default function DashboardPage() {
                   const gainLossPercent = costBasis > 0 ? (gainLoss / costBasis) * 100 : 0;
 
                   return (
-                    <tr key={item.id} className="border-b border-white/5">
+                    <tr key={item.id} className="border-b border-gray-100">
                       <td className="py-2">
-                        <p className="text-white font-medium text-sm">{item.ticker}</p>
-                        <p className="text-white/30 text-xs">{item.name || "-"}</p>
+                        <p className="text-gray-900 font-medium text-sm">{item.ticker}</p>
+                        <p className="text-gray-300 text-xs">{item.name || "-"}</p>
                       </td>
-                      <td className="py-2 text-right text-white/70 text-sm">{item.shares}</td>
-                      <td className="py-2 text-right text-white/70 text-sm">{formatCurrency(item.avgPrice)}</td>
-                      <td className="py-2 text-right text-white text-sm">{formatCurrency(currentPrice)}</td>
-                      <td className="py-2 text-right text-white font-medium text-sm">{formatCurrency(currentValue)}</td>
-                      <td className={`py-2 text-right text-sm font-medium ${gainLoss >= 0 ? "text-green-400" : "text-red-400"}`}>
+                      <td className="py-2 text-right text-gray-700 text-sm">{item.shares}</td>
+                      <td className="py-2 text-right text-gray-700 text-sm">{formatCurrency(item.avgPrice)}</td>
+                      <td className="py-2 text-right text-gray-900 text-sm">{formatCurrency(currentPrice)}</td>
+                      <td className="py-2 text-right text-gray-900 font-medium text-sm">{formatCurrency(currentValue)}</td>
+                      <td className={`py-2 text-right text-sm font-medium ${gainLoss >= 0 ? "text-green-600" : "text-red-500"}`}>
                         {gainLoss >= 0 ? "+" : ""}{gainLossPercent.toFixed(1)}%
                       </td>
                     </tr>
@@ -198,8 +198,8 @@ export default function DashboardPage() {
       {/* Empty State */}
       {portfolio.length === 0 && !isLoading && (
         <GlassCard className="p-8 text-center">
-          <h3 className="text-base font-semibold text-white mb-1">Mulai dengan Invest Tracker</h3>
-          <p className="text-white/40 text-sm mb-4">
+          <h3 className="text-base font-semibold text-gray-900 mb-1">Mulai dengan Invest Tracker</h3>
+          <p className="text-gray-400 text-sm mb-4">
             Tambahkan saham ke portfolio untuk mulai melacak investasi
           </p>
           <div className="flex gap-3 justify-center">

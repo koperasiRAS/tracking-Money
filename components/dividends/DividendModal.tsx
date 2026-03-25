@@ -97,13 +97,13 @@ export function DividendModal({ isOpen, onClose, onSubmit, schedule, portfolioTi
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
       <GlassCard className="relative w-full max-w-md p-6 space-y-6 animate-slide-up max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-white">
+          <h2 className="text-xl font-semibold text-gray-900">
             {schedule ? "Edit Dividend Data" : "Add Dividend Data"}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors"
+            className="p-2 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -112,7 +112,7 @@ export function DividendModal({ isOpen, onClose, onSubmit, schedule, portfolioTi
         </div>
 
         {error && (
-          <div className="p-3 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm">
+          <div className="p-3 rounded-xl bg-red-500/20 border border-red-500/30 text-red-500 text-sm">
             {error}
           </div>
         )}
@@ -174,7 +174,7 @@ export function DividendModal({ isOpen, onClose, onSubmit, schedule, portfolioTi
             onChange={(e) => setNextPayDate(e.target.value)}
           />
           <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
-            <p className="text-green-400 text-sm">
+            <p className="text-green-600 text-sm">
               💡 Add dividend data for stocks in your Portfolio to see projected income.
               Frequency determines how many times per year dividends are paid.
             </p>

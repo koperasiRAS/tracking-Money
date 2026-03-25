@@ -94,8 +94,8 @@ export default function MutualFundsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white">Mutual Funds</h1>
-          <p className="text-white/50 mt-1">Track your investment fund holdings</p>
+          <h1 className="text-3xl font-bold text-gray-900">Mutual Funds</h1>
+          <p className="text-gray-500 mt-1">Track your investment fund holdings</p>
         </div>
         <GlassButton onClick={() => setIsModalOpen(true)}>
           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,14 +109,14 @@ export default function MutualFundsPage() {
       <GlassCard className="p-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <p className="text-white/50 text-sm">Total Mutual Funds Value</p>
-            <p className="text-3xl font-bold text-white mt-1">
+            <p className="text-gray-500 text-sm">Total Mutual Funds Value</p>
+            <p className="text-3xl font-bold text-gray-900 mt-1">
               {isLoading ? "..." : formatCurrency(totalValue)}
             </p>
           </div>
           <div className="text-right">
-            <p className="text-white/50 text-sm">Holdings</p>
-            <p className="text-xl font-semibold text-white mt-1">
+            <p className="text-gray-500 text-sm">Holdings</p>
+            <p className="text-xl font-semibold text-gray-900 mt-1">
               {funds.length} funds
             </p>
           </div>
@@ -126,7 +126,7 @@ export default function MutualFundsPage() {
       {/* Quick Add Popular Funds */}
       {!isLoading && funds.length < 5 && (
         <GlassCard className="p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">Popular Indonesian Funds</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Popular Indonesian Funds</h2>
           <div className="flex flex-wrap gap-2">
             {POPULAR_FUNDS.filter((f) => !funds.find((fund) => fund.ticker === f.ticker))
               .slice(0, 5)
@@ -146,7 +146,7 @@ export default function MutualFundsPage() {
                     });
                     setIsModalOpen(true);
                   }}
-                  className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white text-sm transition-all"
+                  className="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 hover:text-gray-900 text-sm transition-all"
                 >
                   {fund.ticker}
                 </button>
@@ -173,13 +173,13 @@ export default function MutualFundsPage() {
         </div>
       ) : funds.length === 0 ? (
         <GlassCard className="p-12 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-white mb-2">No mutual funds yet</h3>
-          <p className="text-white/50 text-sm mb-4">Add your first fund to start tracking</p>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No mutual funds yet</h3>
+          <p className="text-gray-500 text-sm mb-4">Add your first fund to start tracking</p>
           <GlassButton onClick={() => setIsModalOpen(true)}>Add Your First Fund</GlassButton>
         </GlassCard>
       ) : (
@@ -221,8 +221,8 @@ export default function MutualFundsPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setDeletingFund(null)} />
           <GlassCard className="relative w-full max-w-sm p-6 space-y-4 animate-slide-up">
-            <h3 className="text-lg font-semibold text-white">Delete Fund</h3>
-            <p className="text-white/50">
+            <h3 className="text-lg font-semibold text-gray-900">Delete Fund</h3>
+            <p className="text-gray-500">
               Are you sure you want to remove {deletingFund.fundName} from your tracking?
             </p>
             <div className="flex gap-3">

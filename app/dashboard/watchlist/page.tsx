@@ -104,8 +104,8 @@ export default function WatchlistPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white">Watchlist</h1>
-          <p className="text-white/50 mt-1">Track your favorite Indonesian stocks</p>
+          <h1 className="text-3xl font-bold text-gray-900">Watchlist</h1>
+          <p className="text-gray-500 mt-1">Track your favorite Indonesian stocks</p>
         </div>
         <GlassButton onClick={() => setIsModalOpen(true)}>
           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,7 +118,7 @@ export default function WatchlistPage() {
       {/* Quick Add Popular Stocks */}
       {!isLoading && items.length < 5 && (
         <GlassCard className="p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">Popular Indonesian Stocks</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Popular Indonesian Stocks</h2>
           <div className="flex flex-wrap gap-2">
             {popularStocks
               .filter((s) => !items.find((i) => i.ticker === s.ticker))
@@ -130,7 +130,7 @@ export default function WatchlistPage() {
                     await addToWatchlist({ ticker: stock.ticker, name: stock.name });
                     loadWatchlist();
                   }}
-                  className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white text-sm transition-all"
+                  className="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 hover:text-gray-900 text-sm transition-all"
                 >
                   {stock.ticker}
                 </button>
@@ -157,13 +157,13 @@ export default function WatchlistPage() {
         </div>
       ) : items.length === 0 ? (
         <GlassCard className="p-12 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-white mb-2">No stocks in watchlist</h3>
-          <p className="text-white/50 text-sm mb-4">Add stocks to track their prices</p>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No stocks in watchlist</h3>
+          <p className="text-gray-500 text-sm mb-4">Add stocks to track their prices</p>
           <GlassButton onClick={() => setIsModalOpen(true)}>Add Your First Stock</GlassButton>
         </GlassCard>
       ) : (
@@ -184,11 +184,11 @@ export default function WatchlistPage() {
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsModalOpen(false)} />
           <GlassCard className="relative w-full max-w-md p-6 space-y-6 animate-slide-up">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-white">Add to Watchlist</h2>
+              <h2 className="text-xl font-semibold text-gray-900">Add to Watchlist</h2>
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="p-2 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors"
+                className="p-2 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

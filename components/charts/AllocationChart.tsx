@@ -44,8 +44,8 @@ export function AllocationChart({ data, title = "Portfolio Allocation" }: Alloca
   if (data.length === 0) {
     return (
       <GlassCard className="p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">{title}</h3>
-        <div className="h-64 flex items-center justify-center text-white/40">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
+        <div className="h-64 flex items-center justify-center text-gray-400">
           No data available
         </div>
       </GlassCard>
@@ -54,7 +54,7 @@ export function AllocationChart({ data, title = "Portfolio Allocation" }: Alloca
 
   return (
     <GlassCard className="p-6">
-      <h3 className="text-lg font-semibold text-white mb-4">{title}</h3>
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -81,7 +81,7 @@ export function AllocationChart({ data, title = "Portfolio Allocation" }: Alloca
               formatter={(value: number) => [formatCurrency(value), ""]}
             />
             <Legend
-              formatter={(value) => <span style={{ color: "rgba(255,255,255,0.7)" }}>{value}</span>}
+              formatter={(value) => <span style={{ color: "rgba(0,0,0,0.7)" }}>{value}</span>}
             />
           </PieChart>
         </ResponsiveContainer>
@@ -96,11 +96,11 @@ export function AllocationChart({ data, title = "Portfolio Allocation" }: Alloca
                 className="w-3 h-3 rounded-full"
                 style={{ backgroundColor: item.color || COLORS[index % COLORS.length] }}
               />
-              <span className="text-white/70">{item.name}</span>
+              <span className="text-gray-700">{item.name}</span>
             </div>
             <div className="text-right">
-              <span className="text-white font-medium">{formatPercent(item.value)}</span>
-              <span className="text-white/40 ml-2">{formatCurrency(item.value)}</span>
+              <span className="text-gray-900 font-medium">{formatPercent(item.value)}</span>
+              <span className="text-gray-400 ml-2">{formatCurrency(item.value)}</span>
             </div>
           </div>
         ))}

@@ -45,10 +45,10 @@ export function DCACard({ schedule, onEdit, onDelete, onToggle, highlight }: DCA
   };
 
   const getDueColor = () => {
-    if (daysUntilDue < 0) return "text-red-400";
+    if (daysUntilDue < 0) return "text-red-500";
     if (daysUntilDue === 0) return "text-yellow-400";
     if (daysUntilDue <= 3) return "text-orange-400";
-    return "text-white/50";
+    return "text-gray-500";
   };
 
   const freq = frequencyLabels[schedule.frequency] || { label: schedule.frequency, icon: "?" };
@@ -65,34 +65,34 @@ export function DCACard({ schedule, onEdit, onDelete, onToggle, highlight }: DCA
         <div className="flex items-center gap-4">
           {/* Ticker Badge */}
           <div className="w-12 h-12 rounded-xl bg-green-500/20 flex flex-col items-center justify-center">
-            <span className="text-green-400 font-bold text-sm">{freq.icon}</span>
-            <span className="text-green-400/60 text-xs">{freq.label.split("-")[0]}</span>
+            <span className="text-green-600 font-bold text-sm">{freq.icon}</span>
+            <span className="text-green-600/60 text-xs">{freq.label.split("-")[0]}</span>
           </div>
 
           {/* Schedule Info */}
           <div>
             <div className="flex items-center gap-2">
-              <p className="text-white font-semibold">{schedule.ticker}</p>
+              <p className="text-gray-900 font-semibold">{schedule.ticker}</p>
               {schedule.name && (
-                <span className="text-white/50 text-sm">{schedule.name}</span>
+                <span className="text-gray-500 text-sm">{schedule.name}</span>
               )}
             </div>
             <div className="flex items-center gap-3 mt-1">
-              <span className="text-white font-medium">
+              <span className="text-gray-900 font-medium">
                 {formatCurrency(schedule.amount)}
               </span>
-              <span className="text-white/30 text-sm">•</span>
-              <span className="text-white/50 text-sm">{freq.label}</span>
+              <span className="text-gray-300 text-sm">•</span>
+              <span className="text-gray-500 text-sm">{freq.label}</span>
               {schedule.dayOfWeek !== null && schedule.dayOfWeek !== undefined && (
                 <>
-                  <span className="text-white/30 text-sm">•</span>
-                  <span className="text-white/50 text-sm">{dayNames[schedule.dayOfWeek]}</span>
+                  <span className="text-gray-300 text-sm">•</span>
+                  <span className="text-gray-500 text-sm">{dayNames[schedule.dayOfWeek]}</span>
                 </>
               )}
               {schedule.dayOfMonth !== null && schedule.dayOfMonth !== undefined && (
                 <>
-                  <span className="text-white/30 text-sm">•</span>
-                  <span className="text-white/50 text-sm">Day {schedule.dayOfMonth}</span>
+                  <span className="text-gray-300 text-sm">•</span>
+                  <span className="text-gray-500 text-sm">Day {schedule.dayOfMonth}</span>
                 </>
               )}
             </div>
@@ -105,7 +105,7 @@ export function DCACard({ schedule, onEdit, onDelete, onToggle, highlight }: DCA
             {getDueLabel()}
           </p>
           {schedule.lastTriggered && (
-            <p className="text-white/30 text-xs mt-1">
+            <p className="text-gray-300 text-xs mt-1">
               Last: {new Date(schedule.lastTriggered).toLocaleDateString("id-ID")}
             </p>
           )}
@@ -124,7 +124,7 @@ export function DCACard({ schedule, onEdit, onDelete, onToggle, highlight }: DCA
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             ) : (
-              <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -146,7 +146,7 @@ export function DCACard({ schedule, onEdit, onDelete, onToggle, highlight }: DCA
             onClick={() => onDelete(schedule)}
             title="Delete Plan"
           >
-            <svg className="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
           </GlassButton>

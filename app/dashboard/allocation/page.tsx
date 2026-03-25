@@ -220,15 +220,15 @@ export default function AllocationPage() {
   const getTextColorClass = (color: string) => {
     const colors: Record<string, string> = {
       blue: "text-blue-400",
-      green: "text-green-400",
+      green: "text-green-600",
       yellow: "text-yellow-400",
       purple: "text-purple-400",
-      red: "text-red-400",
+      red: "text-red-500",
       orange: "text-orange-400",
       cyan: "text-cyan-400",
       pink: "text-pink-400",
       indigo: "text-indigo-400",
-      gray: "text-gray-400",
+      gray: "text-gray-4000",
     };
     return colors[color] || colors.gray;
   };
@@ -239,13 +239,13 @@ export default function AllocationPage() {
     <main className="space-y-8 animate-in">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-white">Smart Allocation</h1>
-        <p className="text-white/50 mt-1">Analyze and optimize your portfolio allocation</p>
+        <h1 className="text-3xl font-bold text-gray-900">Smart Allocation</h1>
+        <p className="text-gray-500 mt-1">Analyze and optimize your portfolio allocation</p>
       </div>
 
       {/* User Profile */}
       <GlassCard className="p-6">
-        <h2 className="text-lg font-semibold text-white mb-4">Your Profile</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">Your Profile</h2>
         <div className="grid sm:grid-cols-3 gap-4">
           <GlassInput
             label="Age"
@@ -283,24 +283,24 @@ export default function AllocationPage() {
       {/* Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <GlassCard className="p-4 text-center">
-          <p className="text-2xl font-bold text-white">{formatCurrency(totalValue)}</p>
-          <p className="text-white/50 text-sm">Total Value</p>
+          <p className="text-2xl font-bold text-gray-900">{formatCurrency(totalValue)}</p>
+          <p className="text-gray-500 text-sm">Total Value</p>
         </GlassCard>
         <GlassCard className="p-4 text-center">
-          <p className={`text-2xl font-bold ${portfolioRisk > 2.2 ? "text-red-400" : portfolioRisk > 1.8 ? "text-yellow-400" : "text-green-400"}`}>
+          <p className={`text-2xl font-bold ${portfolioRisk > 2.2 ? "text-red-500" : portfolioRisk > 1.8 ? "text-yellow-400" : "text-green-600"}`}>
             {portfolioRisk.toFixed(1)}
           </p>
-          <p className="text-white/50 text-sm">Risk Score (1-3)</p>
+          <p className="text-gray-500 text-sm">Risk Score (1-3)</p>
         </GlassCard>
         <GlassCard className="p-4 text-center">
-          <p className="text-2xl font-bold text-green-400">{ageBasedStocks}%</p>
-          <p className="text-white/50 text-sm">Age-Based Stocks</p>
+          <p className="text-2xl font-bold text-green-600">{ageBasedStocks}%</p>
+          <p className="text-gray-500 text-sm">Age-Based Stocks</p>
         </GlassCard>
         <GlassCard className="p-4 text-center">
-          <p className={`text-2xl font-bold ${needsRebalancing ? "text-yellow-400" : "text-green-400"}`}>
+          <p className={`text-2xl font-bold ${needsRebalancing ? "text-yellow-400" : "text-green-600"}`}>
             {needsRebalancing ? "⚠️ Rebalance" : "✅ Balanced"}
           </p>
-          <p className="text-white/50 text-sm">Status</p>
+          <p className="text-gray-500 text-sm">Status</p>
         </GlassCard>
       </div>
 
@@ -311,38 +311,38 @@ export default function AllocationPage() {
         </GlassCard>
       ) : portfolio.length === 0 ? (
         <GlassCard className="p-12 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-white mb-2">No stocks in portfolio</h3>
-          <p className="text-white/50 text-sm">Add stocks to your portfolio to see allocation analysis</p>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No stocks in portfolio</h3>
+          <p className="text-gray-500 text-sm">Add stocks to your portfolio to see allocation analysis</p>
         </GlassCard>
       ) : (
         <>
           {/* Allocation Table */}
           <GlassCard className="p-6">
-            <h2 className="text-lg font-semibold text-white mb-4">Recommended Allocation</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Recommended Allocation</h2>
             <div className="space-y-4">
               {recommendations.map((rec) => (
                 <div key={rec.category} className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-white font-medium">{rec.category}</span>
+                    <span className="text-gray-900 font-medium">{rec.category}</span>
                     <div className="flex gap-4 text-xs">
-                      <span className="text-white/50">
-                        Current: <span className="text-white">{rec.currentPercent.toFixed(1)}%</span>
+                      <span className="text-gray-500">
+                        Current: <span className="text-gray-900">{rec.currentPercent.toFixed(1)}%</span>
                       </span>
-                      <span className="text-white/50">
-                        Target: <span className="text-white">{rec.targetPercent}%</span>
+                      <span className="text-gray-500">
+                        Target: <span className="text-gray-900">{rec.targetPercent}%</span>
                       </span>
-                      <span className={rec.differencePercent > 0 ? "text-green-400" : rec.differencePercent < 0 ? "text-red-400" : "text-white/50"}>
+                      <span className={rec.differencePercent > 0 ? "text-green-600" : rec.differencePercent < 0 ? "text-red-500" : "text-gray-500"}>
                         {rec.differencePercent > 0 ? "+" : ""}{rec.differencePercent.toFixed(1)}%
                       </span>
                     </div>
                   </div>
                   <div className="flex gap-2 h-6">
-                    <div className="relative flex-1 bg-white/10 rounded-full overflow-hidden">
+                    <div className="relative flex-1 bg-gray-100 rounded-full overflow-hidden">
                       {/* Current allocation */}
                       <div
                         className={`absolute inset-y-0 left-0 ${getColorClass(rec.color)} opacity-50`}
@@ -355,16 +355,16 @@ export default function AllocationPage() {
                       />
                     </div>
                   </div>
-                  <div className="flex justify-between text-xs text-white/40">
+                  <div className="flex justify-between text-xs text-gray-400">
                     <span>{formatCurrency(rec.currentValue)}</span>
                     <span>{formatCurrency(rec.targetValue)}</span>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-4 p-3 bg-white/5 rounded-xl">
-              <p className="text-white/50 text-sm">
-                <span className="text-white font-medium">Legend:</span> Solid bar = current allocation, Border = target allocation.
+            <div className="mt-4 p-3 bg-gray-50 rounded-xl">
+              <p className="text-gray-500 text-sm">
+                <span className="text-gray-900 font-medium">Legend:</span> Solid bar = current allocation, Border = target allocation.
                 Bars showing more/less than target indicate rebalancing needed.
               </p>
             </div>
@@ -372,19 +372,19 @@ export default function AllocationPage() {
 
           {/* Sector Analysis */}
           <GlassCard className="p-6">
-            <h2 className="text-lg font-semibold text-white mb-4">Sector Diversification</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Sector Diversification</h2>
             <div className="space-y-3">
               {sectorAllocations.map((s) => (
                 <div key={s.sector} className="flex items-center gap-4">
                   <div className={`w-3 h-3 rounded-full ${getColorClass(s.sectorInfo.color)}`} />
                   <div className="flex-1">
                     <div className="flex justify-between">
-                      <span className="text-white text-sm">{s.sectorInfo.label}</span>
+                      <span className="text-gray-900 text-sm">{s.sectorInfo.label}</span>
                       <span className={`text-sm ${getTextColorClass(s.sectorInfo.color)}`}>
                         {s.percent.toFixed(1)}% ({formatCurrency(s.value)})
                       </span>
                     </div>
-                    <div className="mt-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div className="mt-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                       <div
                         className={`h-full ${getColorClass(s.sectorInfo.color)}`}
                         style={{ width: `${s.percent}%` }}
@@ -407,7 +407,7 @@ export default function AllocationPage() {
                 </div>
                 <div>
                   <p className="text-yellow-400 font-medium">Rebalancing Suggested</p>
-                  <p className="text-white/50 text-sm mt-1">
+                  <p className="text-gray-500 text-sm mt-1">
                     Your portfolio allocation differs from your target by more than 10%.
                     Consider {recommendations.find((r) => r.difference > 0)
                       ? `adding ${formatCurrency(recommendations.find((r) => r.difference > 0)?.difference || 0)} to underweight categories`
@@ -425,17 +425,17 @@ export default function AllocationPage() {
       <GlassCard className="p-6">
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
-            <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
           <div>
-            <p className="text-white font-medium">Allocation Guidelines</p>
-            <div className="text-white/50 text-sm mt-2 space-y-1">
-              <p><span className="text-white">Age Rule:</span> Stocks % = 110 - Age. If you&apos;re {age || 30}, recommended stocks = {ageBasedStocks}%</p>
-              <p><span className="text-white">Risk Profiles:</span> Adjust based on your comfort with volatility and investment timeline</p>
-              <p><span className="text-white">Goal Adjustment:</span> Longer goals (retirement) = more stocks. Shorter goals (house) = more bonds/cash</p>
-              <p><span className="text-white">Sector Diversification:</span> Aim for no single sector exceeding 25% of portfolio</p>
+            <p className="text-gray-900 font-medium">Allocation Guidelines</p>
+            <div className="text-gray-500 text-sm mt-2 space-y-1">
+              <p><span className="text-gray-900">Age Rule:</span> Stocks % = 110 - Age. If you&apos;re {age || 30}, recommended stocks = {ageBasedStocks}%</p>
+              <p><span className="text-gray-900">Risk Profiles:</span> Adjust based on your comfort with volatility and investment timeline</p>
+              <p><span className="text-gray-900">Goal Adjustment:</span> Longer goals (retirement) = more stocks. Shorter goals (house) = more bonds/cash</p>
+              <p><span className="text-gray-900">Sector Diversification:</span> Aim for no single sector exceeding 25% of portfolio</p>
             </div>
           </div>
         </div>

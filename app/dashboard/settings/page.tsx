@@ -100,12 +100,12 @@ export default function SettingsPage() {
   return (
     <main className="max-w-2xl mx-auto space-y-6 animate-in">
       <div>
-        <h1 className="text-2xl font-bold text-white">Pengaturan</h1>
-        <p className="text-white/50 text-sm mt-0.5">Konfigurasi notifikasi dan preferensi</p>
+        <h1 className="text-2xl font-bold text-gray-900">Pengaturan</h1>
+        <p className="text-gray-500 text-sm mt-0.5">Konfigurasi notifikasi dan preferensi</p>
       </div>
 
       {message && (
-        <div className={`p-4 rounded-xl ${message.type === "success" ? "bg-green-500/20 border border-green-500/30 text-green-400" : "bg-red-500/20 border border-red-500/30 text-red-400"}`}>
+        <div className={`p-4 rounded-xl ${message.type === "success" ? "bg-green-500/20 border border-green-500/30 text-green-600" : "bg-red-500/20 border border-red-500/30 text-red-500"}`}>
           {message.text}
         </div>
       )}
@@ -113,8 +113,8 @@ export default function SettingsPage() {
       {/* Telegram Settings */}
       <GlassCard className="p-6 space-y-5">
         <div>
-          <h2 className="text-base font-semibold text-white">Notifikasi Telegram</h2>
-          <p className="text-white/40 text-sm mt-0.5">Terima peringatan melalui bot Telegram</p>
+          <h2 className="text-base font-semibold text-gray-900">Notifikasi Telegram</h2>
+          <p className="text-gray-400 text-sm mt-0.5">Terima peringatan melalui bot Telegram</p>
         </div>
 
         <div className="space-y-4">
@@ -141,14 +141,14 @@ export default function SettingsPage() {
           </GlassButton>
         </div>
 
-        <div className="text-sm text-white/30 space-y-1">
+        <div className="text-sm text-gray-300 space-y-1">
           <p>Cara mendapatkan Chat ID:</p>
           <ol className="list-decimal list-inside space-y-0.5 ml-2">
             <li>Buat bot via @BotFather di Telegram, copy token-nya</li>
             <li>Buka chat dengan bot yang baru dibuat</li>
             <li>Kirim pesan apapun ke bot</li>
-            <li>Kunjungi <code className="bg-white/10 px-1 rounded">api.telegram.org/bot[TOKEN]/getUpdates</code></li>
-            <li> Cari <code className="bg-white/10 px-1 rounded">{'"'}id{'"'}:</code> di response — itu Chat ID Anda</li>
+            <li>Kunjungi <code className="bg-gray-100 px-1 rounded">api.telegram.org/bot[TOKEN]/getUpdates</code></li>
+            <li> Cari <code className="bg-gray-100 px-1 rounded">{'"'}id{'"'}:</code> di response — itu Chat ID Anda</li>
           </ol>
         </div>
       </GlassCard>

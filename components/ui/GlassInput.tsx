@@ -13,11 +13,11 @@ interface GlassInputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
-  ({ className, label, error, id, icon, rightIcon, onRightIconClick, variant = "glass", ...props }, ref) => {
+  ({ className, label, error, id, icon, rightIcon, onRightIconClick, variant = "solid", ...props }, ref) => {
     const isGlass = variant === "glass";
     const baseClasses = isGlass
-      ? "bg-white/5 border border-white/10 text-white placeholder:text-white/40 focus:ring-green-500/50 focus:border-green-500/30"
-      : "bg-white border border-gray-200 text-gray-900 placeholder:text-gray-400 focus:ring-green-500/50 focus:border-green-500/30 shadow-sm";
+      ? "bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:ring-green-500/50 focus:border-green-500/30"
+      : "bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus:ring-green-500/50 focus:border-green-400";
 
     const labelClasses = isGlass ? "text-white/70" : "text-gray-700";
     const iconColorClass = isGlass ? "text-white/40" : "text-gray-400";

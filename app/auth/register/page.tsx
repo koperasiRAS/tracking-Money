@@ -138,7 +138,7 @@ export default function RegisterPage() {
           {/* Header */}
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-1">Buat Akun Baru</h2>
-            <p className="text-gray-500 text-sm">Daftar dengan Google untuk memulai</p>
+            <p className="text-gray-5000 text-sm">Daftar dengan Google untuk memulai</p>
           </div>
 
           {/* Error alert */}
@@ -156,7 +156,7 @@ export default function RegisterPage() {
             type="button"
             onClick={handleGoogleRegister}
             disabled={isLoading || !supabase}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-200 rounded-xl font-medium text-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-200 rounded-xl font-medium text-sm text-gray-7000 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
           >
             {isLoading ? (
               <div className="w-5 h-5 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
@@ -177,13 +177,13 @@ export default function RegisterPage() {
               <div className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-3 text-gray-400">atau</span>
+              <span className="bg-white px-3 text-gray-4000">atau</span>
             </div>
           </div>
 
           {/* Note about email/password */}
           <div className="text-center py-4 border border-gray-100 rounded-xl bg-gray-50">
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-4000 text-sm">
               Saat ini hanya pendaftaran dengan{" "}
               <span className="font-medium text-gray-600">Google</span> yang tersedia
             </p>
@@ -191,7 +191,7 @@ export default function RegisterPage() {
 
           {/* Register link */}
           <div className="mt-6 text-center">
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-5000 text-sm">
               Sudah punya akun?{" "}
               <Link
                 href="/auth/login"
@@ -207,7 +207,7 @@ export default function RegisterPage() {
             <svg className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
-            <p className="text-gray-400 text-xs leading-relaxed">
+            <p className="text-gray-4000 text-xs leading-relaxed">
               Setelah daftar, Anda akan diarahkan untuk mengatur 2FA dengan Google Authenticator.
               Akun dilindungi dengan Supabase Row Level Security.
             </p>

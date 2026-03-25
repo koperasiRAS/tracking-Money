@@ -39,8 +39,8 @@ export function PerformanceChart({
   if (data.length === 0) {
     return (
       <GlassCard className="p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">{title}</h3>
-        <div className="h-64 flex items-center justify-center text-white/40">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
+        <div className="h-64 flex items-center justify-center text-gray-400">
           No historical data available
         </div>
       </GlassCard>
@@ -58,10 +58,10 @@ export function PerformanceChart({
   return (
     <GlassCard className="p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-white">{title}</h3>
+        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
         <div className="text-right">
-          <p className="text-white font-medium">{formatCurrency(lastValue)}</p>
-          <p className={`text-sm ${isPositive ? "text-green-400" : "text-red-400"}`}>
+          <p className="text-gray-900 font-medium">{formatCurrency(lastValue)}</p>
+          <p className={`text-sm ${isPositive ? "text-green-600" : "text-red-500"}`}>
             {isPositive ? "+" : ""}{changePercent.toFixed(2)}%
           </p>
         </div>
@@ -79,15 +79,15 @@ export function PerformanceChart({
             <XAxis
               dataKey="date"
               tickFormatter={formatDate}
-              stroke="rgba(255,255,255,0.3)"
-              tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 12 }}
-              axisLine={{ stroke: "rgba(255,255,255,0.1)" }}
+              stroke="rgba(0,0,0,0.2)"
+              tick={{ fill: "rgba(0,0,0,0.5)", fontSize: 12 }}
+              axisLine={{ stroke: "rgba(0,0,0,0.1)" }}
               tickLine={false}
             />
             <YAxis
               tickFormatter={(v) => formatCurrency(v)}
-              stroke="rgba(255,255,255,0.3)"
-              tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 12 }}
+              stroke="rgba(0,0,0,0.2)"
+              tick={{ fill: "rgba(0,0,0,0.5)", fontSize: 12 }}
               axisLine={false}
               tickLine={false}
               width={80}

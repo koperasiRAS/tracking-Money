@@ -31,13 +31,13 @@ export function PortfolioTable({ items, onEdit, onDelete }: PortfolioTableProps)
   if (items.length === 0) {
     return (
       <GlassCard className="p-12 text-center">
-        <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4">
-          <svg className="w-8 h-8 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-4">
+          <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
           </svg>
         </div>
-        <h3 className="text-lg font-semibold text-white mb-2">No stocks yet</h3>
-        <p className="text-white/50 text-sm mb-4">Add your first stock to start tracking your portfolio</p>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No stocks yet</h3>
+        <p className="text-gray-500 text-sm mb-4">Add your first stock to start tracking your portfolio</p>
       </GlassCard>
     );
   }
@@ -47,43 +47,43 @@ export function PortfolioTable({ items, onEdit, onDelete }: PortfolioTableProps)
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-white/10">
-              <th className="text-left px-6 py-4 text-white/50 text-sm font-medium">Stock</th>
-              <th className="text-right px-6 py-4 text-white/50 text-sm font-medium">Shares</th>
-              <th className="text-right px-6 py-4 text-white/50 text-sm font-medium">Avg Price</th>
-              <th className="text-right px-6 py-4 text-white/50 text-sm font-medium">Total Value</th>
-              <th className="text-right px-6 py-4 text-white/50 text-sm font-medium">Actions</th>
+            <tr className="border-b border-gray-200">
+              <th className="text-left px-6 py-4 text-gray-500 text-sm font-medium">Stock</th>
+              <th className="text-right px-6 py-4 text-gray-500 text-sm font-medium">Shares</th>
+              <th className="text-right px-6 py-4 text-gray-500 text-sm font-medium">Avg Price</th>
+              <th className="text-right px-6 py-4 text-gray-500 text-sm font-medium">Total Value</th>
+              <th className="text-right px-6 py-4 text-gray-500 text-sm font-medium">Actions</th>
             </tr>
           </thead>
           <tbody>
             {items.map((item) => (
               <tr
                 key={item.id}
-                className="border-b border-white/5 hover:bg-white/5 transition-colors"
+                className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
               >
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
-                      <span className="text-green-400 font-bold text-sm">
+                      <span className="text-green-600 font-bold text-sm">
                         {item.ticker.slice(0, 2)}
                       </span>
                     </div>
                     <div>
-                      <p className="text-white font-medium">{item.ticker}</p>
+                      <p className="text-gray-900 font-medium">{item.ticker}</p>
                       {item.name && (
-                        <p className="text-white/40 text-sm">{item.name}</p>
+                        <p className="text-gray-400 text-sm">{item.name}</p>
                       )}
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 text-right text-white">
+                <td className="px-6 py-4 text-right text-gray-900">
                   {formatNumber(item.shares, 4)}
                 </td>
-                <td className="px-6 py-4 text-right text-white">
+                <td className="px-6 py-4 text-right text-gray-900">
                   {formatCurrency(item.avgPrice)}
                 </td>
                 <td className="px-6 py-4 text-right">
-                  <p className="text-white font-medium">
+                  <p className="text-gray-900 font-medium">
                     {formatCurrency(item.shares * item.avgPrice)}
                   </p>
                 </td>

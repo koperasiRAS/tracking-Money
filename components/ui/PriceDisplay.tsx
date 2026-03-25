@@ -26,7 +26,7 @@ export function PriceDisplay({ price, currency = "IDR", size = "md", className }
   };
 
   return (
-    <span className={cn("font-semibold text-white", sizes[size], className)}>
+    <span className={cn("font-semibold text-gray-900", sizes[size], className)}>
       {formatCurrency(price, currency)}
     </span>
   );
@@ -55,7 +55,7 @@ export function PriceChange({ change, changePercent, showCurrency = false, class
   return (
     <div className={cn(
       "flex items-center gap-2 text-sm font-medium",
-      isPositive ? "text-green-400" : "text-red-400",
+      isPositive ? "text-green-600" : "text-red-500",
       className
     )}>
       {isPositive ? (

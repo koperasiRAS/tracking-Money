@@ -27,15 +27,15 @@ export function StatCard({
     <GlassCard className={cn("p-6", className)}>
       <div className="flex items-start justify-between">
         <div className="space-y-1">
-          <p className="text-white/50 text-sm font-medium">{title}</p>
-          <p className="text-2xl font-bold text-white">{value}</p>
+          <p className="text-gray-500 text-sm font-medium">{title}</p>
+          <p className="text-2xl font-bold text-gray-900">{value}</p>
           {subtitle && (
-            <p className="text-white/40 text-xs">{subtitle}</p>
+            <p className="text-gray-400 text-xs">{subtitle}</p>
           )}
           {trend && (
             <div className={cn(
               "flex items-center gap-1 text-sm font-medium",
-              trend.isPositive ? "text-green-400" : "text-red-400"
+              trend.isPositive ? "text-green-600" : "text-red-500"
             )}>
               <svg
                 className={cn("w-4 h-4", !trend.isPositive && "rotate-180")}
@@ -55,7 +55,7 @@ export function StatCard({
           )}
         </div>
         {icon && (
-          <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center">
             {icon}
           </div>
         )}

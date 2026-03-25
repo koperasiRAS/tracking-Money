@@ -112,8 +112,8 @@ export default function DCAPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white">DCA Scheduler</h1>
-          <p className="text-white/50 mt-1">Set up recurring investment reminders</p>
+          <h1 className="text-3xl font-bold text-gray-900">DCA Scheduler</h1>
+          <p className="text-gray-500 mt-1">Set up recurring investment reminders</p>
         </div>
         <GlassButton onClick={() => setIsModalOpen(true)}>
           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,20 +126,20 @@ export default function DCAPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <GlassCard className="p-4 text-center">
-          <p className="text-2xl font-bold text-white">{activeSchedules.length}</p>
-          <p className="text-white/50 text-sm">Active Plans</p>
+          <p className="text-2xl font-bold text-gray-900">{activeSchedules.length}</p>
+          <p className="text-gray-500 text-sm">Active Plans</p>
         </GlassCard>
         <GlassCard className="p-4 text-center">
-          <p className="text-2xl font-bold text-green-400">{upcomingSchedules.length}</p>
-          <p className="text-white/50 text-sm">Due This Week</p>
+          <p className="text-2xl font-bold text-green-600">{upcomingSchedules.length}</p>
+          <p className="text-gray-500 text-sm">Due This Week</p>
         </GlassCard>
         <GlassCard className="p-4 text-center">
-          <p className="text-2xl font-bold text-green-400">{formatCurrency(monthlyTotal)}</p>
-          <p className="text-white/50 text-sm">Est. Monthly</p>
+          <p className="text-2xl font-bold text-green-600">{formatCurrency(monthlyTotal)}</p>
+          <p className="text-gray-500 text-sm">Est. Monthly</p>
         </GlassCard>
         <GlassCard className="p-4 text-center">
           <p className="text-2xl font-bold text-purple-400">{pausedSchedules.length}</p>
-          <p className="text-white/50 text-sm">Paused</p>
+          <p className="text-gray-500 text-sm">Paused</p>
         </GlassCard>
       </div>
 
@@ -147,13 +147,13 @@ export default function DCAPage() {
       <GlassCard className="p-4">
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
-            <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
           <div>
-            <p className="text-white font-medium">How DCA Works</p>
-            <p className="text-white/50 text-sm mt-1">
+            <p className="text-gray-900 font-medium">How DCA Works</p>
+            <p className="text-gray-500 text-sm mt-1">
               Dollar Cost Averaging (DCA) helps you invest consistently by buying fixed amounts at regular intervals.
               Set up your schedule and get reminded on Telegram when it&apos;s time to invest.
             </p>
@@ -164,7 +164,7 @@ export default function DCAPage() {
       {/* Upcoming This Week */}
       {upcomingSchedules.length > 0 && (
         <div>
-          <h2 className="text-lg font-semibold text-white mb-4">Due This Week</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Due This Week</h2>
           <div className="grid gap-3">
             {upcomingSchedules.map((schedule) => (
               <DCACard
@@ -198,18 +198,18 @@ export default function DCAPage() {
         </div>
       ) : schedules.length === 0 ? (
         <GlassCard className="p-12 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-white mb-2">No DCA plans yet</h3>
-          <p className="text-white/50 text-sm mb-4">Create your first recurring investment plan</p>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No DCA plans yet</h3>
+          <p className="text-gray-500 text-sm mb-4">Create your first recurring investment plan</p>
           <GlassButton onClick={() => setIsModalOpen(true)}>Create Your First Plan</GlassButton>
         </GlassCard>
       ) : (
         <div>
-          <h2 className="text-lg font-semibold text-white mb-4">All Plans</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">All Plans</h2>
           <div className="grid gap-3">
             {schedules.map((schedule) => (
               <DCACard
@@ -240,8 +240,8 @@ export default function DCAPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setDeletingSchedule(null)} />
           <GlassCard className="relative w-full max-w-sm p-6 space-y-4 animate-slide-up">
-            <h3 className="text-lg font-semibold text-white">Delete DCA Plan</h3>
-            <p className="text-white/50">
+            <h3 className="text-lg font-semibold text-gray-900">Delete DCA Plan</h3>
+            <p className="text-gray-500">
               Are you sure you want to delete this DCA plan for {deletingSchedule.ticker}?
             </p>
             <div className="flex gap-3">

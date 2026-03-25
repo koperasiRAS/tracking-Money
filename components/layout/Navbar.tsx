@@ -24,7 +24,7 @@ export function Navbar() {
   return (
     <>
       {/* Mobile Header */}
-      <header className="lg:hidden sticky top-0 z-50 bg-[#0f0f23]/90 backdrop-blur-xl border-b border-white/10">
+      <header className="lg:hidden sticky top-0 z-50 bg-[#0f0f23] border-b border-white/10">
         <nav className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-green-500 flex items-center justify-center">
@@ -32,13 +32,13 @@ export function Navbar() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
             </div>
-            <span className="font-bold text-white text-sm">InvestTrack</span>
+            <span className="font-bold text-gray-900 text-sm">InvestTrack</span>
           </div>
 
           <button
             type="button"
             aria-label="Toggle menu"
-            className="p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+            className="p-2 rounded-lg text-white/60 hover:text-gray-700 hover:bg-white/5 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@ export function Navbar() {
                     "flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors",
                     isActive
                       ? "bg-green-500/10 text-green-400 border-l-[3px] border-green-500 pl-[10px]"
-                      : "text-white/50 hover:text-white hover:bg-white/5 border-l-[3px] border-transparent pl-[10px]"
+                      : "text-white/50 hover:text-gray-700 hover:bg-white/5 border-l-[3px] border-transparent pl-[10px]"
                   )}
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -78,7 +78,7 @@ export function Navbar() {
             <div className="pt-2 border-t border-white/10 space-y-0.5">
               <Link
                 href="/dashboard/settings"
-                className="block px-4 py-2.5 rounded-xl text-sm text-white/50 hover:text-white hover:bg-white/5 transition-colors border-l-[3px] border-transparent pl-[10px]"
+                className="block px-4 py-2.5 rounded-xl text-sm text-white/50 hover:text-gray-700 hover:bg-white/5 transition-colors border-l-[3px] border-transparent pl-[10px]"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Pengaturan
