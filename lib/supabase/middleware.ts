@@ -56,21 +56,8 @@ export async function updateSession(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Protected routes (everything except auth pages and static assets)
+  // Protected routes (everything under /dashboard)
   const isProtectedRoute =
-    request.nextUrl.pathname.startsWith('/portfolio') ||
-    request.nextUrl.pathname.startsWith('/watchlist') ||
-    request.nextUrl.pathname.startsWith('/alerts') ||
-    request.nextUrl.pathname.startsWith('/mutual-funds') ||
-    request.nextUrl.pathname.startsWith('/settings') ||
-    request.nextUrl.pathname.startsWith('/dca') ||
-    request.nextUrl.pathname.startsWith('/dividends') ||
-    request.nextUrl.pathname.startsWith('/planner') ||
-    request.nextUrl.pathname.startsWith('/income') ||
-    request.nextUrl.pathname.startsWith('/allocation') ||
-    request.nextUrl.pathname.startsWith('/cash-to-lot') ||
-    request.nextUrl.pathname.startsWith('/risk-meter') ||
-    request.nextUrl.pathname.startsWith('/score') ||
     request.nextUrl.pathname.startsWith('/dashboard');
 
   // Auth routes (login/register + OAuth + 2FA)
