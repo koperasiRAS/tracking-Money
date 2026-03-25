@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { GlassButton } from "@/components/ui/GlassButton";
 
 export default function RegisterPage() {
   const [error, setError] = useState("");
@@ -42,29 +40,126 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 py-12">
-      <GlassCard className="max-w-md w-full p-8 space-y-6 animate-slide-up">
-        <div className="text-center space-y-2">
-          <h1 className="text-2xl font-bold text-white">Buat Akun</h1>
-          <p className="text-white/50 text-sm">Daftar dengan Google untuk memulai</p>
-        </div>
+    <main className="min-h-screen flex bg-base">
+      {/* ===== LEFT PANEL - Branding ===== */}
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-[#0f0f23] via-[#0d1f2d] to-[#0a2a1a]">
 
-        {error && (
-          <div className="p-3 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm">
-            {error}
+        {/* Decorative background orbs */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-green-500/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-green-400/5 rounded-full blur-3xl animate-float" style={{ animationDelay: "3s" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-green-600/5 rounded-full blur-3xl" />
+
+        {/* Dot pattern overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* Left Panel Content */}
+        <div className="relative z-10 flex flex-col justify-center px-12 xl:px-20 py-16 w-full">
+          {/* Logo / Brand */}
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-green-500 flex items-center justify-center shadow-lg shadow-green-500/30">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              </div>
+              <span className="text-2xl font-bold text-white tracking-tight">INVESTTRACK PRO</span>
+            </div>
           </div>
-        )}
 
-        {/* Google Sign Up */}
-        <div className="space-y-3">
+          {/* Headline */}
+          <h1 className="text-4xl xl:text-5xl font-bold text-white leading-tight mb-6">
+            Mulai Perjalanan<br />
+            <span className="text-green-400">Investasi Anda</span><br />
+            Sekarang
+          </h1>
+
+          <p className="text-white/50 text-lg mb-16 max-w-md leading-relaxed">
+            Daftar gratis dan mulai melacak portofolio saham Anda dengan alat yang powerful dan mudah digunakan.
+          </p>
+
+          {/* Feature highlights */}
+          <div className="space-y-5">
+            {[
+              { icon: "🔐", text: "Aman dengan 2FA Google Authenticator" },
+              { icon: "📊", text: "Lacak Portofolio Secara Real-time" },
+              { icon: "🔔", text: "Peringatan Harga Otomatis" },
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-lg backdrop-blur-sm">
+                  {item.icon}
+                </div>
+                <span className="text-white/70 text-sm font-medium">{item.text}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Bottom decoration - financial chart visual */}
+          <div className="mt-16 flex items-end gap-2">
+            {[30, 45, 35, 55, 48, 70, 60, 80, 70, 95].map((h, i) => (
+              <div
+                key={i}
+                className="flex-1 bg-green-500/20 rounded-sm border-t border-green-500/40 transition-all duration-300 hover:bg-green-500/40"
+                style={{ height: `${h}%`, animationDelay: `${i * 0.1}s` }}
+              />
+            ))}
+          </div>
+          <div className="flex items-center gap-2 mt-3">
+            <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+            <span className="text-green-400/60 text-xs">Proses Pendaftaran Gratis</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ===== RIGHT PANEL - Register Form ===== */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 bg-white relative overflow-hidden">
+
+        {/* Decorative circles */}
+        <div className="absolute -top-32 -right-32 w-64 h-64 bg-green-50 rounded-full" />
+        <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-green-50 rounded-full" />
+
+        <div className="relative z-10 w-full max-w-md">
+
+          {/* Mobile logo */}
+          <div className="lg:hidden flex items-center gap-3 mb-8">
+            <div className="w-9 h-9 rounded-xl bg-green-500 flex items-center justify-center shadow-lg shadow-green-500/30">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+            </div>
+            <span className="text-xl font-bold text-gray-900 tracking-tight">INVESTTRACK PRO</span>
+          </div>
+
+          {/* Header */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-1">Buat Akun Baru</h2>
+            <p className="text-gray-500 text-sm">Daftar dengan Google untuk memulai</p>
+          </div>
+
+          {/* Error alert */}
+          {error && (
+            <div className="mb-5 p-3.5 rounded-xl bg-red-50 border border-red-100 text-red-600 text-sm flex items-center gap-2">
+              <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {error}
+            </div>
+          )}
+
+          {/* Google Sign Up Button */}
           <button
             type="button"
             onClick={handleGoogleRegister}
             disabled={isLoading || !supabase}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-200 rounded-xl font-medium text-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
           >
             {isLoading ? (
-              <div className="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
             ) : (
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -76,39 +171,49 @@ export default function RegisterPage() {
             {isLoading ? "Mengalihkan..." : "Daftar dengan Google"}
           </button>
 
-          <p className="text-white/40 text-xs text-center">
-            Setelah daftar, Anda akan diarahkan untuk mengatur 2FA
-          </p>
-        </div>
-
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-white/10" />
+          {/* Divider */}
+          <div className="relative my-5">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200" />
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="bg-white px-3 text-gray-400">atau</span>
+            </div>
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-base px-2 text-white/30">atau</span>
+
+          {/* Note about email/password */}
+          <div className="text-center py-4 border border-gray-100 rounded-xl bg-gray-50">
+            <p className="text-gray-400 text-sm">
+              Saat ini hanya pendaftaran dengan{" "}
+              <span className="font-medium text-gray-600">Google</span> yang tersedia
+            </p>
+          </div>
+
+          {/* Register link */}
+          <div className="mt-6 text-center">
+            <p className="text-gray-500 text-sm">
+              Sudah punya akun?{" "}
+              <Link
+                href="/auth/login"
+                className="text-green-600 hover:text-green-700 font-semibold transition-colors"
+              >
+                Masuk
+              </Link>
+            </p>
+          </div>
+
+          {/* Security note */}
+          <div className="mt-8 flex items-start gap-2.5 p-3.5 bg-gray-50 rounded-xl border border-gray-100">
+            <svg className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            <p className="text-gray-400 text-xs leading-relaxed">
+              Setelah daftar, Anda akan diarahkan untuk mengatur 2FA dengan Google Authenticator.
+              Akun dilindungi dengan Supabase Row Level Security.
+            </p>
           </div>
         </div>
-
-        <div className="text-center">
-          <p className="text-white/50 text-sm">
-            Sudah punya akun?{" "}
-            <Link href="/auth/login" className="text-blue-400 hover:text-blue-300 transition-colors">
-              Masuk
-            </Link>
-          </p>
-        </div>
-
-        {/* Security note */}
-        <div className="flex items-start gap-2 p-3 bg-white/5 rounded-xl">
-          <svg className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-          </svg>
-          <p className="text-white/40 text-xs">
-            Akun Anda dilindungi 2FA. Data dienkripsi dan diamankan dengan Supabase Row Level Security.
-          </p>
-        </div>
-      </GlassCard>
+      </div>
     </main>
   );
 }

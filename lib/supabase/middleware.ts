@@ -31,6 +31,8 @@ export async function updateSession(request: NextRequest) {
             name,
             value,
             ...options,
+            sameSite: options?.sameSite ?? 'lax',
+            secure: options?.secure ?? true,
           });
         },
         remove(name: string, options: CookieOptions) {
@@ -48,6 +50,8 @@ export async function updateSession(request: NextRequest) {
             name,
             value: '',
             ...options,
+            sameSite: 'lax',
+            secure: true,
           });
         },
       },
@@ -55,6 +59,19 @@ export async function updateSession(request: NextRequest) {
   );
 
   const { data: { user } } = await supabase.auth.getUser();
+
+  // If no user yet, try to refresh the session from cookies
+  // This fixes the redirect loop after OAuth callback sets the session
+  if (!user) {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.user) {
+      // Session exists but not yet validated — validate it
+      const { data: { user: refreshedUser } } = await supabase.auth.getUser();
+      if (refreshedUser) {
+        return response;
+      }
+    }
+  }
 
   // Protected routes (everything under /dashboard)
   const isProtectedRoute =
@@ -78,9 +95,9 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(new URL('/auth/register', request.url));
   }
 
-  // Redirect unauthenticated users from landing page to register
+  // Redirect unauthenticated users from landing page to login
   if (request.nextUrl.pathname === '/' && !user) {
-    return NextResponse.redirect(new URL('/auth/register', request.url));
+    return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
   return response;
