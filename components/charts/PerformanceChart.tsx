@@ -40,7 +40,7 @@ export function PerformanceChart({
     return (
       <GlassCard className="p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
-        <div className="h-64 flex items-center justify-center text-gray-400">
+        <div className="h-64 flex items-center justify-center text-gray-400 dark:text-gray-500">
           No historical data available
         </div>
       </GlassCard>
@@ -58,7 +58,7 @@ export function PerformanceChart({
   return (
     <GlassCard className="p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
         <div className="text-right">
           <p className="text-gray-900 font-medium">{formatCurrency(lastValue)}</p>
           <p className={`text-sm ${isPositive ? "text-green-600" : "text-red-500"}`}>

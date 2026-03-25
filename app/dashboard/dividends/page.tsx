@@ -196,7 +196,7 @@ export default function DividendsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Dividend Forecast</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Dividend Forecast</h1>
           <p className="text-gray-500 mt-1">Project your dividend income from holdings</p>
         </div>
         <div className="flex gap-3">
@@ -296,7 +296,7 @@ export default function DividendsPage() {
       ) : forecasts.length === 0 ? (
         <GlassCard className="p-12 text-center">
           <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-8 h-8 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 8V7" />
             </svg>
           </div>
@@ -331,11 +331,11 @@ export default function DividendsPage() {
                         <p className="text-gray-900 font-medium">{f.ticker}</p>
                         <p className="text-gray-500 text-xs">{f.name}</p>
                       </td>
-                      <td className="p-4 text-right text-gray-900">{f.shares}</td>
-                      <td className="p-4 text-right text-gray-900">{formatCurrency(f.dividendPerShare)}</td>
-                      <td className="p-4 text-right text-gray-700">{freqLabels[f.frequency] || f.frequency}</td>
+                      <td className="p-4 text-right text-gray-900 dark:text-gray-100">{f.shares}</td>
+                      <td className="p-4 text-right text-gray-900 dark:text-gray-100">{formatCurrency(f.dividendPerShare)}</td>
+                      <td className="p-4 text-right text-gray-700 dark:text-gray-300">{freqLabels[f.frequency] || f.frequency}</td>
                       <td className="p-4 text-right">
-                        <span className={`font-medium ${f.yieldPercent >= 4 ? "text-green-600" : f.yieldPercent >= 2 ? "text-yellow-400" : "text-gray-500"}`}>
+                        <span className={`font-medium ${f.yieldPercent >= 4 ? "text-green-600" : f.yieldPercent >= 2 ? "text-yellow-400" : "text-gray-500 dark:text-gray-400 dark:text-gray-500"}`}>
                           {f.yieldPercent.toFixed(2)}%
                         </span>
                       </td>
@@ -364,7 +364,7 @@ export default function DividendsPage() {
                   ))}
                 </tbody>
                 <tfoot>
-                  <tr className="border-t border-gray-200">
+                  <tr className="border-t border-gray-200 dark:border-gray-700">
                     <td className="p-4 text-gray-900 font-bold" colSpan={5}>Total</td>
                     <td className="p-4 text-right text-green-600 font-bold">{formatCurrency(totalProjectedIncome)}</td>
                     <td className="p-4 text-right text-green-600 font-bold">{formatCurrency(totalAnnualIncome)}</td>
@@ -412,17 +412,17 @@ export default function DividendsPage() {
                 </div>
                 <div className="space-y-1 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-500">Div/Share</span>
-                    <span className="text-gray-900">{formatCurrency(s.dividendPerShare)}</span>
+                    <span className="text-gray-500 dark:text-gray-400 dark:text-gray-500">Div/Share</span>
+                    <span className="text-gray-900 dark:text-gray-100">{formatCurrency(s.dividendPerShare)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-500">Frequency</span>
-                    <span className="text-gray-900">{freqLabels[s.frequency] || s.frequency}</span>
+                    <span className="text-gray-500 dark:text-gray-400 dark:text-gray-500">Frequency</span>
+                    <span className="text-gray-900 dark:text-gray-100">{freqLabels[s.frequency] || s.frequency}</span>
                   </div>
                   {s.nextExDate && (
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Next Ex-Date</span>
-                      <span className="text-gray-900">{new Date(s.nextExDate).toLocaleDateString("id-ID")}</span>
+                      <span className="text-gray-500 dark:text-gray-400 dark:text-gray-500">Next Ex-Date</span>
+                      <span className="text-gray-900 dark:text-gray-100">{new Date(s.nextExDate).toLocaleDateString("id-ID")}</span>
                     </div>
                   )}
                 </div>
@@ -453,9 +453,9 @@ export default function DividendsPage() {
                   {records.slice(0, 10).map((r) => (
                     <tr key={r.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                       <td className="p-4 text-gray-900 font-medium">{r.ticker}</td>
-                      <td className="p-4 text-gray-700">{new Date(r.exDate).toLocaleDateString("id-ID")}</td>
-                      <td className="p-4 text-gray-700">{r.payDate ? new Date(r.payDate).toLocaleDateString("id-ID") : "-"}</td>
-                      <td className="p-4 text-right text-gray-900">{formatCurrency(r.amountPerShare)}</td>
+                      <td className="p-4 text-gray-700 dark:text-gray-300">{new Date(r.exDate).toLocaleDateString("id-ID")}</td>
+                      <td className="p-4 text-gray-700 dark:text-gray-300">{r.payDate ? new Date(r.payDate).toLocaleDateString("id-ID") : "-"}</td>
+                      <td className="p-4 text-right text-gray-900 dark:text-gray-100">{formatCurrency(r.amountPerShare)}</td>
                       <td className="p-4 text-right text-green-600 font-medium">
                         {r.totalReceived ? formatCurrency(r.totalReceived) : "-"}
                       </td>

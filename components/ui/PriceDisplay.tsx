@@ -26,7 +26,7 @@ export function PriceDisplay({ price, currency = "IDR", size = "md", className }
   };
 
   return (
-    <span className={cn("font-semibold text-gray-900", sizes[size], className)}>
+    <span className={cn("font-semibold text-gray-900 dark:text-gray-100", sizes[size], className)}>
       {formatCurrency(price, currency)}
     </span>
   );

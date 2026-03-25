@@ -49,14 +49,14 @@ export function MutualFundCard({ fund, onEdit, onDelete, onUpdateNAV }: MutualFu
               <p className="text-green-600 text-sm">{fund.ticker}</p>
             )}
             <div className="flex flex-wrap items-center gap-4 mt-2 text-sm">
-              <span className="text-gray-500">
-                Units: <span className="text-gray-900">{formatNumber(fund.units, 2)}</span>
+              <span className="text-gray-500 dark:text-gray-400 dark:text-gray-500">
+                Units: <span className="text-gray-900 dark:text-gray-100">{formatNumber(fund.units, 2)}</span>
               </span>
-              <span className="text-gray-500">
-                NAV: <span className="text-gray-900">{formatCurrency(fund.nav)}</span>
+              <span className="text-gray-500 dark:text-gray-400 dark:text-gray-500">
+                NAV: <span className="text-gray-900 dark:text-gray-100">{formatCurrency(fund.nav)}</span>
               </span>
               {fund.purchaseDate && (
-                <span className="text-gray-300">
+                <span className="text-gray-300 dark:text-gray-600">
                   Purchased: {new Date(fund.purchaseDate).toLocaleDateString("id-ID")}
                 </span>
               )}
@@ -66,7 +66,7 @@ export function MutualFundCard({ fund, onEdit, onDelete, onUpdateNAV }: MutualFu
 
         {/* Value and Actions */}
         <div className="text-right">
-          <p className="text-lg font-bold text-gray-900">
+          <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
             {formatCurrency(totalValue)}
           </p>
           <p className="text-gray-400 text-sm">Total Value</p>

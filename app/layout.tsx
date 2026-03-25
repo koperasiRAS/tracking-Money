@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Providers } from "./providers";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -15,18 +16,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={inter.className}>
-        <div className="min-h-screen relative">
-          {/* Background */}
-          <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-            <div className="absolute inset-0 bg-white" />
-          </div>
-
-          {/* Main content */}
-          <div className="relative z-10">
-            {children}
-          </div>
+        <div className="min-h-screen">
+          <Providers>{children}</Providers>
         </div>
       </body>
     </html>

@@ -48,7 +48,7 @@ export function DCACard({ schedule, onEdit, onDelete, onToggle, highlight }: DCA
     if (daysUntilDue < 0) return "text-red-500";
     if (daysUntilDue === 0) return "text-yellow-400";
     if (daysUntilDue <= 3) return "text-orange-400";
-    return "text-gray-500";
+    return "text-gray-500 dark:text-gray-400 dark:text-gray-500";
   };
 
   const freq = frequencyLabels[schedule.frequency] || { label: schedule.frequency, icon: "?" };

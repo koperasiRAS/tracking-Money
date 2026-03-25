@@ -239,7 +239,7 @@ export default function AllocationPage() {
     <main className="space-y-8 animate-in">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Smart Allocation</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Smart Allocation</h1>
         <p className="text-gray-500 mt-1">Analyze and optimize your portfolio allocation</p>
       </div>
 
@@ -283,7 +283,7 @@ export default function AllocationPage() {
       {/* Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <GlassCard className="p-4 text-center">
-          <p className="text-2xl font-bold text-gray-900">{formatCurrency(totalValue)}</p>
+          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{formatCurrency(totalValue)}</p>
           <p className="text-gray-500 text-sm">Total Value</p>
         </GlassCard>
         <GlassCard className="p-4 text-center">
@@ -312,7 +312,7 @@ export default function AllocationPage() {
       ) : portfolio.length === 0 ? (
         <GlassCard className="p-12 text-center">
           <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-8 h-8 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
@@ -330,13 +330,13 @@ export default function AllocationPage() {
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-900 font-medium">{rec.category}</span>
                     <div className="flex gap-4 text-xs">
-                      <span className="text-gray-500">
-                        Current: <span className="text-gray-900">{rec.currentPercent.toFixed(1)}%</span>
+                      <span className="text-gray-500 dark:text-gray-400 dark:text-gray-500">
+                        Current: <span className="text-gray-900 dark:text-gray-100">{rec.currentPercent.toFixed(1)}%</span>
                       </span>
-                      <span className="text-gray-500">
-                        Target: <span className="text-gray-900">{rec.targetPercent}%</span>
+                      <span className="text-gray-500 dark:text-gray-400 dark:text-gray-500">
+                        Target: <span className="text-gray-900 dark:text-gray-100">{rec.targetPercent}%</span>
                       </span>
-                      <span className={rec.differencePercent > 0 ? "text-green-600" : rec.differencePercent < 0 ? "text-red-500" : "text-gray-500"}>
+                      <span className={rec.differencePercent > 0 ? "text-green-600" : rec.differencePercent < 0 ? "text-red-500" : "text-gray-500 dark:text-gray-400 dark:text-gray-500"}>
                         {rec.differencePercent > 0 ? "+" : ""}{rec.differencePercent.toFixed(1)}%
                       </span>
                     </div>
@@ -355,7 +355,7 @@ export default function AllocationPage() {
                       />
                     </div>
                   </div>
-                  <div className="flex justify-between text-xs text-gray-400">
+                  <div className="flex justify-between text-xs text-gray-400 dark:text-gray-500">
                     <span>{formatCurrency(rec.currentValue)}</span>
                     <span>{formatCurrency(rec.targetValue)}</span>
                   </div>
@@ -432,10 +432,10 @@ export default function AllocationPage() {
           <div>
             <p className="text-gray-900 font-medium">Allocation Guidelines</p>
             <div className="text-gray-500 text-sm mt-2 space-y-1">
-              <p><span className="text-gray-900">Age Rule:</span> Stocks % = 110 - Age. If you&apos;re {age || 30}, recommended stocks = {ageBasedStocks}%</p>
-              <p><span className="text-gray-900">Risk Profiles:</span> Adjust based on your comfort with volatility and investment timeline</p>
-              <p><span className="text-gray-900">Goal Adjustment:</span> Longer goals (retirement) = more stocks. Shorter goals (house) = more bonds/cash</p>
-              <p><span className="text-gray-900">Sector Diversification:</span> Aim for no single sector exceeding 25% of portfolio</p>
+              <p><span className="text-gray-900 dark:text-gray-100">Age Rule:</span> Stocks % = 110 - Age. If you&apos;re {age || 30}, recommended stocks = {ageBasedStocks}%</p>
+              <p><span className="text-gray-900 dark:text-gray-100">Risk Profiles:</span> Adjust based on your comfort with volatility and investment timeline</p>
+              <p><span className="text-gray-900 dark:text-gray-100">Goal Adjustment:</span> Longer goals (retirement) = more stocks. Shorter goals (house) = more bonds/cash</p>
+              <p><span className="text-gray-900 dark:text-gray-100">Sector Diversification:</span> Aim for no single sector exceeding 25% of portfolio</p>
             </div>
           </div>
         </div>

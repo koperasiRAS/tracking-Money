@@ -13,9 +13,9 @@ const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
   ({ className, variant = "primary", size = "md", isLoading, children, disabled, ...props }, ref) => {
     const variants = {
       primary: "bg-green-600 hover:bg-green-700 active:bg-green-800 text-white border-green-600 shadow-sm",
-      secondary: "bg-gray-100 hover:bg-gray-200 active:bg-gray-300 text-gray-800 border-gray-200",
+      secondary: "bg-gray-100 hover:bg-gray-200 active:bg-gray-300 text-gray-800 border-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:active:bg-gray-500 dark:text-gray-200 dark:border-gray-600",
       danger: "bg-red-500 hover:bg-red-600 active:bg-red-700 text-white border-red-500 shadow-sm",
-      ghost: "bg-transparent hover:bg-gray-100 text-gray-600 border-transparent",
+      ghost: "bg-transparent hover:bg-gray-100 text-gray-600 border-transparent dark:hover:bg-gray-700 dark:text-gray-300",
     };
 
     const sizes = {

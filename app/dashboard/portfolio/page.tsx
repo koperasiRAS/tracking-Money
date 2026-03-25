@@ -84,7 +84,7 @@ export default function PortfolioPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Portfolio</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Portfolio</h1>
           <p className="text-gray-500 mt-1">Track your stock holdings</p>
         </div>
         <GlassButton onClick={() => setIsModalOpen(true)}>
@@ -147,8 +147,8 @@ export default function PortfolioPage() {
             onClick={() => setDeletingItem(null)}
           />
           <GlassCard className="relative w-full max-w-sm p-6 space-y-4 animate-slide-up">
-            <h3 className="text-lg font-semibold text-gray-900">Delete Stock</h3>
-            <p className="text-gray-500">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Delete Stock</h3>
+            <p className="text-gray-500 dark:text-gray-400 dark:text-gray-500">
               Are you sure you want to remove {deletingItem.ticker} from your portfolio?
             </p>
             <div className="flex gap-3">

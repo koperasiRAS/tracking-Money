@@ -100,7 +100,7 @@ export default function SettingsPage() {
   return (
     <main className="max-w-2xl mx-auto space-y-6 animate-in">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Pengaturan</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Pengaturan</h1>
         <p className="text-gray-500 text-sm mt-0.5">Konfigurasi notifikasi dan preferensi</p>
       </div>
 
@@ -113,7 +113,7 @@ export default function SettingsPage() {
       {/* Telegram Settings */}
       <GlassCard className="p-6 space-y-5">
         <div>
-          <h2 className="text-base font-semibold text-gray-900">Notifikasi Telegram</h2>
+          <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100">Notifikasi Telegram</h2>
           <p className="text-gray-400 text-sm mt-0.5">Terima peringatan melalui bot Telegram</p>
         </div>
 

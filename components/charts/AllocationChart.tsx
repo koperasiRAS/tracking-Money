@@ -45,7 +45,7 @@ export function AllocationChart({ data, title = "Portfolio Allocation" }: Alloca
     return (
       <GlassCard className="p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
-        <div className="h-64 flex items-center justify-center text-gray-400">
+        <div className="h-64 flex items-center justify-center text-gray-400 dark:text-gray-500">
           No data available
         </div>
       </GlassCard>
@@ -96,7 +96,7 @@ export function AllocationChart({ data, title = "Portfolio Allocation" }: Alloca
                 className="w-3 h-3 rounded-full"
                 style={{ backgroundColor: item.color || COLORS[index % COLORS.length] }}
               />
-              <span className="text-gray-700">{item.name}</span>
+              <span className="text-gray-700 dark:text-gray-300">{item.name}</span>
             </div>
             <div className="text-right">
               <span className="text-gray-900 font-medium">{formatPercent(item.value)}</span>

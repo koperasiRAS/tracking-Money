@@ -13,8 +13,8 @@ const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
       <div
         ref={ref}
         className={cn(
-          "rounded-2xl bg-white border border-gray-200 shadow-sm",
-          hover && "hover:bg-gray-50 hover:border-gray-300 hover:shadow transition-all duration-200 cursor-pointer",
+          "rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm",
+          hover && "hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-md transition-all duration-200 cursor-pointer",
           className
         )}
         {...props}

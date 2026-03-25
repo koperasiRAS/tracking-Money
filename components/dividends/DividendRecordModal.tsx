@@ -87,7 +87,7 @@ export function DividendRecordModal({ isOpen, onClose, onSubmit, portfolioTicker
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
       <GlassCard className="relative w-full max-w-md p-6 space-y-6 animate-slide-up">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">Log Dividend Received</h2>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Log Dividend Received</h2>
           <button
             type="button"
             onClick={onClose}

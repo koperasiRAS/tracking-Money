@@ -17,10 +17,10 @@ const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
     const isGlass = variant === "glass";
     const baseClasses = isGlass
       ? "bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:ring-green-500/50 focus:border-green-500/30"
-      : "bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus:ring-green-500/50 focus:border-green-400";
+      : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-green-500/50 focus:border-green-400";
 
-    const labelClasses = isGlass ? "text-white/70" : "text-gray-700";
-    const iconColorClass = isGlass ? "text-white/40" : "text-gray-400";
+    const labelClasses = isGlass ? "text-white/70" : "text-gray-700 dark:text-gray-300";
+    const iconColorClass = isGlass ? "text-white/40" : "text-gray-400 dark:text-gray-500";
 
     return (
       <div className="w-full">

@@ -79,7 +79,7 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h1>
           <p className="text-gray-500 text-sm mt-0.5">Ringkasan investasi Anda</p>
         </div>
         <Link href="/dashboard/portfolio">
@@ -90,7 +90,7 @@ export default function DashboardPage() {
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <GlassCard className="p-4">
-          <p className="text-lg font-bold text-gray-900">{formatCurrency(totalValue)}</p>
+          <p className="text-lg font-bold text-gray-900 dark:text-gray-100">{formatCurrency(totalValue)}</p>
           <p className="text-gray-400 text-xs mt-0.5">Nilai Portfolio</p>
           <p className={`text-xs mt-1 ${totalGainLoss >= 0 ? "text-green-600" : "text-red-500"}`}>
             {totalGainLoss >= 0 ? "+" : ""}{formatCurrency(totalGainLoss)} ({gainLossPercent.toFixed(1)}%)
@@ -138,6 +138,7 @@ export default function DashboardPage() {
           <Link href="/dashboard/allocation">
             <GlassCard className="p-4 cursor-pointer">
               <p className="text-gray-900 font-medium text-sm">Alokasi</p>
+              <p className="text-gray-400 text-xs mt-1">Kelola</p>
             </GlassCard>
           </Link>
         </div>
@@ -147,7 +148,7 @@ export default function DashboardPage() {
       {portfolio.length > 0 && (
         <GlassCard className="p-4">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-base font-semibold text-gray-900">Holdings Portfolio</h2>
+            <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100">Holdings Portfolio</h2>
             <Link href="/dashboard/portfolio">
               <GlassButton variant="ghost" size="sm">Lihat Semua</GlassButton>
             </Link>
@@ -155,7 +156,7 @@ export default function DashboardPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-200 text-left text-xs text-gray-400">
+                <tr className="border-b border-gray-200 text-left text-xs text-gray-400 dark:text-gray-500">
                   <th className="pb-2 font-medium">Saham</th>
                   <th className="pb-2 font-medium text-right">Lot</th>
                   <th className="pb-2 font-medium text-right">Harga Rata-rata</th>
@@ -174,7 +175,7 @@ export default function DashboardPage() {
                   const gainLossPercent = costBasis > 0 ? (gainLoss / costBasis) * 100 : 0;
 
                   return (
-                    <tr key={item.id} className="border-b border-gray-100">
+                    <tr key={item.id} className="border-b border-gray-100 dark:border-gray-700">
                       <td className="py-2">
                         <p className="text-gray-900 font-medium text-sm">{item.ticker}</p>
                         <p className="text-gray-300 text-xs">{item.name || "-"}</p>

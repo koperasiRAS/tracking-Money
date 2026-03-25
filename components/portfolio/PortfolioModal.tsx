@@ -86,7 +86,7 @@ export function PortfolioModal({ isOpen, onClose, onSubmit, item }: PortfolioMod
       {/* Modal */}
       <GlassCard className="relative w-full max-w-md p-6 space-y-6 animate-slide-up">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
             {item ? "Edit Stock" : "Add Stock"}
           </h2>
           <button

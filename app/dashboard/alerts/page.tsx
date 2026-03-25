@@ -94,7 +94,7 @@ export default function AlertsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Price Alerts</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Price Alerts</h1>
           <p className="text-gray-500 mt-1">Get notified when prices hit your targets</p>
         </div>
         <GlassButton onClick={() => setIsModalOpen(true)}>
@@ -108,7 +108,7 @@ export default function AlertsPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
         <GlassCard className="p-3 text-center">
-          <p className="text-xl font-bold text-gray-900">{activeAlerts.length}</p>
+          <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{activeAlerts.length}</p>
           <p className="text-gray-500 text-xs">Active</p>
         </GlassCard>
         <GlassCard className="p-3 text-center">
@@ -148,7 +148,7 @@ export default function AlertsPage() {
       ) : alerts.length === 0 ? (
         <GlassCard className="p-12 text-center">
           <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-8 h-8 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
           </div>
@@ -189,8 +189,8 @@ export default function AlertsPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setDeletingAlert(null)} />
           <GlassCard className="relative w-full max-w-sm p-6 space-y-4 animate-slide-up">
-            <h3 className="text-lg font-semibold text-gray-900">Delete Alert</h3>
-            <p className="text-gray-500">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Delete Alert</h3>
+            <p className="text-gray-500 dark:text-gray-400 dark:text-gray-500">
               Are you sure you want to delete this alert for {deletingAlert.ticker}?
             </p>
             <div className="flex gap-3">

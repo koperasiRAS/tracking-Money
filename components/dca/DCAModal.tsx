@@ -113,7 +113,7 @@ export function DCAModal({ isOpen, onClose, onSubmit, schedule }: DCAModalProps)
       {/* Modal */}
       <GlassCard className="relative w-full max-w-md p-6 space-y-6 animate-slide-up max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
             {schedule ? "Edit DCA Plan" : "Create DCA Plan"}
           </h2>
           <button
